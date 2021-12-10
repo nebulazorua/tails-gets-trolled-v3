@@ -3391,7 +3391,7 @@ class PlayState extends MusicBeatState
 		SONG = song;
 		var songData = new SongData(SONG.song,SONG.player2,storyWeek,SONG.song,'week${storyWeek}');
 
-		weekData = new WeekData("Chart",songData.weekNum,'dad',[songData],'bf','gf',songData.loadingPath);
+		weekData = new WeekData("Chart",songData.weekNum,SONG.player2,[songData],songData.loadingPath);
 		PlayState.songData=songData;
 	}
 
@@ -3401,7 +3401,7 @@ class PlayState extends MusicBeatState
 		PlayState.charterPos = 0;
 		PlayState.songData=songData;
 		SONG = Song.loadFromJson(songData.formatDifficulty(difficulty), songData.chartName.toLowerCase());
-		weekData = new WeekData("Freeplay",songData.weekNum,'dad',[songData],'bf','gf',songData.loadingPath);
+		weekData = new WeekData("Freeplay",songData.weekNum,'dad',[songData],songData.loadingPath);
 		// TODO: maybe have a "setPlaylist" function which takes WeekData and have FreeplayState create a temporary one n shit
 		// could also be used to have custom 'freeplay playlists' where you play multiple songs in a row without being in story mode
 		// for now, this'll do

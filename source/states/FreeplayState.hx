@@ -144,10 +144,19 @@ class FreeplayState extends MusicBeatState
 			addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit'])
 		*/
 
+		/*addWeekData(new EngineData.WeekData("Fuckin' Virgin",
+      1,
+      "gf",
+      ["Tutorial"]
+    ));
 		for(week in EngineData.weekData){
 			addWeekData(week);
+		}*/
+		for(song in EngineData.freeplay){
+			addSongData(song);
 		}
 
+		/*
 		var otherSongs = Paths.getDirs("songs","assets");
 
 		for(song in otherSongs){
@@ -189,7 +198,7 @@ class FreeplayState extends MusicBeatState
 				}
 
 			}
-		}
+		}*/
 
 
 		// LOAD MUSIC

@@ -1,0 +1,81 @@
+{
+	"charOffset": [
+		0,
+		0
+	],
+	"camOffset": [
+		75,
+		-25
+	],
+	"spritesheet": "shadow crazy",
+	"singDur": 6.1,
+	"scale": 1,
+	"anims": [
+		{
+			"prefix": "idle crazy",
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"name": "idle",
+			"looped": false
+		},
+		{
+			"prefix": "up crazy",
+			"offsets": [
+				83,
+				25
+			],
+			"fps": 24,
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"prefix": "left crazy",
+			"offsets": [
+				5,
+				31
+			],
+			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"prefix": "right crazy",
+			"offsets": [
+				-74,
+				10
+			],
+			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"prefix": "down crazy",
+			"offsets": [
+				-72,
+				-271
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"prefix": "shoot crazy",
+			"offsets": [
+				13,
+				-24
+			],
+			"fps": 24,
+			"name": "shoot",
+			"looped": false
+		}
+	],
+	"flipX": false,
+	"iconName": "dad",
+	"antialiasing": true,
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFFAF66CE"
+}

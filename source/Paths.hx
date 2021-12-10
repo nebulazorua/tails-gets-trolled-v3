@@ -317,6 +317,11 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 
+	inline static public function video(key:String, ?library:String)
+	{
+		return getPath('videos/$key.mp4', BINARY, library);
+	}
+
 
 	inline static public function characterSparrow(key:String, ?library:String)
 	{

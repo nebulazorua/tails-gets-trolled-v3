@@ -20,40 +20,29 @@ class EngineData {
   public static var options:Options;
   public static var weeksUnlocked:Array<Bool>=[true,true,true,true,true,true];
   public static var mustUnlockWeeks:Bool=false; // TODO: make this work
+  public static var freeplay:Array<SongData> = [
+    new SongData("Tutorial",'gf',0,'tutorial'),
+    new SongData("Tsuraran Fox",'tails',0,'tsuraran-fox')
+  ];
   public static var weekData:Array<WeekData> = [
-    new WeekData("Funkin' Virgin",0,'',[
-      new SongData("Tutorial","gf",0),
-    ]),
-    new WeekData("DADDY DEAREST",1,'dad',[
-      "Bopeebo",
-      "Fresh",
-      "Dadbattle"
-    ]),
-    new WeekData("Spooky Month",2,'spooky',[
-      "Spookeez",
-      "South",
-      new SongData("Monster","monster",2)
-    ]),
-    new WeekData("Pico",3,'pico',[
-      "Pico",
-      new SongData("Philly Nice","pico",3,"philly-nice"),
-      "Blammed"
-    ]),
-    new WeekData("MOMMY MUST MURDER",4,'mom',[
-      new SongData("Satin Panties","mom",4,"satin-panties"),
-      "High",
-      "MILF"
-    ]),
-    new WeekData("RED SNOW",5,'parents-christmas',[
-      "Cocoa",
-      "Eggnog",
-      new SongData("Winter Horrorland","monster",5,"winter-horrorland"),
-    ]),
-    new WeekData("hating simulator ft. moawling",6,'senpai',[
-      "Senpai",
-      "Roses",
-      new SongData("Thorns","spirit",6),
-    ]),
+    new WeekData("Tails Gets Trolled",
+      1,
+      "tails",
+      ["Talentless Fox"],
+      "tailsGetsTrolled"
+    ),
+    new WeekData("Dumbass Learns",
+      2,
+      "sonic",
+      ["No Villains"],
+      "sonicGetsTrolled"
+    ),
+    new WeekData("Shadow Showdown",
+      3,
+      "shadow",
+      ["Die Batsards"],
+      "dumbassLearnt"
+    )
   ];
 }
 
@@ -97,15 +86,13 @@ class SongData {
 class WeekData {
   public var songs:Array<SongData>=[];
   public var character:String = '';
-  public var protag:String = 'bf';
-  public var lover:String='gf';
   public var weekNum:Int = 0;
   public var loadingPath:String = '';
   public var name:String = 'Template';
-
-  public function new(name:String='Template',weekNum:Int=0,character:String='',songs:Array<Dynamic>,?protag:String='bf',?lover:String='gf',?path:String){
+  public var cutscene:String ='';
+  public function new(name:String='Template',weekNum:Int=0,character:String='',songs:Array<Dynamic>,?cutscene:String, ?path:String){
     if(path==null){
-      path = 'week${weekNum}';
+      path = 'chapter${weekNum}';
     }
     var songData:Array<SongData>=[];
     for(stuff in songs){
@@ -119,9 +106,7 @@ class WeekData {
       }
     }
     loadingPath=path;
-
-    this.protag=protag;
-    this.lover=lover;
+    this.cutscene = cutscene==null?'':cutscene;
     this.songs=songData;
     this.name=name;
     this.weekNum=weekNum;

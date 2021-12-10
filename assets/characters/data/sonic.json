@@ -1,0 +1,71 @@
+{
+	"charOffset": [
+		0,
+		0
+	],
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "idle",
+			"name": "idle",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-38,
+				22
+			],
+			"fps": 24,
+			"prefix": "up",
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"offsets": [
+				0,
+				2
+			],
+			"fps": 24,
+			"prefix": "left",
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-68,
+				-6
+			],
+			"fps": 24,
+			"prefix": "right",
+			"looped": false,
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				-24,
+				-28
+			],
+			"fps": 24,
+			"prefix": "down",
+			"looped": false,
+			"name": "singDOWN"
+		}
+	],
+	"spritesheet": "sonic",
+	"camOffset": [
+		150,
+		50
+	],
+	"scale": 0.7,
+	"singDur": 6.1,
+	"flipX": false,
+	"iconName": "sonic",
+	"antialiasing": true,
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFF577DFF"
+}
