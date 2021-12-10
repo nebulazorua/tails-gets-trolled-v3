@@ -199,7 +199,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         curStage = 'hillzoneTails';
         var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('sky','chapter1'));
         bg.antialiasing = true;
-        bg.scrollFactor.set(0.9, 0.9);
+        bg.scrollFactor.set(0.4, 0.4);
         bg.active = false;
         add(bg);
 
@@ -227,7 +227,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         curStage = 'hillzoneTailsSwag';
         var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('skySwag','chapter1'));
         bg.antialiasing = true;
-        bg.scrollFactor.set(0.9, 0.9);
+        bg.scrollFactor.set(0.4, 0.4);
         bg.active = false;
         add(bg);
 
@@ -255,7 +255,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         curStage = 'hillzoneSonic';
         var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('sky','chapter2'));
         bg.antialiasing = true;
-        bg.scrollFactor.set(0.9, 0.9);
+        bg.scrollFactor.set(0.4, 0.4);
         bg.active = false;
         add(bg);
 
@@ -283,7 +283,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         curStage = 'hillzoneShadow';
         var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('sky','chapter3'));
         bg.antialiasing = true;
-        bg.scrollFactor.set(0.9, 0.9);
+        bg.scrollFactor.set(0.4, 0.4);
         bg.active = false;
         add(bg);
 
