@@ -212,7 +212,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         add(stageFront);
 
         var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('foreground','chapter1'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
         stageCurtains.updateHitbox();
         stageCurtains.antialiasing = true;
         stageCurtains.scrollFactor.set(1.3, 1.3);
@@ -240,7 +240,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         add(stageFront);
 
         var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('foregroundSwag','chapter1'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
         stageCurtains.updateHitbox();
         stageCurtains.antialiasing = true;
         stageCurtains.scrollFactor.set(1.3, 1.3);
@@ -268,7 +268,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         add(stageFront);
 
         var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('foreground','chapter2'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
         stageCurtains.updateHitbox();
         stageCurtains.antialiasing = true;
         stageCurtains.scrollFactor.set(1.3, 1.3);
@@ -296,7 +296,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         add(stageFront);
 
         var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('foreground','chapter3'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
         stageCurtains.updateHitbox();
         stageCurtains.antialiasing = true;
         stageCurtains.scrollFactor.set(1.3, 1.3);
@@ -327,7 +327,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         add(stageFront);
 
         var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('stagecurtains','shared'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
         stageCurtains.updateHitbox();
         stageCurtains.antialiasing = true;
         stageCurtains.scrollFactor.set(1.3, 1.3);

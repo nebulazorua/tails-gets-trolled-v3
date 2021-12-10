@@ -1,0 +1,166 @@
+{
+	"charOffset": [
+		0,
+		300
+	],
+	"singDur": 4,
+	"spritesheet": "BOYFRIEND2",
+	"anims": [
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"fps": 24,
+			"prefix": "BF idle dance",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"prefix": "BF NOTE UP instance 10",
+			"offsets": [
+				36,
+				22
+			],
+			"fps": 24,
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE LEFT instance 10",
+			"offsets": [
+				-41,
+				-7
+			],
+			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE RIGHT instance 10",
+			"offsets": [
+				33,
+				-7
+			],
+			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE DOWN instance 10",
+			"offsets": [
+				-28,
+				-56
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE UP MISS",
+			"offsets": [
+				38,
+				24
+			],
+			"fps": 24,
+			"name": "singUPmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE RIGHT MISS",
+			"offsets": [
+				40,
+				21
+			],
+			"fps": 24,
+			"name": "singLEFTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE LEFT MISS",
+			"offsets": [
+				-42,
+				38
+			],
+			"fps": 24,
+			"name": "singRIGTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE DOWN MISS",
+			"offsets": [
+				-24,
+				-30
+			],
+			"fps": 24,
+			"name": "singDOWNmiss",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-3,
+				4
+			],
+			"fps": 24,
+			"prefix": "BF HEY",
+			"looped": false,
+			"name": "hey"
+		},
+		{
+			"offsets": [
+				-3,
+				11
+			],
+			"fps": 24,
+			"prefix": "BF dies",
+			"looped": false,
+			"name": "firstDeath"
+		},
+		{
+			"offsets": [
+				-3,
+				5
+			],
+			"fps": 24,
+			"prefix": "BF Dead Loop",
+			"looped": true,
+			"name": "deathLoop"
+		},
+		{
+			"offsets": [
+				-3,
+				69
+			],
+			"fps": 24,
+			"prefix": "BF Dead confirm",
+			"looped": false,
+			"name": "deathConfirm"
+		},
+		{
+			"offsets": [
+				-4,
+				0
+			],
+			"fps": 24,
+			"prefix": "BF idle shaking",
+			"looped": true,
+			"name": "scared"
+		},
+		{
+			"offsets": [
+				-3,
+				4
+			],
+			"fps": 24,
+			"prefix": "BF HEY",
+			"name": "singUP-alt",
+			"looped": false
+		}
+	],
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "bf",
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFF31B0D1"
+}

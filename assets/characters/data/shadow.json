@@ -1,15 +1,10 @@
 {
 	"charOffset": [
 		0,
-		0
+		50
 	],
-	"camOffset": [
-		75,
-		-25
-	],
-	"spritesheet": "shadow",
 	"singDur": 6.1,
-	"scale": 0.9,
+	"spritesheet": "shadow",
 	"anims": [
 		{
 			"offsets": [
@@ -24,8 +19,8 @@
 		{
 			"prefix": "up",
 			"offsets": [
-				69,
-				27
+				68,
+				30
 			],
 			"fps": 24,
 			"name": "singUP",
@@ -35,7 +30,7 @@
 			"prefix": "left",
 			"offsets": [
 				5,
-				21
+				14
 			],
 			"fps": 24,
 			"name": "singLEFT",
@@ -44,8 +39,8 @@
 		{
 			"prefix": "right",
 			"offsets": [
-				-74,
-				28
+				-94,
+				17
 			],
 			"fps": 24,
 			"name": "singRIGHT",
@@ -55,22 +50,27 @@
 			"prefix": "down",
 			"offsets": [
 				-72,
-				-213
+				-245
 			],
 			"fps": 24,
 			"name": "singDOWN",
 			"looped": false
 		},
 		{
-			"prefix": "shoot",
 			"offsets": [
 				3,
 				-11
 			],
 			"fps": 24,
+			"prefix": "shoot",
 			"name": "shoot",
 			"looped": false
 		}
+	],
+	"scale": 0.9,
+	"camOffset": [
+		100,
+		25
 	],
 	"flipX": false,
 	"iconName": "dad",
