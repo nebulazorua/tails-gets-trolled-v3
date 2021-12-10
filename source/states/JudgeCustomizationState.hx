@@ -29,7 +29,7 @@ class JudgeCustomizationState extends MusicBeatState {
 
     defaultPos = FlxPoint.get();
     judgePlacementPos = FlxPoint.get(EngineData.options.judgeX,EngineData.options.judgeY);
-    stage = new Stage('stage',EngineData.options);
+    stage = new Stage('hillzoneShadow',EngineData.options);
     add(stage);
 
     add(stage.layers.get("gf"));
