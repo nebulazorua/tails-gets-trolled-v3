@@ -3204,7 +3204,6 @@ class PlayState extends MusicBeatState
 				case 'mine':
 					hurtNoteHit(note);
 				case 'alt':
-					trace("woo alt");
 					goodNoteHit(note,diff,true);
 				default:
 					goodNoteHit(note,diff,false);
