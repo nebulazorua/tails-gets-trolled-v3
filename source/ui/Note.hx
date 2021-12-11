@@ -47,6 +47,7 @@ class Note extends NoteGraphic
 {
 	public static var skinManifest:Map<String,SkinManifest>=[];
 
+	public var speed:Float = 1;
 	public var causesMiss:Bool=true;
 	public var opponentMisses:Bool=false;
 	public var canHold:Bool = true;
@@ -159,6 +160,8 @@ class Note extends NoteGraphic
 		y -= 2000;
 		this.strumTime = strumTime;
 
+		speed = PlayState.getSVFromTime(strumTime) * (1/.45);
+
 		this.noteData = noteData;
 
 		var daStage:String = PlayState.curStage;
@@ -215,8 +218,7 @@ class Note extends NoteGraphic
 				//prevNote.noteGraphic.animation.play('${colors[noteData]}hold');
 				prevNote.setDir(noteData,true,false);
 				if(!beingCharted){
-					prevNote.scale.y *= (Conductor.stepCrochet / 100 * 1.5);
-					prevNote.scale.y *= PlayState.getFNFSpeed(strumTime);
+					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * speed;
 				}
 
 

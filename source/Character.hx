@@ -424,6 +424,9 @@ class Character extends FlxSprite
 				case 'gf':
 					if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
 						playAnim('danceRight');
+				case 'shadow' | 'shadow-crazy':
+					if (animation.curAnim.name == 'shoot' && animation.curAnim.finished)
+						playAnim('idle');
 			}
 		}
 
@@ -457,7 +460,14 @@ class Character extends FlxSprite
 				}
 
 			}else{
-				playAnim("idle",forced);
+				switch(curCharacter){
+					case 'shadow' | 'shadow-crazy':
+						if(animation.curAnim.name!='shoot')
+							playAnim("idle",forced);
+					default:
+						playAnim("idle",forced);
+				}
+
 			}
 		}
 	}

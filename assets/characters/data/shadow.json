@@ -1,15 +1,8 @@
 {
 	"charOffset": [
 		0,
-		50
+		100
 	],
-	"camOffset": [
-		100,
-		25
-	],
-	"scale": 0.9,
-	"singDur": 6.1,
-	"spritesheet": "shadow",
 	"anims": [
 		{
 			"offsets": [
@@ -23,8 +16,8 @@
 		},
 		{
 			"offsets": [
-				68,
-				30
+				58,
+				31
 			],
 			"fps": 24,
 			"prefix": "up",
@@ -43,8 +36,8 @@
 		},
 		{
 			"offsets": [
-				-94,
-				17
+				-82,
+				16
 			],
 			"fps": 24,
 			"prefix": "right",
@@ -53,8 +46,8 @@
 		},
 		{
 			"offsets": [
-				-72,
-				-245
+				-64,
+				-207
 			],
 			"fps": 24,
 			"prefix": "down",
@@ -64,14 +57,21 @@
 		{
 			"offsets": [
 				3,
-				-11
+				-6
 			],
 			"fps": 24,
 			"prefix": "shoot",
-			"looped": false,
-			"name": "shoot"
+			"name": "shoot",
+			"looped": false
 		}
 	],
+	"scale": 0.8,
+	"camOffset": [
+		75,
+		50
+	],
+	"spritesheet": "shadow",
+	"singDur": 6.1,
 	"flipX": false,
 	"antialiasing": true,
 	"iconName": "shadow",

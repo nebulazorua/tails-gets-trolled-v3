@@ -94,6 +94,7 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 	public var scrollSpeed:Float = 1;
+	public var speed:Float = 0;
 	public var dontSync:Bool=false;
 	public var currentTrackPos:Float = 0;
 	public var currentVisPos:Float = 0;
@@ -245,6 +246,67 @@ class PlayState extends MusicBeatState
 	var comboSprites:Array<FlxSprite>=[];
 
 	var velocityMarkers:Array<Float>=[];
+
+	// sometimes i wonder why im allowed to program LOL
+	var shotAnims:Map<String,Array<Float>> = [
+		"die-batsards"=>[ // this is for the anims
+			192,
+			1020,
+			1080,
+			1083,
+			1752,
+			1756,
+			1775,
+			1780,
+			1783,
+			1788,
+			1815,
+			1820,
+			1832,
+			1836,
+			1840,
+			1844,
+			1846,
+			1871,
+		]
+	];
+	var killShots:Map<String,Array<Float>> = [ // these will take you to near death if you have max hp when the shots start
+		"die-batsards"=>[
+			1984,
+			1986,
+			1990,
+			1992,
+			1993,
+			1996,
+			1997,
+			1999,
+			2000,
+			2001,
+			2002,
+			2003,
+			2004,
+			2005
+		]
+	];
+
+	var shotMechanics:Map<String,Array<Array<Float>>> = [ // this is for the mechanic
+		"die-batsards"=>[ // steps where the shots should happen
+			[192,1], // step, shots
+			[1020,1],
+			[1080,2],
+			[1752,2],
+			[1775,2],
+			[1785,2],
+			[1815,1],
+			[1820,1],
+			[1831,1],
+			[1838,3]
+		]
+	];
+	var killShotCount:Int = 1;
+	var loadedShotAnims:Array<Null<Float>>=[];
+	var loadedKillShots:Array<Null<Float>>=[];
+	var loadedShotMechanics:Array<Array<Null<Float>>>=[];
 
 	public static var campaignScore:Int = 0;
 
@@ -498,7 +560,7 @@ class PlayState extends MusicBeatState
 		if (SONG == null)
 			SONG = Song.loadFromJson('tutorial');
 
-		var speed = SONG.speed;
+		speed = SONG.speed;
 		if(!isStoryMode){
 			var mMod = currentOptions.mMod<.1?speed:currentOptions.mMod;
 			speed = currentOptions.cMod<.1?speed:currentOptions.cMod;
@@ -508,9 +570,14 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		SONG.initialSpeed = speed*.45;
-
 		SONG.sliderVelocities.sort((a,b)->Std.int(a.startTime-b.startTime));
+
+		if(SONG.sliderVelocities[0]!=null){
+			SONG.initialSpeed = speed * SONG.sliderVelocities[0].multiplier .45;
+		}else{
+			SONG.initialSpeed = speed * .45;
+		}
+
 		mapVelocityChanges();
 
 		Conductor.mapBPMChanges(SONG);
@@ -759,6 +826,24 @@ class PlayState extends MusicBeatState
 
 		generateSong();
 
+		/*var currentShotSteps:Array<Array<Float>> = [
+			[]; // anims
+			[]; // kill shots
+			[]; // mechanics
+		];*/
+
+		loadedShotAnims = shotAnims.get(SONG.song.toLowerCase());
+		loadedKillShots = killShots.get(SONG.song.toLowerCase());
+		loadedShotMechanics = shotMechanics.get(SONG.song.toLowerCase());
+
+		if(loadedShotAnims==null)loadedShotAnims=[];
+		if(loadedKillShots==null)loadedKillShots=[];
+		if(loadedShotMechanics==null)loadedShotMechanics=[];
+
+		loadedShotAnims.sort((a,b)->Std.int(a-b));
+		loadedKillShots.sort((a,b)->Std.int(a-b));
+		loadedShotMechanics.sort((a,b)->Std.int(a[0]-b[0]));
+		killShotCount = loadedKillShots.length;
 		// add(strumLine);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -1095,10 +1180,8 @@ class PlayState extends MusicBeatState
 
 		if(!modManager.exists("reverse")){
 			var y = upscrollOffset;
-			if(scrollSpeed<0)
+			if(currentOptions.downScroll)
 				y = downscrollOffset;
-
-			trace(y);
 
 			for(babyArrow in strumLineNotes.members){
 				babyArrow.desiredY+=y;
@@ -1333,6 +1416,7 @@ class PlayState extends MusicBeatState
 
 		}*/
 		scrollSpeed = 1;//(currentOptions.downScroll?-1:1);
+
 		var setupSplashes:Array<String>=[];
 		var loadingSplash = new NoteSplash(0,0);
 		loadingSplash.visible=false;
@@ -1710,6 +1794,7 @@ class PlayState extends MusicBeatState
 	// https://github.com/Quaver/Quaver
 	// https://github.com/Quaver/Quaver
 	// https://github.com/Quaver/Quaver
+
 	function getPosFromTime(strumTime:Float):Float{
 		var idx:Int = 0;
 		while(idx<SONG.sliderVelocities.length){
@@ -1721,7 +1806,17 @@ class PlayState extends MusicBeatState
 	}
 
 	public static function getFNFSpeed(strumTime:Float):Float{
-		return (getSVFromTime(strumTime)*(currentPState.scrollSpeed*(1/.45) ));
+		var idx:Int = 0;
+		while(idx<SONG.sliderVelocities.length){
+			if(strumTime<SONG.sliderVelocities[idx].startTime)
+				break;
+			idx++;
+		}
+		idx--;
+		if(idx<=0)
+			return currentPState.speed;
+		return currentPState.speed*SONG.sliderVelocities[idx].multiplier;
+
 	}
 
 	public static function getScale(strumTime:Float):Float{
@@ -2307,19 +2402,21 @@ class PlayState extends MusicBeatState
 								lua.call("dadNoteHit",[Math.abs(daNote.noteData),daNote.strumTime,Conductor.songPosition,anim]); // TODO: Note lua class???
 							}
 						if(opponent.animation.curAnim!=null){
-							var canHold = daNote.isSustainNote && opponent.animation.getByName(anim+"Hold")!=null;
-							if(canHold && !opponent.animation.curAnim.name.startsWith(anim)){
-								opponent.playAnim(anim,true);
-							}else if(currentOptions.pauseHoldAnims && !canHold){
-								opponent.playAnim(anim,true);
+							if(opponent.animation.curAnim.name!='shoot'){
+								var canHold = daNote.isSustainNote && opponent.animation.getByName(anim+"Hold")!=null;
+								if(canHold && !opponent.animation.curAnim.name.startsWith(anim)){
+									opponent.playAnim(anim,true);
+								}else if(currentOptions.pauseHoldAnims && !canHold){
+									opponent.playAnim(anim,true);
 
-								if(daNote.holdParent && !daNote.isSustainEnd())
-									opponent.holding=true;
-								else{
-									opponent.holding=false;
+									if(daNote.holdParent && !daNote.isSustainEnd())
+										opponent.holding=true;
+									else{
+										opponent.holding=false;
+									}
+								}else if(!currentOptions.pauseHoldAnims && !canHold){
+									opponent.playAnim(anim,true);
 								}
-							}else if(!currentOptions.pauseHoldAnims && !canHold){
-								opponent.playAnim(anim,true);
 							}
 						}
 
@@ -3243,6 +3340,18 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
+		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curStep){
+			dad.playAnim("shoot",true);
+			loadedShotAnims.shift();
+		}
+		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curStep){
+			dad.playAnim("shoot",true);
+			//boyfriend.playAnim("hit",true);
+			health -= 1.99 * (1/killShotCount);
+			loadedKillShots.shift();
+		}
+
+
 		if(luaModchartExists && lua!=null){
 			lua.setGlobalVar("curStep",curStep);
 			lua.call("stepHit",[curStep]);

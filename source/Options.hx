@@ -94,7 +94,7 @@ class Options
 	public var cMod:Float = 0;
 	public var xMod:Float = 1;
 	public var mMod:Float = 1;
-	public var judgementWindow:String = 'ITG';
+	public var judgementWindow:String = 'Vanilla-like';
 	public var noteOffset:Int = 0;
 	public var botPlay:Bool = false;
 	public var loadModcharts:Bool = true;
