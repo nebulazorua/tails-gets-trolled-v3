@@ -303,6 +303,8 @@ class PlayState extends MusicBeatState
 			[1838,3]
 		]
 	];
+
+	public static var sliderVelocities:Array<Song.VelocityChange>;
 	var killShotCount:Int = 1;
 	var loadedShotAnims:Array<Null<Float>>=[];
 	var loadedKillShots:Array<Null<Float>>=[];
@@ -570,13 +572,21 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		SONG.sliderVelocities.sort((a,b)->Std.int(a.startTime-b.startTime));
+		sliderVelocities = [];
 
-		if(SONG.sliderVelocities[0]!=null){
-			SONG.initialSpeed = speed * SONG.sliderVelocities[0].multiplier .45;
-		}else{
-			SONG.initialSpeed = speed * .45;
+		sliderVelocities.push({
+			startTime: -5000,
+			multiplier: 1
+		});
+
+		for(shit in SONG.sliderVelocities){
+			sliderVelocities.push(shit);
 		}
+
+		sliderVelocities.sort((a,b)->Std.int(a.startTime-b.startTime));
+
+		SONG.initialSpeed = speed * .45;
+
 
 		mapVelocityChanges();
 
@@ -832,12 +842,40 @@ class PlayState extends MusicBeatState
 			[]; // mechanics
 		];*/
 
-		loadedShotAnims = shotAnims.get(SONG.song.toLowerCase());
-		loadedKillShots = killShots.get(SONG.song.toLowerCase());
+		//loadedShotAnims = shotAnims.get(SONG.song.toLowerCase());
+		//loadedKillShots = killShots.get(SONG.song.toLowerCase());
 		loadedShotMechanics = shotMechanics.get(SONG.song.toLowerCase());
+		loadedShotAnims=[];
+		loadedKillShots=[];
 
-		if(loadedShotAnims==null)loadedShotAnims=[];
-		if(loadedKillShots==null)loadedKillShots=[];
+		if(FileSystem.exists(Paths.chart("shots",songData.chartName.toLowerCase()))){
+			trace("SHOTS");
+			var shit = Song.loadFromJson("shots",songData.chartName.toLowerCase());
+
+			// LOADING SHOT ANIMATIONS IN!
+			for (section in shit.notes)
+			{
+				var coolSection:Int = Std.int(section.lengthInSteps / 4);
+				section.sectionNotes.sort((a,b)->Std.int(a[0]-b[0]));
+
+				for (note in section.sectionNotes)
+				{
+					//noteStrum, noteData, noteSus, Std.parseInt(placingType.selectedId)
+					var time = note[0];
+					var data = note[1];
+
+					if(data%2==0){
+						loadedShotAnims.push(Conductor.getStep(time));
+					}else if(data%2==1){
+
+						loadedKillShots.push(Conductor.getStep(time));
+					}
+				}
+			}
+		}
+
+		//if(loadedShotAnims==null)loadedShotAnims=[];
+		//if(loadedKillShots==null)loadedKillShots=[];
 		if(loadedShotMechanics==null)loadedShotMechanics=[];
 
 		loadedShotAnims.sort((a,b)->Std.int(a-b));
@@ -956,9 +994,23 @@ class PlayState extends MusicBeatState
 			}
 		}
 		for(note in removing){
+			if(note.isSustainNote){
+				noteCounter.set("holdTails",noteCounter.get("holdTails")-1);
+			}else{
+				noteCounter.set("taps",noteCounter.get("taps")-1);
+			}
+
 			unspawnNotes.remove(note);
 			destroyNote(note);
 		}
+
+		shownAccuracy = 100;
+		if(currentOptions.accuracySystem==1){ // ITG
+			totalNotes = ScoreUtils.GetMaxAccuracy(noteCounter);
+			accuracyName = 'Grade Points';
+			shownAccuracy = 0;
+		}
+
 
 		if(currentOptions.backTrans>0){
 			var overlay = new FlxSprite(0,0).makeGraphic(Std.int(FlxG.width*2),Std.int(FlxG.width*2),FlxColor.BLACK);
@@ -1409,12 +1461,6 @@ class PlayState extends MusicBeatState
 		var playerCounter:Int = 0;
 
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
-		/*for(idx in 0...4){ // TODO: 6K OR 7K MODE!!
-			if(idx==4)break;
-			noteLanes[idx]=[];
-			susNoteLanes[idx]=[];
-
-		}*/
 		scrollSpeed = 1;//(currentOptions.downScroll?-1:1);
 
 		var setupSplashes:Array<String>=[];
@@ -1496,9 +1542,9 @@ class PlayState extends MusicBeatState
 
 						if (sustainNote.mustPress)
 						{
-							if(sustainNote.noteType=='default'){
+							if(swagNote.causesMiss)
 								noteCounter.set("holdTails",noteCounter.get("holdTails")+1);
-							}else{
+							if(sustainNote.noteType=='default'){
 								if(!noteCounter.exists(sustainNote.noteType + "holdTail") )
 									noteCounter.set(sustainNote.noteType + "holdTail",0);
 
@@ -1514,9 +1560,10 @@ class PlayState extends MusicBeatState
 
 				if (swagNote.mustPress)
 				{
-					if(swagNote.noteType=='default'){
+					if(swagNote.causesMiss)
 						noteCounter.set("taps",noteCounter.get("taps")+1);
-					}else{
+
+					if(swagNote.noteType!='default'){
 						if(!noteCounter.exists(swagNote.noteType) )
 							noteCounter.set(swagNote.noteType,0);
 
@@ -1534,12 +1581,6 @@ class PlayState extends MusicBeatState
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);
-		shownAccuracy = 100;
-		if(currentOptions.accuracySystem==1){ // ITG
-			totalNotes = ScoreUtils.GetMaxAccuracy(noteCounter);
-			accuracyName = 'Grade Points';
-			shownAccuracy = 0;
-		}
 
 
 
@@ -1568,13 +1609,13 @@ class PlayState extends MusicBeatState
 	// https://github.com/Quaver/Quaver
 	// https://github.com/Quaver/Quaver
 	function mapVelocityChanges(){
-		if(SONG.sliderVelocities.length==0)
+		if(sliderVelocities.length==0)
 			return;
 
-		var pos:Float = SONG.sliderVelocities[0].startTime*(SONG.initialSpeed);
+		var pos:Float = sliderVelocities[0].startTime*(SONG.initialSpeed);
 		velocityMarkers.push(pos);
-		for(i in 1...SONG.sliderVelocities.length){
-			pos+=(SONG.sliderVelocities[i].startTime-SONG.sliderVelocities[i-1].startTime)*(SONG.initialSpeed*SONG.sliderVelocities[i-1].multiplier);
+		for(i in 1...sliderVelocities.length){
+			pos+=(sliderVelocities[i].startTime-sliderVelocities[i-1].startTime)*(SONG.initialSpeed*sliderVelocities[i-1].multiplier);
 			velocityMarkers.push(pos);
 		}
 	};
@@ -1674,7 +1715,8 @@ class PlayState extends MusicBeatState
 		if(judgeMan.judgementCounter.get("miss")>0){
 			fcType='';
 		}else{
-			if(judgeMan.judgementCounter.get("bad")+judgeMan.judgementCounter.get("shit")>=noteCounter.get("taps")/2)
+			trace(judgeMan.judgementCounter.get("bad")+judgeMan.judgementCounter.get("shit"),noteCounter.get("taps")/2);
+			if((judgeMan.judgementCounter.get("bad")+judgeMan.judgementCounter.get("shit"))>=noteCounter.get("taps")/2)
 				fcType = ' (WTFC)';
 			else if(judgeMan.judgementCounter.get("bad")>0 || judgeMan.judgementCounter.get("shit")>0)
 				fcType += '(FC)';
@@ -1797,8 +1839,8 @@ class PlayState extends MusicBeatState
 
 	function getPosFromTime(strumTime:Float):Float{
 		var idx:Int = 0;
-		while(idx<SONG.sliderVelocities.length){
-			if(strumTime<SONG.sliderVelocities[idx].startTime)
+		while(idx<sliderVelocities.length){
+			if(strumTime<sliderVelocities[idx].startTime)
 				break;
 			idx++;
 		}
@@ -1806,16 +1848,17 @@ class PlayState extends MusicBeatState
 	}
 
 	public static function getFNFSpeed(strumTime:Float):Float{
+		if(sliderVelocities==null)return currentPState.speed;
 		var idx:Int = 0;
-		while(idx<SONG.sliderVelocities.length){
-			if(strumTime<SONG.sliderVelocities[idx].startTime)
+		while(idx<sliderVelocities.length){
+			if(strumTime<sliderVelocities[idx].startTime)
 				break;
 			idx++;
 		}
 		idx--;
 		if(idx<=0)
 			return currentPState.speed;
-		return currentPState.speed*SONG.sliderVelocities[idx].multiplier;
+		return currentPState.speed*sliderVelocities[idx].multiplier;
 
 	}
 
@@ -1824,16 +1867,17 @@ class PlayState extends MusicBeatState
 	}
 
 	public static function getSVFromTime(strumTime:Float):Float{
+		if(sliderVelocities==null)return SONG.initialSpeed;
 		var idx:Int = 0;
-		while(idx<SONG.sliderVelocities.length){
-			if(strumTime<SONG.sliderVelocities[idx].startTime)
+		while(idx<sliderVelocities.length){
+			if(strumTime<sliderVelocities[idx].startTime)
 				break;
 			idx++;
 		}
 		idx--;
 		if(idx<=0)
 			return SONG.initialSpeed;
-		return SONG.initialSpeed*SONG.sliderVelocities[idx].multiplier;
+		return SONG.initialSpeed*sliderVelocities[idx].multiplier;
 	}
 
 	function getPosFromTimeSV(strumTime:Float,?svIdx:Int=0):Float{
@@ -1842,7 +1886,7 @@ class PlayState extends MusicBeatState
 
 		svIdx--;
 		var curPos = velocityMarkers[svIdx];
-		curPos += ((strumTime-SONG.sliderVelocities[svIdx].startTime)*(SONG.initialSpeed*SONG.sliderVelocities[svIdx].multiplier));
+		curPos += ((strumTime-sliderVelocities[svIdx].startTime)*(SONG.initialSpeed*sliderVelocities[svIdx].multiplier));
 		return curPos;
 	}
 
@@ -1994,6 +2038,18 @@ class PlayState extends MusicBeatState
 		#end
 
 		super.update(elapsed);
+
+		// TODO: modManager.queueFunction() maybe?
+		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
+			dad.playAnim("shoot",true);
+			loadedShotAnims.shift();
+		}
+		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
+			dad.playAnim("shoot",true);
+			health -= 1.99 * (1/killShotCount);
+			loadedKillShots.shift();
+		}
+
 		if (startingSong)
 		{
 			if (startedCountdown)
@@ -3340,16 +3396,6 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curStep){
-			dad.playAnim("shoot",true);
-			loadedShotAnims.shift();
-		}
-		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curStep){
-			dad.playAnim("shoot",true);
-			//boyfriend.playAnim("hit",true);
-			health -= 1.99 * (1/killShotCount);
-			loadedKillShots.shift();
-		}
 
 
 		if(luaModchartExists && lua!=null){
@@ -3400,6 +3446,8 @@ class PlayState extends MusicBeatState
 
 
 		}
+
+
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
 

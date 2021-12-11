@@ -117,11 +117,6 @@ class Note extends NoteGraphic
 	public function new(strumTime:Float, noteData:Int, skin:String='default', modifier:String='base', type:String='default', ?prevNote:Note, ?sustainNote:Bool = false, ?initialPos:Float=0, ?beingCharted=false)
 	{
 		var graphicType:String = type;
-		var behaviour = type=='default'?Note.noteBehaviour:Note.behaviours.get(type);
-		if(behaviour==null){
-			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,type));
-			Note.behaviours.set(type,behaviour);
-		}
 		this.noteType=type;
 		hitbox = Conductor.safeZoneOffset;
 		switch(noteType){
@@ -133,6 +128,11 @@ class Note extends NoteGraphic
 				opponentMisses=true;
 				canHold=false;
 				hitbox = Conductor.safeZoneOffset*0.38; // should probably not scale but idk man
+		}
+		var behaviour = graphicType=='default'?Note.noteBehaviour:Note.behaviours.get(graphicType);
+		if(behaviour==null){
+			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,graphicType));
+			Note.behaviours.set(graphicType,behaviour);
 		}
 		super(strumTime,modifier,skin,graphicType,behaviour);
 
@@ -160,7 +160,9 @@ class Note extends NoteGraphic
 		y -= 2000;
 		this.strumTime = strumTime;
 
-		speed = PlayState.getSVFromTime(strumTime) * (1/.45);
+		if(!beingCharted)
+			speed = PlayState.getSVFromTime(strumTime) * (1/.45);
+
 
 		this.noteData = noteData;
 
@@ -218,6 +220,7 @@ class Note extends NoteGraphic
 				//prevNote.noteGraphic.animation.play('${colors[noteData]}hold');
 				prevNote.setDir(noteData,true,false);
 				if(!beingCharted){
+					trace(speed);
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * speed;
 				}
 
