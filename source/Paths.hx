@@ -307,10 +307,18 @@ class Paths
 		return getPath('songs/$song/modchart.lua',TEXT,library);
 	}
 
-	inline static public function image(key:String, ?library:String)
+	inline static public function imageog(key:String, ?library:String)//appreantly some images break with gpufunctions so this is a backup
 	{
 		return getPath('images/$key.png', IMAGE, library);
 	}
+
+	inline static public function image(key:String, ?library:String):Dynamic
+		{
+			var imagePath:String = getPath('images/$key.png', IMAGE, library);
+	
+			var daBitmap = GPUFunctions.bitmapToGPU(imagePath);
+			return daBitmap;
+		}
 
 	inline static public function font(key:String)
 	{

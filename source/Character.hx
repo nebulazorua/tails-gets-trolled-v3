@@ -63,6 +63,7 @@ class Character extends FlxSprite
 	var idleAnims:Array<String> = ['danceLeft','danceRight','idle'];
 	public var beatDancer:Bool = false;
 	public var charPath:String='';
+	public var specialanims:Array<String>=[];
 
 	public var iconNames:Map<String,String> = [
 		"bf-car"=>"bf",
@@ -460,14 +461,9 @@ class Character extends FlxSprite
 				}
 
 			}else{
-				switch(curCharacter){
-					case 'shadow' | 'shadow-crazy':
-						if(animation.curAnim.name!='shoot')
-							playAnim("idle",forced);
-					default:
-						playAnim("idle",forced);
-				}
-
+				if ((specialanims.contains(animation.curAnim.name) && animation.curAnim.finished)
+					|| !specialanims.contains(animation.curAnim.name))
+					playAnim("idle",forced);
 			}
 		}
 	}

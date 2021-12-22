@@ -281,31 +281,40 @@ class Stage extends FlxTypedGroup<FlxBasic> {
       case 'hillzoneShadow':
         defaultCamZoom = 1;
         curStage = 'hillzoneShadow';
-        var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('sky','chapter3'));
+        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg','chapter3'));
         bg.antialiasing = true;
-        bg.scrollFactor.set(0.4, 0.4);
+        bg.scrollFactor.set(1.05, 1.05);
         bg.active = false;
+        bg.screenCenter();
+        bg.offset.set(-150,100);
         add(bg);
 
-        var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('grass','chapter3'));
-        stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-        stageFront.updateHitbox();
-        stageFront.antialiasing = true;
-        stageFront.scrollFactor.set(0.9, 0.9);
-        stageFront.active = false;
-        add(stageFront);
+        var thisthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg3','chapter3'));
+        thisthing.antialiasing = true;
+        thisthing.scrollFactor.set(1.025, 1.025);
+        thisthing.active = false;
+        thisthing.screenCenter();
+        thisthing.offset.set(-150,100);
+        add(thisthing);
 
-        var stageCurtains:FlxSprite = new FlxSprite(-450, -150).loadGraphic(Paths.image('foreground','chapter3'));
-        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.87));
-        stageCurtains.updateHitbox();
-        stageCurtains.antialiasing = true;
-        stageCurtains.scrollFactor.set(1.3, 1.3);
-        stageCurtains.active = false;
+        var thisotherthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg2','chapter3'));
+        thisotherthing.antialiasing = true;
+        thisotherthing.scrollFactor.set(1.025, 1.025);
+        thisotherthing.active = false;
+        thisotherthing.screenCenter();
+        thisotherthing.offset.set(-150,100);
+        add(thisotherthing);
+
+        var grass:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg4','chapter3'));
+        grass.antialiasing = true;
+        grass.active = false;
+        grass.screenCenter();
+        grass.offset.set(-150,100);
+        add(grass);
 
         centerX = bg.getMidpoint().x;
         centerY = bg.getMidpoint().y;
 
-        foreground.add(stageCurtains);
       case 'blank':
         centerX = 400;
         centerY = 130;

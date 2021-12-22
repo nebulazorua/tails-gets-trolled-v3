@@ -454,9 +454,9 @@ class PlayState extends MusicBeatState
 				i.Register(lua.state);
 
 
-			lua.errorHandler = function(error:String){
+			/*lua.errorHandler = function(error:String){
 				FlxG.log.advanced(error, EngineData.LUAERROR, true);
-			}
+			}*/
 
 			// this catches compile errors
 			try {
@@ -2453,12 +2453,16 @@ class PlayState extends MusicBeatState
 							if(opponent.animation.getByName(anim)==null){
 								anim = anim.replace(altAnim,"");
 							}
-
+							switch(dad.curCharacter){//cleaner code for this since we might have alot more animations in the later chapters
+								case 'shadow' | 'shadow-crazy':
+									opponent.specialanims.push('shoot');
+							}
 							if(luaModchartExists && lua!=null){
 								lua.call("dadNoteHit",[Math.abs(daNote.noteData),daNote.strumTime,Conductor.songPosition,anim]); // TODO: Note lua class???
 							}
 						if(opponent.animation.curAnim!=null){
-							if(opponent.animation.curAnim.name!='shoot'){
+							if ((opponent.specialanims.contains(opponent.animation.curAnim.name) && opponent.animation.curAnim.finished)
+								|| !opponent.specialanims.contains(opponent.animation.curAnim.name)){
 								var canHold = daNote.isSustainNote && opponent.animation.getByName(anim+"Hold")!=null;
 								if(canHold && !opponent.animation.curAnim.name.startsWith(anim)){
 									opponent.playAnim(anim,true);
