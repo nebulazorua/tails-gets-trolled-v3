@@ -3,6 +3,11 @@
 		0,
 		0
 	],
+	"camOffset": [
+		150,
+		50
+	],
+	"spritesheet": "sonic_forced",
 	"singDur": 6.1,
 	"scale": 0.7,
 	"anims": [
@@ -13,8 +18,8 @@
 			],
 			"fps": 24,
 			"prefix": "idle",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -23,8 +28,8 @@
 			],
 			"fps": 24,
 			"prefix": "up",
-			"looped": false,
-			"name": "singUP"
+			"name": "singUP",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -33,8 +38,8 @@
 			],
 			"fps": 24,
 			"prefix": "left",
-			"looped": false,
-			"name": "singLEFT"
+			"name": "singLEFT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -43,8 +48,8 @@
 			],
 			"fps": 24,
 			"prefix": "right",
-			"looped": false,
-			"name": "singRIGHT"
+			"name": "singRIGHT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -53,19 +58,14 @@
 			],
 			"fps": 24,
 			"prefix": "down",
-			"looped": false,
-			"name": "singDOWN"
+			"name": "singDOWN",
+			"looped": false
 		}
 	],
-	"spritesheet": "sonic_forced",
-	"camOffset": [
-		150,
-		50
-	],
 	"flipX": false,
+	"iconName": "sonic-forced",
 	"antialiasing": true,
-	"iconName": "sonic",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF577DFF"
+	"healthColor": "0xFF577DFF",
+	"format": "andromeda"
 }

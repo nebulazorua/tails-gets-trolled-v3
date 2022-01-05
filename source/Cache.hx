@@ -69,6 +69,7 @@ class Cache {
           l++;
         }
       }
+      GPUFunctions.disposeAllTextures();
       trace('destroyed ${l}');
     }
   }
