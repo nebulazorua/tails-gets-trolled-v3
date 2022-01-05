@@ -22,7 +22,8 @@ class EngineData {
   public static var mustUnlockWeeks:Bool=false; // TODO: make this work
   public static var freeplay:Array<SongData> = [
     new SongData("Tutorial",'gf',0,'tutorial'),
-    new SongData("Tsuraran Fox",'tails',0,'tsuraran-fox')
+    new SongData("Tsuraran Fox",'tails',1,'tsuraran-fox'),
+    new SongData("High Shovel",'shadow',0,'high-shovel'),
   ];
   public static var weekData:Array<WeekData> = [
     new WeekData("Tails Gets Trolled",
