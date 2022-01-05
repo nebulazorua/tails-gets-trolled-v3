@@ -36,7 +36,7 @@ class StoryIcon extends FlxSprite
 		this.cutscene=cutscene;
 		this.weekData=weekData;
 		antialiasing=true;
-		loadGraphic(Paths.imageog('newstorymenu/${image}'));
+		loadGraphic(Paths.image('newstorymenu/${image}'));
 		updateHitbox();
 	}
 }
