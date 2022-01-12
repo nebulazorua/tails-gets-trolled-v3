@@ -47,7 +47,7 @@ class Character extends FlxSprite
 {
 	public var theyHaveCancer:Bool = false;
 
-	public var cancer:FlxTween;
+	public var cancerTween:FlxTween;
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 	public var offsetNames:Array<String>=[];
