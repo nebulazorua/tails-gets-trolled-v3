@@ -745,9 +745,11 @@ class PlayState extends MusicBeatState
 			curStage='blank';
 
 		cancer = new FlxSprite(FlxG.width/2,FlxG.height/2);
-		cancer.makeGraphic(Std.int(FlxG.width*2),Std.int(FlxG.height*2),FlxColor.BLACK);
+		cancer.makeGraphic(Std.int(FlxG.width*4),Std.int(FlxG.height*4),FlxColor.BLACK);
+		cancer.screenCenter(XY);
+		cancer.scrollFactor.set(0,0);
+
 		cancer.alpha=0;
-		add(cancer);
 
 		stage = new Stage(curStage,currentOptions);
 		switch(curStage){
@@ -837,6 +839,7 @@ class PlayState extends MusicBeatState
 		if(SONG.player1=='bf-neb')
 			boyfriend.y -= 75;
 
+		add(cancer);
 		add(gf);
 		add(stage.layers.get("gf"));
 		add(dad);
@@ -1156,6 +1159,9 @@ class PlayState extends MusicBeatState
 				currAnim=sprite.animation.curAnim.name;
 			trace(currAnim);
 			remove(sprite);
+
+			var blammedLIGHT = sprite.color;
+			var isBLAMMEDLIGHTS = sprite.theyHaveCancer;
 			// TODO: Make this BETTER!!!
 			if(spriteName=="bf"){
 				boyfriend = new Boyfriend(spriteX,spriteY,newCharacter,boyfriend.hasSprite);
@@ -1178,6 +1184,8 @@ class PlayState extends MusicBeatState
 			}else{
 				newSprite = new Character(spriteX,spriteY,newCharacter);
 			}
+			newSprite.theyHaveCancer = isBLAMMEDLIGHTS;
+			newSprite.color = blammedLIGHT;
 			healthBar.setIcons(boyfriend.iconName,dad.iconName);
 			if(currentOptions.healthBarColors)
 				healthBar.setColors(dad.iconColor,boyfriend.iconColor);
@@ -3484,6 +3492,17 @@ class PlayState extends MusicBeatState
 		super.beatHit();
 
 		stage.beatHit(curBeat);
+
+		if(curBeat%4==0){
+			var shitheads:Array<Character> = [boyfriend,gf,dad];
+			var colorIdx = FlxG.random.int(0, cancerColors.length-1, [cancerColors.indexOf(shitheads[0].color)]);
+			for(char in shitheads){
+				if(char.theyHaveCancer){
+					char.color = cancerColors[colorIdx];
+				}
+			}
+		}
+
 
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
