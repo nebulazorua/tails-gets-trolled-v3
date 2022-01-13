@@ -1062,11 +1062,14 @@ class PlayState extends MusicBeatState
 			}
 		}
 		for(note in removing){
-			if(note.isSustainNote){
-				noteCounter.set("holdTails",noteCounter.get("holdTails")-1);
-			}else{
-				noteCounter.set("taps",noteCounter.get("taps")-1);
+			if(note.causesMiss && note.noteType=='default'){
+				if(note.isSustainNote){
+					noteCounter.set("holdTails",noteCounter.get("holdTails")-1);
+				}else{
+					noteCounter.set("taps",noteCounter.get("taps")-1);
+				}
 			}
+			trace(noteCounter.get("taps"));
 
 			unspawnNotes.remove(note);
 			destroyNote(note);

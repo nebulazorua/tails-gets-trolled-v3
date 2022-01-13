@@ -39,7 +39,7 @@ import sys.FileSystem;
 
 using StringTools;
 
-class Sidemenu extends MusicBeatState
+class SidemenuState extends MusicBeatState
 {
 	public static var unlocked:Array<Bool> = [true, true, false, false];
 	var boxes:FlxTypedGroup<Box>;
