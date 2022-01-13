@@ -20,7 +20,12 @@ class EngineData {
   public static var options:Options;
   public static var weeksUnlocked:Array<Bool>=[true,true,true,true,true,true];
   public static var mustUnlockWeeks:Bool=false; // TODO: make this work
-  public static var freeplay:Array<SongData> = [
+  public static var freeplaymain:Array<SongData> = [
+    new SongData("Talentless Fox",'tails',0,'talentless-fox'),
+    new SongData("No Villains",'sonic',1,'no-villains'),
+    new SongData("Die Batsards",'shadow',2,'die-batsards'),
+  ];
+  public static var freeplayremix:Array<SongData> = [
     new SongData("Tutorial",'gf',0,'tutorial'),
     new SongData("Tsuraran Fox",'tails',1,'tsuraran-fox'),
     new SongData("High Shovel",'shadow',0,'high-shovel'),

@@ -121,7 +121,7 @@ class Note extends NoteGraphic
 		hitbox = Conductor.safeZoneOffset;
 		switch(noteType){
 			case 'alt':
-				trace("alt note");
+				//trace("alt note");
 				graphicType='default'; // makes it look like a normal note
 			case 'mine':
 				causesMiss=false;
@@ -220,7 +220,7 @@ class Note extends NoteGraphic
 				//prevNote.noteGraphic.animation.play('${colors[noteData]}hold');
 				prevNote.setDir(noteData,true,false);
 				if(!beingCharted){
-					trace(speed);
+					//trace(speed);
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * speed;
 				}
 
