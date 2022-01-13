@@ -121,6 +121,7 @@ class Options
 	public var judgeX:Float = 0;
 	public var judgeY:Float = 0;
 	public var fcBasedComboColor:Bool = false;
+	public var ruinMod:Bool = false;
 
 	// performance
 	public var fps:Int = 120;

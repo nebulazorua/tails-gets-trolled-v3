@@ -107,6 +107,17 @@ class PlayState extends MusicBeatState
 	public var opponent:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
+
+	public var cancerColors:Array<FlxColor> = [
+		0xff31a2fd,
+		0xff31fd8c,
+		0xfff794f7,
+		0xfff96d63,
+		0xfffba633
+	];
+	public var cancer:FlxSprite;
+	public var cancerTween:FlxTween;
+
 	public static var judgeMan:JudgementManager;
 	public static var startPos:Float = 0;
 	public static var charterPos:Float = 0;
@@ -346,6 +357,54 @@ class PlayState extends MusicBeatState
 			lua.setGlobalVar("Y","Y");
 			lua.setGlobalVar("width",FlxG.width);
 			lua.setGlobalVar("height",FlxG.height);
+
+			Lua_helper.add_callback(lua.state,"ruin", function(god:Bool){ // fuck you psych engine for blammed lights
+				// ily shadowmario and psych is cool but please god hardcode blammed lights on blammed :(
+				if(god){
+					if(cancerTween!=null){
+						cancerTween.cancel();
+					}
+					cancerTween = FlxTween.tween(cancer, {alpha: 1}, 1, {ease: FlxEase.quadInOut,
+						onComplete: function(twn:FlxTween) {
+							cancerTween = null;
+						}
+					});
+
+					var shitheads:Array<Character> = [boyfriend,gf,dad];
+					for(char in shitheads){
+						if(char.cancerTween!=null)
+							char.cancerTween.cancel();
+
+						char.cancerTween = FlxTween.color(char, 1, FlxColor.WHITE, 0xff31a2fd, {onComplete: function(twn:FlxTween) {
+							char.cancerTween = null;
+							char.theyHaveCancer=true;
+						}, ease: FlxEase.quadInOut});
+					}
+				}else{
+					if(cancerTween!=null){
+						cancerTween.cancel();
+					}
+					cancerTween = FlxTween.tween(cancer, {alpha: 0}, 1, {ease: FlxEase.quadInOut,
+						onComplete: function(twn:FlxTween) {
+							cancerTween = null;
+						}
+					});
+
+					var shitheads:Array<Character> = [boyfriend,gf,dad];
+					for(char in shitheads){
+						if(char.cancerTween!=null)
+							char.cancerTween.cancel();
+
+						char.theyHaveCancer=false;
+
+						char.cancerTween = FlxTween.color(char, 1, char.color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
+							char.cancerTween = null;
+						}, ease: FlxEase.quadInOut});
+					}
+
+				}
+			});
+
 
 			Lua_helper.add_callback(lua.state,"log", function(string:String){
 				FlxG.log.add(string);
@@ -685,6 +744,11 @@ class PlayState extends MusicBeatState
 		if(currentOptions.noStage)
 			curStage='blank';
 
+		cancer = new FlxSprite(FlxG.width/2,FlxG.height/2);
+		cancer.makeGraphic(Std.int(FlxG.width*2),Std.int(FlxG.height*2),FlxColor.BLACK);
+		cancer.alpha=0;
+		add(cancer);
+
 		stage = new Stage(curStage,currentOptions);
 		switch(curStage){
 			case 'school' | 'schoolEvil':
@@ -864,11 +928,12 @@ class PlayState extends MusicBeatState
 					var time = note[0];
 					var data = note[1];
 
-					if(data%2==0){
+					if(data%4==0){
 						loadedShotAnims.push(Conductor.getStep(time));
-					}else if(data%2==1){
-
+					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
+					}else if(data%4==2){
+
 					}
 				}
 			}
@@ -2309,8 +2374,7 @@ class PlayState extends MusicBeatState
 					playerNotes.sort((a,b)->Std.int(a.strumTime-b.strumTime));
 				}
 
-				var index:Int = unspawnNotes.indexOf(dunceNote);
-				unspawnNotes.splice(index, 1);
+				unspawnNotes.shift();
 
 			}else{
 				break;
