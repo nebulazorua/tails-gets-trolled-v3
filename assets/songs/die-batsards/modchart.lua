@@ -52,14 +52,14 @@ function stepHit(step)
         tween(camshit,{zoom=defaultZoom},1.5,"inOutQuad")
     end
     for s = oStep, step do
-        --if(getOption"ruinMod")then
+        if(getOption"ruinMod")then
             if(s==448 or s==1215 or s==1728)then
                 ruin(true)
             end
             if(s==704 or s==1472 or s==1984)then
                 ruin(false)
             end
-        --end
+        end
     end
     oStep=step;
 end
