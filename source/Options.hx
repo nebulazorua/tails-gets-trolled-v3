@@ -42,18 +42,16 @@ class OptionUtils
 		var fields = Reflect.fields(options);
 		for(f in fields){
 			var shit = Reflect.field(options,f);
-			trace(f,shit);
 			Reflect.setField(saveFile.data,f,shit);
 		}
 		saveFile.flush();
 	};
 	public static function loadOptions(options:Options){
 		var fields = Reflect.fields(saveFile.data);
-		for(f in fields){
-			trace(f,Reflect.getProperty(options,f));
+		for(f in fields)
 			if(Reflect.getProperty(options,f)!=null)
 				Reflect.setField(options,f,Reflect.field(saveFile.data,f));
-		}
+		
 	}
 
 	public static function getKIdx(control:Control){
@@ -71,6 +69,8 @@ class OptionUtils
 				idx = 4;
 			case Control.PAUSE:
 				idx = 5;
+			case Control.DODGE:
+				idx = 6;
 			default:
 		}
 		return idx;
@@ -86,7 +86,7 @@ class Options
 	public var dummyInt:Int = 0;
 
 	// gameplay
-	public var controls:Array<FlxKey> = [FlxKey.A,FlxKey.S,FlxKey.K,FlxKey.L,FlxKey.R,FlxKey.ENTER];
+	public var controls:Array<FlxKey> = [FlxKey.A,FlxKey.S,FlxKey.K,FlxKey.L,FlxKey.R,FlxKey.ENTER,FlxKey.SPACE];
 	public var ghosttapping:Bool = false;
 	public var failForMissing:Bool = false;
 	public var accuracySystem:Int = 0;

@@ -93,21 +93,6 @@ class StoryMenuState extends MusicBeatState
 	}
 
 	function startShit(icon:StoryIcon){
-		/*PlayState.storyPlaylist = [weekData.song];
-		PlayState.isStoryMode = true;
-
-		PlayState.storyDifficulty = 2;
-
-		PlayState.storyWeek = 0;
-		PlayState.campaignScore = 0;
-
-		var video:MP4Handler = new MP4Handler();
-		if (!isCutscene) // Checks if the current week is Tutorial.
-		{
-			video.playMP4(Paths.video(weekData.cutscene), new PlayState());
-			isCutscene = true;
-		}
-		PlayState.SONG = Song.loadFromJson('${weekData.song}-hard', weekData.song);*/
 		PlayState.setStoryWeek(icon.weekData,1);
 		if(icon.cutscene!=''){
 			var video:MP4Handler = new MP4Handler();

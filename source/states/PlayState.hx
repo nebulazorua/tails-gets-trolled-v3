@@ -125,9 +125,11 @@ class PlayState extends MusicBeatState
 	private var shownAccuracy:Float = 0;
 
 	private var renderedNotes:FlxTypedGroup<Note>;
+	private var crosshairs:FlxTypedGroup<Crosshair>;
 	private var noteSplashes:FlxTypedGroup<NoteSplash>;
 	private var playerNotes:Array<Note> = [];
 	private var unspawnNotes:Array<Note> = [];
+	private var unspawnCrosshairs:Array<Crosshair> = [];
 
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
@@ -566,6 +568,7 @@ class PlayState extends MusicBeatState
 			OptionUtils.getKey(Control.DOWN),
 			OptionUtils.getKey(Control.UP),
 			OptionUtils.getKey(Control.RIGHT),
+			OptionUtils.getKey(Control.DODGE),
 		];
 
 		if (FlxG.sound.music != null)
@@ -927,16 +930,19 @@ class PlayState extends MusicBeatState
 
 				for (note in section.sectionNotes)
 				{
-					//noteStrum, noteData, noteSus, Std.parseInt(placingType.selectedId)
 					var time = note[0];
 					var data = note[1];
 
 					if(data%4==0){
+						var crosshair:Crosshair = new Crosshair(time);
+						crosshair.initialPos = getPosFromTime(time);
+						crosshair.x = FlxG.width/2 - Note.swagWidth*2 - 100;
+						crosshair.x += Note.swagWidth*4;
+						crosshair.x -= 8;
+						unspawnCrosshairs.push(crosshair);
 						loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
-					}else if(data%4==2){
-
 					}
 				}
 			}
@@ -1033,6 +1039,7 @@ class PlayState extends MusicBeatState
 
 		strumLineNotes.cameras = [camReceptor];
 		renderedNotes.cameras = [camNotes];
+		crosshairs.cameras = [camNotes];
 		//judgeBin.cameras = [camRating];
 		noteSplashes.cameras = [camReceptor];
 		healthBar.cameras = [camHUD];
@@ -1056,11 +1063,23 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 
 		var removing:Array<Note>=[];
+		var removingCross:Array<Crosshair> = [];
 		for(note in unspawnNotes){
 			if(note.strumTime<startPos){
 				removing.push(note);
 			}
 		}
+		for(cross in unspawnCrosshairs){
+			if(cross.strumTime<startPos){
+				removingCross.push(cross);
+			}
+		}
+
+		for(crosshair in removingCross){
+			unspawnCrosshairs.remove(crosshair);
+			destroyCrosshair(crosshair);
+		}
+
 		for(note in removing){
 			if(note.causesMiss && note.noteType=='default'){
 				if(note.isSustainNote){
@@ -1069,8 +1088,6 @@ class PlayState extends MusicBeatState
 					noteCounter.set("taps",noteCounter.get("taps")-1);
 				}
 			}
-			trace(noteCounter.get("taps"));
-
 			unspawnNotes.remove(note);
 			destroyNote(note);
 		}
@@ -1460,6 +1477,16 @@ class PlayState extends MusicBeatState
 
 	var debugNum:Int = 0;
 
+	private function destroyCrosshair(crosshair:Crosshair){
+		crosshair.active = false;
+		crosshair.visible = false;
+
+		crosshair.kill();
+
+		crosshairs.remove(crosshair,true);
+		crosshair.destroy();
+	}
+
 	private function destroyNote(daNote:Note){
 		daNote.active = false;
 		daNote.visible = false;
@@ -1528,6 +1555,9 @@ class PlayState extends MusicBeatState
 
 		renderedNotes = new FlxTypedGroup<Note>();
 		add(renderedNotes);
+
+		crosshairs = new FlxTypedGroup<Crosshair>();
+		add(crosshairs);
 
 		var noteData:Array<SwagSection>;
 
@@ -2025,6 +2055,27 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+
+	/*
+	public function getYPosition(note:Note, ?mult, ?followReceptor=true):Float{
+		var hitPos = playerStrums.members[note.noteData];
+		if(mult==null)mult=scrollSpeed;
+
+		if(!note.mustPress){
+			hitPos = dadStrums.members[note.noteData];
+		}
+
+		var desiredY = hitPos.desiredY;
+		if(followReceptor)desiredY+=hitPos.point.y;
+
+		return desiredY + ((note.initialPos-Conductor.currentTrackPos) * mult) - note.manualYOffset;
+	}
+	*/
+
+	public function getScrollPos(timeDiff:Float, ?speed:Float): Float{
+		return timeDiff * (0.45 * FlxMath.roundDecimal(speed==null?SONG.speed:speed, 2));
+	}
+
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2122,7 +2173,9 @@ class PlayState extends MusicBeatState
 		}
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
 			dad.playAnim("shoot",true);
-			health -= 1.99 * (1/killShotCount);
+			boyfriend.holdTimer = 0;
+			boyfriend.playAnim("hit",true);
+			health -= 1.8 * (1/killShotCount);
 			loadedKillShots.shift();
 		}
 
@@ -2392,6 +2445,21 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		while(unspawnCrosshairs[0] != null)
+		{
+			if (Conductor.songPosition-unspawnCrosshairs[0].strumTime>-3000)
+			{
+				var crosshair:Crosshair = unspawnCrosshairs[0];
+
+				crosshairs.add(crosshair);
+
+				unspawnCrosshairs.shift();
+
+			}else{
+				break;
+			}
+		}
+
 		var bfVar:Float=boyfriend.dadVar;
 
 		if(boyfriend.animation.curAnim!=null){
@@ -2407,6 +2475,38 @@ class PlayState extends MusicBeatState
 		if (generatedMusic)
 		{
 			if(startedCountdown){
+
+				crosshairs.forEachAlive(function(crosshair:Crosshair){
+					var revPerc:Float = modManager.get("reverse").getScrollReversePerc(1,0);
+					var scrollOffset = CoolUtil.scale(revPerc,0,1,50,FlxG.height - 150);
+					var scrollDirec = CoolUtil.scale(revPerc,0,1,1,-1);
+
+					var timeDiff:Float = Conductor.currentTrackPos-crosshair.initialPos;
+					crosshair.y = scrollOffset - (timeDiff * scrollDirec);
+
+					if (crosshair.y > FlxG.height)
+					{
+						crosshair.visible = false;
+					}
+					else
+					{
+						crosshair.visible = true;
+					}
+
+					if(crosshair!=null && crosshair.alive){
+						if (crosshair.tooLate)
+						{
+							if(!crosshair.wasHit){
+								health = -1; // perish, whore.
+								// set to -1 incase you gain hp right as you miss so you just die immediately
+							}
+							destroyCrosshair(crosshair);
+						}
+					}
+
+
+				});
+
 				if(currentOptions.allowOrderSorting)
 					renderedNotes.sort(sortByOrder);
 				renderedNotes.forEachAlive(function(daNote:Note)
@@ -3113,10 +3213,15 @@ class PlayState extends MusicBeatState
 		#end
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
+		trace(direction);
 		if(direction!=-1 && !pressedKeys[direction]){
 			pressedKeys[direction]=true;
-			handleInput(direction);
-			updateReceptors();
+			if(direction==4){
+				handleDodge();
+			}else{
+				handleInput(direction);
+				updateReceptors();
+			}
 		}
 
 	}
@@ -3124,10 +3229,28 @@ class PlayState extends MusicBeatState
 	private function keyRelease(event:KeyboardEvent){
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
-		if(direction!=-1 && pressedKeys[direction]){
-			pressedKeys[direction]=false;
-			updateReceptors();
+		if(pressedKeys[direction]){
+			// if this gets too long, swap this to a switch/case
+			if(direction!=-1 && pressedKeys[direction]){
+				pressedKeys[direction]=false;
+				if(direction==4){
+
+				}else{
+					updateReceptors();
+				}
+			}
 		}
+	}
+
+	private function handleDodge(){
+		var hitting:Array<Crosshair> = getHittableCrosshairs();
+		hitting.sort((a,b)->Std.int(a.strumTime-b.strumTime)); // SHOULD be in order?
+		// But just incase, we do this sort
+		trace(hitting.length);
+		if(hitting.length>0)
+			dodge(hitting[0]);
+
+
 	}
 
 	private function handleInput(direction:Int){
@@ -3139,10 +3262,7 @@ class PlayState extends MusicBeatState
 			// TODO: chord cohesion, maybe
 			if(hitting.length>0){
 				boyfriend.holdTimer=0;
-				for(hit in hitting){
-					noteHit(hit);
-					break;
-				}
+				noteHit(hitting[0]);
 			}else{
 				if(currentOptions.ghosttapSounds)
 					FlxG.sound.play(Paths.sound('Ghost_Hit'),currentOptions.hitsoundVol/100);
@@ -3157,6 +3277,12 @@ class PlayState extends MusicBeatState
 	private function botplay(){
 		var holdArray:Array<Bool> = [false,false,false,false];
 		var controlArray:Array<Bool> = [false,false,false,false];
+		for(cross in crosshairs){
+			if(cross.strumTime <= Conductor.songPosition+25){
+				dodge(cross);
+			}
+		}
+
 		for(note in playerNotes){
 			if(note.mustPress && note.canBeHit && note.strumTime<=Conductor.songPosition+5){
 				if(note.sustainLength>0 && botplayHoldMaxTimes[note.noteData]<note.sustainLength){
@@ -3190,6 +3316,16 @@ class PlayState extends MusicBeatState
 		}
 
 		updateReceptors();
+	}
+
+	function getHittableCrosshairs(){
+		var cross:Array<Crosshair>=[];
+		for(crosshair in crosshairs){
+			if(crosshair.canBeHit && crosshair.alive && !crosshair.wasHit && !crosshair.tooLate){
+				cross.push(crosshair);
+			}
+		}
+		return cross;
 	}
 
 	function getHittableNotes(direction:Int=-1,excludeHolds:Bool=false){
@@ -3274,6 +3410,26 @@ class PlayState extends MusicBeatState
 			noteMiss(3);
 	}
 
+	function dodge(crosshair:Crosshair):Void
+	{
+		if(!crosshair.wasHit){
+			crosshair.wasHit=true;
+			var diff = Math.abs(crosshair.strumTime - Conductor.songPosition);
+
+			var damage = CoolUtil.scale(diff,50,166,0,2);
+			if(damage<0)damage=0;
+			health -= damage;
+
+			boyfriend.holdTimer = 0;
+			if(damage==0){
+				boyfriend.playAnim("dodge",true);
+			}else{
+				boyfriend.playAnim("hit",true);
+			}
+
+			destroyCrosshair(crosshair);
+		}
+	}
 
 	function noteHit(note:Note):Void
 	{

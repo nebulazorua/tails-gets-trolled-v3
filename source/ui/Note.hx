@@ -274,7 +274,7 @@ class Note extends NoteGraphic
 
 
 
-			if (diff<-Conductor.safeZoneOffset && !wasGoodHit)
+			if (diff<-hitbox && !wasGoodHit)
 				tooLate = true;
 		}
 		else

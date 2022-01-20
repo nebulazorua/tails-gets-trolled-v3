@@ -42,6 +42,7 @@ class OptionsState extends MusicBeatState
 					new ControlOption(controls,Control.RIGHT),
 					new ControlOption(controls,Control.PAUSE),
 					new ControlOption(controls,Control.RESET),
+					new ControlOption(controls,Control.DODGE),
 				]),
 				new ToggleOption("resetKey","Reset key","Toggle pressing the bound key to instantly die"),
 				#if !FORCE_LUA_MODCHARTS new ToggleOption("loadModcharts","Load Lua modcharts","Toggles lua modcharts"), #end

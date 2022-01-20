@@ -1,0 +1,190 @@
+{
+	"charOffset": [
+		0,
+		0
+	],
+	"spritesheet": "BOYFRIEND3",
+	"singDur": 4,
+	"camOffset": [
+		0,
+		0
+	],
+	"anims": [
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"fps": 24,
+			"prefix": "BF idle dance",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"prefix": "BF NOTE UP0",
+			"offsets": [
+				-10,
+				39
+			],
+			"fps": 24,
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE LEFT0",
+			"offsets": [
+				-5,
+				-6
+			],
+			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE RIGHT0",
+			"offsets": [
+				-44,
+				-7
+			],
+			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE DOWN0",
+			"offsets": [
+				-20,
+				-41
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE UP MISS",
+			"offsets": [
+				-30,
+				36
+			],
+			"fps": 24,
+			"name": "singUPmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE RIGHT MISS",
+			"offsets": [
+				-35,
+				-1
+			],
+			"fps": 24,
+			"name": "singRIGHTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE LEFT MISS",
+			"offsets": [
+				-7,
+				-1
+			],
+			"fps": 24,
+			"name": "singLEFTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "BF NOTE DOWN MISS",
+			"offsets": [
+				-29,
+				-33
+			],
+			"fps": 24,
+			"name": "singDOWNmiss",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-3,
+				4
+			],
+			"fps": 24,
+			"prefix": "BF HEY",
+			"looped": false,
+			"name": "hey"
+		},
+		{
+			"offsets": [
+				20,
+				5
+			],
+			"fps": 24,
+			"prefix": "BF dies",
+			"looped": false,
+			"name": "firstDeath"
+		},
+		{
+			"offsets": [
+				20,
+				-1
+			],
+			"fps": 24,
+			"prefix": "BF Dead Loop",
+			"looped": true,
+			"name": "deathLoop"
+		},
+		{
+			"offsets": [
+				20,
+				63
+			],
+			"fps": 24,
+			"prefix": "BF Dead confirm",
+			"looped": false,
+			"name": "deathConfirm"
+		},
+		{
+			"offsets": [
+				-4,
+				0
+			],
+			"fps": 24,
+			"prefix": "BF idle shaking",
+			"looped": true,
+			"name": "scared"
+		},
+		{
+			"offsets": [
+				-3,
+				4
+			],
+			"fps": 24,
+			"prefix": "BF HEY",
+			"looped": false,
+			"name": "singUP-alt"
+		},
+		{
+			"prefix": "boyfriend dodge",
+			"offsets": [
+				7,
+				-20
+			],
+			"fps": 24,
+			"name": "dodge",
+			"looped": false
+		},
+		{
+			"prefix": "BF hit",
+			"offsets": [
+				-2,
+				4
+			],
+			"fps": 24,
+			"name": "hit",
+			"looped": false
+		}
+	],
+	"flipX": false,
+	"antialiasing": true,
+	"iconName": "bf",
+	"beatDancer": false,
+	"healthColor": "0xFF31B0D1",
+	"format": "andromeda"
+}
