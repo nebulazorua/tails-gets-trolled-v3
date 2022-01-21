@@ -938,7 +938,7 @@ class PlayState extends MusicBeatState
 						crosshair.initialPos = getPosFromTime(time);
 						crosshair.x = FlxG.width/2 - Note.swagWidth*2 - 100;
 						crosshair.x += Note.swagWidth*4;
-						crosshair.x -= 8;
+						crosshair.x -= 54;
 						unspawnCrosshairs.push(crosshair);
 						loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){

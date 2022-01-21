@@ -91,7 +91,7 @@ class SidemenuState extends MusicBeatState
 
 
 		#if desktop
-		DiscordClient.changePresence("In the Side Menus", null);
+		DiscordClient.changePresence("In the Side Story Menus", null);
 		#end
 
 		var isDebug:Bool = false;

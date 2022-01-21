@@ -29,9 +29,7 @@ class HealthIcon extends FlxSprite
 		}else if(FileSystem.exists("assets/characters/icons/face.png")){
 			FlxG.log.warn('${char} is not a valid icon name. Using fallback');
 			image = FlxG.bitmap.add(BitmapData.fromFile("assets/characters/icons/face.png"),false,path);
-
 		}else{
-
 			FlxG.log.error("Can't find fallback icon and " + char + " is not a valid icon name. Expect a crash lol");
 			trace("Can't find fallback icon and " + char + " is not a valid icon name. Expect a crash lol");
 			return;
@@ -63,9 +61,15 @@ class HealthIcon extends FlxSprite
 		if(animation.curAnim!=null)
 			animation.curAnim.curFrame = neutralIndex;
 
+		if(char!='bf' && char!='gf' && char!='dad' && char!='face')
+			scale.set(.8,.8);
+
 		width=150;
 		height=150;
 		updateHitbox();
+
+
+
 	}
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{

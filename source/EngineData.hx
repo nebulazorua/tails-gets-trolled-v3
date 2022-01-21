@@ -24,11 +24,11 @@ class EngineData {
     new SongData("Talentless Fox",'tails',0,'talentless-fox'),
     new SongData("No Villains",'sonic',1,'no-villains'),
     new SongData("Die Batsards",'shadow',2,'die-batsards'),
+    new SongData("High Shovel",'shadow',0,'high-shovel'),
   ];
   public static var freeplayremix:Array<SongData> = [
     new SongData("Tutorial",'gf',0,'tutorial'),
     new SongData("Tsuraran Fox",'tails',1,'tsuraran-fox'),
-    new SongData("High Shovel",'shadow',0,'high-shovel'),
   ];
   public static var weekData:Array<WeekData> = [
     new WeekData("Tails Gets Trolled",

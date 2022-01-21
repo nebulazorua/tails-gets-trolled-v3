@@ -139,7 +139,7 @@ class InitState extends FlxUIState {
     getCharacters();
 
     //characters
-    var nextState:FlxUIState = new TitleState();
+    var nextState:FlxUIState = new MainMenuState();
     if(currentOptions.shouldCache && canCache){
       nextState = new CachingState(nextState);
     }else{
