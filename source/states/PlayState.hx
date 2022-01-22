@@ -354,6 +354,8 @@ class PlayState extends MusicBeatState
 			lua.setGlobalVar("curDecStep",0);
 			lua.setGlobalVar("songPosition",Conductor.songPosition);
 			lua.setGlobalVar("bpm",Conductor.bpm);
+			lua.setGlobalVar("crochet",Conductor.crochet);
+			lua.setGlobalVar("stepCrochet",Conductor.stepCrochet);
 			lua.setGlobalVar("XY","XY");
 			lua.setGlobalVar("X","X");
 			lua.setGlobalVar("Y","Y");
@@ -1316,8 +1318,8 @@ class PlayState extends MusicBeatState
 
 		inCutscene = false;
 
-		generateStaticArrows(0);
-		generateStaticArrows(1);
+		generateStaticArrows(0, 1);
+		generateStaticArrows(1, 0);
 
 		modManager = new ModManager(this);
 		modManager.registerModifiers();
@@ -1338,6 +1340,8 @@ class PlayState extends MusicBeatState
 		Conductor.rawSongPos = startPos;
 		Conductor.rawSongPos -= Conductor.crochet * 5;
 		Conductor.songPosition=Conductor.rawSongPos;
+		updateCurStep();
+		updateBeat();
 
 		if(startPos>0)canScore=false;
 
@@ -1710,6 +1714,11 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.zIndex, Obj2.zIndex);
 	}
 
+	function sortByZ(wat:Int, Obj1:FNFSprite, Obj2:FNFSprite):Int
+	{
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.z, Obj2.z);
+	}
+
 	// ADAPTED FROM QUAVER!!!
 	// https://github.com/Quaver/Quaver
 	// https://github.com/Quaver/Quaver
@@ -1730,7 +1739,7 @@ class PlayState extends MusicBeatState
 	// https://github.com/Quaver/Quaver
 	// ADAPTED FROM QUAVER!!!
 
-	private function generateStaticArrows(player:Int):Void
+	private function generateStaticArrows(player:Int, pN:Int):Void
 	{
 		for (i in 0...4)
 		{
@@ -1738,6 +1747,7 @@ class PlayState extends MusicBeatState
 			var clrs = ["purple","blue","green","red"];
 
 			var babyArrow:Receptor = new Receptor(0, center.y, i, currentOptions.noteSkin, noteModifier, Note.noteBehaviour);
+			babyArrow.playerNum = pN;
 			if(player==1)
 				noteSplashes.add(babyArrow.noteSplash);
 
@@ -1797,6 +1807,7 @@ class PlayState extends MusicBeatState
 			if (!isStoryMode)
 			{
 				babyArrow.desiredY -= 10;
+				babyArrow.y = babyArrow.desiredY;
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow,{desiredY: babyArrow.desiredY + 10, alpha:1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
@@ -2712,6 +2723,10 @@ class PlayState extends MusicBeatState
 
 		});
 
+		if(currentOptions.allowOrderSorting)
+			strumLineNotes.sort(sortByZ);
+
+
 		if (!inCutscene){
 			if(ScoreUtils.botPlay)
 				botplay();
@@ -3206,6 +3221,7 @@ class PlayState extends MusicBeatState
 	}
 
 	private function keyPress(event:KeyboardEvent){
+		if(paused)return;
 		#if !NO_BOTPLAY
 		if(event.keyCode == FlxKey.F6){
 			ScoreUtils.botPlay = !ScoreUtils.botPlay;
@@ -3227,6 +3243,7 @@ class PlayState extends MusicBeatState
 	}
 
 	private function keyRelease(event:KeyboardEvent){
+		if(paused)return;
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
 		if(pressedKeys[direction]){
@@ -3671,6 +3688,8 @@ class PlayState extends MusicBeatState
 				FlxG.log.add('CHANGED BPM!');
 				if(luaModchartExists && lua!=null){
 					lua.setGlobalVar("bpm",Conductor.bpm);
+					lua.setGlobalVar("crochet",Conductor.crochet);
+					lua.setGlobalVar("stepCrochet",Conductor.stepCrochet);
 				}
 			}
 			// else

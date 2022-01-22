@@ -21,7 +21,7 @@ class Receptor extends FNFSprite {
   public static var dynamicColouring:Bool=false;  // if this is true, then it'll tint to the hit note's dominant colour when it hits a note
   // (DOESNT WORK RN!)
 
-
+  public var playerNum:Int=0;
   public var baseAngle:Float = 0;
   public var desiredAngle:Float = 0;
   public var noteScale:Float = .7;
@@ -115,7 +115,6 @@ class Receptor extends FNFSprite {
     animation.play(anim,force);
     updateHitbox();
     offset.set((frameWidth/2)-(54*(.7/noteScale) ),(frameHeight/2)-(56*(.7/noteScale)));
-
   }
 
   override function update(elapsed:Float){

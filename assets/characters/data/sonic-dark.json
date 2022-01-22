@@ -1,0 +1,71 @@
+{
+	"charOffset": [
+		-150,
+		0
+	],
+	"camOffset": [
+		150,
+		100
+	],
+	"spritesheet": "sonic_dark",
+	"singDur": 6.1,
+	"scale": 0.7,
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "idle",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				-2,
+				117
+			],
+			"fps": 24,
+			"prefix": "up",
+			"looped": false,
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				15,
+				-46
+			],
+			"fps": 24,
+			"prefix": "left",
+			"looped": false,
+			"name": "singLEFT"
+		},
+		{
+			"offsets": [
+				-25,
+				-32
+			],
+			"fps": 24,
+			"prefix": "right",
+			"looped": false,
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				12,
+				-53
+			],
+			"fps": 24,
+			"prefix": "down",
+			"looped": false,
+			"name": "singDOWN"
+		}
+	],
+	"flipX": false,
+	"iconName": "sonic-dark",
+	"antialiasing": true,
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFF3214A0"
+}

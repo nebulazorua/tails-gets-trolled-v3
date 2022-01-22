@@ -148,7 +148,6 @@ class FNFCamera extends FlxCamera {
     super.update(elapsed);
     flashSprite.x += offset.x;
     flashSprite.y += offset.y;
-
   }
 
   public function set_useRaymarcher(val:Bool){

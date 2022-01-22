@@ -25,6 +25,7 @@ class EngineData {
     new SongData("No Villains",'sonic',1,'no-villains'),
     new SongData("Die Batsards",'shadow',2,'die-batsards'),
     new SongData("High Shovel",'shadow',0,'high-shovel'),
+    new SongData("Taste For Blood",'sonic-dark',0,'taste-for-blood'),
   ];
   public static var freeplayremix:Array<SongData> = [
     new SongData("Tutorial",'gf',0,'tutorial'),
@@ -46,7 +47,7 @@ class EngineData {
     new WeekData("Shadow Showdown",
       3,
       "shadow",
-      ["Die Batsards"],
+      ["Die Batsards","High Shovel","Taste For Blood"],
       "dumbassLearnt"
     )
   ];
