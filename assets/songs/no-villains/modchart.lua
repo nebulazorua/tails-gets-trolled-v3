@@ -30,6 +30,7 @@ local charSteps = {
 }
 local zoomed=false;
 
+local oStep = curStep;
 function stepHit(step)
     local setChar='';
 	for i = 1, #charSteps do
@@ -55,6 +56,18 @@ function stepHit(step)
         zoomed=false;
         tween(camshit,{zoom=defaultZoom},1.5,"inOutQuad")
     end
+    
+    for s = oStep, step do
+        if(getOption"ruinMod")then
+            if(s==512 or s==1408)then
+                ruin(true)
+            end
+            if(s==768 or s==1920)then
+                ruin(false)
+            end
+        end
+    end
+    oStep=step;
 end
 
 function update(elapsed)

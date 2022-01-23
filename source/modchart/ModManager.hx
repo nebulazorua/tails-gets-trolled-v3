@@ -16,7 +16,6 @@ import ui.*;
 class ModManager {
   private var definedMods:Map<String,Modifier>=[];
 
-
   private var schedule:Map<String,Array<ModEvent>>=[];
   private var funcs:Array<FuncEvent>=[];
   private var mods:Array<Modifier> = [];
@@ -44,7 +43,7 @@ class ModManager {
 
     defineMod("reverse",new ReverseModifier(this)); // also cross, split, alternate, centered
     defineMod("stealth",new AlphaModifier(this));
-    defineMod("transform",new TransformModifier(this));
+    defineMod("transformX",new TransformModifier(this));
     defineMod("opponentSwap",new OpponentModifier(this));
     defineMod("scrollAngle",new AngleModifier(this));
     defineMod("mini",new ScaleModifier(this)); // also squish and stretch
@@ -52,6 +51,8 @@ class ModManager {
     defineMod("invert",new InvertModifier(this));
     defineMod("tornado",new TornadoModifier(this));
     defineMod("drunk",new DrunkModifier(this));
+    defineMod("confusion",new ConfusionModifier(this));
+    defineMod("beat",new BeatModifier(this));
     var gameCams:Array<FlxCamera> = [state.camGame];
     var hudCams:Array<FlxCamera> = [state.camHUD];
     if(state.currentOptions.ratingInHUD){
@@ -129,7 +130,7 @@ class ModManager {
   }
 
   public function defineBlankMod(modName:String){
-    defineMod(modName, new Modifier(this));
+    defineMod(modName, new Modifier(this), false);
   }
 
   public function get(modName:String):Dynamic{
@@ -232,56 +233,73 @@ class ModManager {
     }
   }
 
-  public function queueEase(step:Float, endStep:Float, modName:String, percent:Float, style:String, player:Int=-1){
-    if(state.curDecStep<step){
-      var easeFunc = Reflect.getProperty(FlxEase, style);
-      if(easeFunc==null)easeFunc=FlxEase.linear;
+  public function queueEase(step:Float, endStep:Float, modName:String, percent:Float, style:String, player:Int=-1, ?startVal:Float){
+    if(player==-1){
+      queueEase(step, endStep, modName, percent, style, 0);
+      queueEase(step, endStep, modName, percent, style, 1);
+    }else{
+      if(state.curDecStep<step){
+        var easeFunc = Reflect.getProperty(FlxEase, style);
+        if(easeFunc==null)easeFunc=FlxEase.linear;
 
-      schedule[modName].push(
-        new EaseEvent(
-          step,
-          endStep,
-          modName,
-          percent,
-          easeFunc,
-          player,
-          this
-        )
-      );
+        schedule[modName].push(
+          new EaseEvent(
+            step,
+            endStep,
+            modName,
+            percent,
+            easeFunc,
+            player,
+            this,
+            startVal
+          )
+        );
+      }
     }
   }
 
-  public function queueEaseL(step:Float, length:Float, modName:String, percent:Float, style:String, player:Int=-1){
-    if(state.curDecStep<step){
-      var easeFunc = Reflect.getProperty(FlxEase, style);
-      if(easeFunc==null)easeFunc=FlxEase.linear;
-      var stepSex = Conductor.stepToSeconds(step);
+  public function queueEaseL(step:Float, length:Float, modName:String, percent:Float, style:String, player:Int=-1, ?startVal:Float){
+    if(player==-1){
+      queueEaseL(step, length, modName, percent, style, 0);
+      queueEaseL(step, length, modName, percent, style, 1);
+    }else{
+      if(state.curDecStep<step){
+        var easeFunc = Reflect.getProperty(FlxEase, style);
+        if(easeFunc==null)easeFunc=FlxEase.linear;
+        var stepSex = Conductor.stepToSeconds(step);
 
-      schedule[modName].push(
-        new EaseEvent(
-          step,
-          Conductor.getStep(stepSex+(length*1000)),
-          modName,
-          percent,
-          easeFunc,
-          player,
-          this
-        )
-      );
+        schedule[modName].push(
+          new EaseEvent(
+            step,
+            Conductor.getStep(stepSex+(length*1000)),
+            modName,
+            percent,
+            easeFunc,
+            player,
+            this,
+            startVal
+          )
+        );
+      }
     }
   }
 
   public function queueSet(step:Float, modName:String, percent:Float, player:Int=-1){
-    if(state.curDecStep<step){
-      schedule[modName].push(
-        new SetEvent(
-          step,
-          modName,
-          percent,
-          player,
-          this
-        )
-      );
+    if(player==-1){
+      queueSet(step, modName, percent, 0);
+      queueSet(step, modName, percent, 1);
+    }else{
+      if(state.curDecStep<step){
+        schedule[modName].push(
+          new SetEvent(
+            step,
+            modName,
+            percent,
+            player,
+            this
+          )
+        );
+      }
     }
   }
 

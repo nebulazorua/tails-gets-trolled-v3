@@ -74,7 +74,6 @@ class Note extends NoteGraphic
 	public var beingCharted:Bool=false;
 	public var initialPos:Float = 0;
 	public var desiredZIndex:Float = 0;
-	public var zIndex:Float = 0;
 	public var hitbox:Float = 166;
 
 	public var beat:Float = 0;
@@ -121,7 +120,7 @@ class Note extends NoteGraphic
 		hitbox = Conductor.safeZoneOffset;
 		switch(noteType){
 			case 'alt':
-				trace("alt note");
+				//trace("alt note");
 				graphicType='default'; // makes it look like a normal note
 			case 'mine':
 				causesMiss=false;
@@ -220,7 +219,7 @@ class Note extends NoteGraphic
 				//prevNote.noteGraphic.animation.play('${colors[noteData]}hold');
 				prevNote.setDir(noteData,true,false);
 				if(!beingCharted){
-					trace(speed);
+					//trace(speed);
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * speed;
 				}
 
@@ -274,7 +273,7 @@ class Note extends NoteGraphic
 
 
 
-			if (diff<-Conductor.safeZoneOffset && !wasGoodHit)
+			if (diff<-hitbox && !wasGoodHit)
 				tooLate = true;
 		}
 		else

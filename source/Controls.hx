@@ -19,14 +19,17 @@ enum abstract Action(String) to String from String
 	var LEFT = "left";
 	var RIGHT = "right";
 	var DOWN = "down";
+	var DODGE = "dodge";
 	var UP_P = "up-press";
 	var LEFT_P = "left-press";
 	var RIGHT_P = "right-press";
 	var DOWN_P = "down-press";
+	var DODGE_P = "dodge-press";
 	var UP_R = "up-release";
 	var LEFT_R = "left-release";
 	var RIGHT_R = "right-release";
 	var DOWN_R = "down-release";
+	var DODGE_R = "dodge-release";
 	var ACCEPT = "accept";
 	var BACK = "back";
 	var PAUSE = "pause";
@@ -41,14 +44,17 @@ abstract Action(String) to String from String
 	var LEFT = "left";
 	var RIGHT = "right";
 	var DOWN = "down";
+	var DODGE = "dodge";
 	var UP_P = "up-press";
 	var LEFT_P = "left-press";
 	var RIGHT_P = "right-press";
 	var DOWN_P = "down-press";
+	var DODGE_P = "dodge-press";
 	var UP_R = "up-release";
 	var LEFT_R = "left-release";
 	var RIGHT_R = "right-release";
 	var DOWN_R = "down-release";
+	var DODGE_R = "dodge-release";
 	var ACCEPT = "accept";
 	var BACK = "back";
 	var PAUSE = "pause";
@@ -74,6 +80,7 @@ enum Control
 	LEFT;
 	RIGHT;
 	DOWN;
+	DODGE;
 	RESET;
 	ACCEPT;
 	BACK;
@@ -99,14 +106,17 @@ class Controls extends FlxActionSet
 	var _left = new FlxActionDigital(Action.LEFT);
 	var _right = new FlxActionDigital(Action.RIGHT);
 	var _down = new FlxActionDigital(Action.DOWN);
+	var _dodge = new FlxActionDigital(Action.DODGE);
 	var _upP = new FlxActionDigital(Action.UP_P);
 	var _leftP = new FlxActionDigital(Action.LEFT_P);
 	var _rightP = new FlxActionDigital(Action.RIGHT_P);
 	var _downP = new FlxActionDigital(Action.DOWN_P);
+	var _dodgeP = new FlxActionDigital(Action.DODGE_P);
 	var _upR = new FlxActionDigital(Action.UP_R);
 	var _leftR = new FlxActionDigital(Action.LEFT_R);
 	var _rightR = new FlxActionDigital(Action.RIGHT_R);
 	var _downR = new FlxActionDigital(Action.DOWN_R);
+	var _dodgeR = new FlxActionDigital(Action.DODGE_R);
 	var _accept = new FlxActionDigital(Action.ACCEPT);
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
@@ -142,6 +152,11 @@ class Controls extends FlxActionSet
 	inline function get_DOWN()
 		return _down.check();
 
+	public var DODGE(get, never):Bool;
+
+	inline function get_DODGE()
+		return _dodge.check();
+
 	public var UP_P(get, never):Bool;
 
 	inline function get_UP_P()
@@ -162,6 +177,11 @@ class Controls extends FlxActionSet
 	inline function get_DOWN_P()
 		return _downP.check();
 
+	public var DODGE_P(get, never):Bool;
+
+	inline function get_DODGE_P()
+		return _dodgeP.check();
+
 	public var UP_R(get, never):Bool;
 
 	inline function get_UP_R()
@@ -181,6 +201,11 @@ class Controls extends FlxActionSet
 
 	inline function get_DOWN_R()
 		return _downR.check();
+
+	public var DODGE_R(get, never):Bool;
+
+	inline function get_DODGE_R()
+		return _dodgeR.check();
 
 	public var ACCEPT(get, never):Bool;
 
@@ -216,14 +241,17 @@ class Controls extends FlxActionSet
 		add(_left);
 		add(_right);
 		add(_down);
+		add(_dodge);
 		add(_upP);
 		add(_leftP);
 		add(_rightP);
 		add(_downP);
+		add(_dodgeP);
 		add(_upR);
 		add(_leftR);
 		add(_rightR);
 		add(_downR);
+		add(_dodgeR);
 		add(_accept);
 		add(_back);
 		add(_pause);
@@ -244,14 +272,17 @@ class Controls extends FlxActionSet
 		add(_left);
 		add(_right);
 		add(_down);
+		add(_dodge);
 		add(_upP);
 		add(_leftP);
 		add(_rightP);
 		add(_downP);
+		add(_dodgeP);
 		add(_upR);
 		add(_leftR);
 		add(_rightR);
 		add(_downR);
+		add(_dodgeR);
 		add(_accept);
 		add(_back);
 		add(_pause);
@@ -306,6 +337,7 @@ class Controls extends FlxActionSet
 			case DOWN: _down;
 			case LEFT: _left;
 			case RIGHT: _right;
+			case DODGE: _dodge;
 			case ACCEPT: _accept;
 			case BACK: _back;
 			case PAUSE: _pause;
@@ -346,6 +378,10 @@ class Controls extends FlxActionSet
 				func(_down, PRESSED);
 				func(_downP, JUST_PRESSED);
 				func(_downR, JUST_RELEASED);
+			case DODGE:
+				func(_dodge, PRESSED);
+				func(_dodgeP, JUST_PRESSED);
+				func(_dodgeR, JUST_RELEASED);
 			case ACCEPT:
 				func(_accept, JUST_PRESSED);
 			case BACK:
@@ -500,6 +536,7 @@ class Controls extends FlxActionSet
 			case Solo:
 				inline bindKeys(Control.UP, [K, FlxKey.UP]);
 				inline bindKeys(Control.DOWN, [S, FlxKey.DOWN]);
+				inline bindKeys(Control.DODGE, [FlxKey.SPACE]);
 				inline bindKeys(Control.LEFT, [A, FlxKey.LEFT]);
 				inline bindKeys(Control.RIGHT, [L, FlxKey.RIGHT]);
 				inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
@@ -514,7 +551,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.DOWN, [FlxKey.DOWN]);
 				inline bindKeys(Control.LEFT, [FlxKey.LEFT]);
 				inline bindKeys(Control.RIGHT, [FlxKey.RIGHT]);
-				for (i in [Control.LEFT,Control.DOWN,Control.UP,Control.RIGHT,Control.PAUSE,Control.RESET]){
+				for (i in [Control.LEFT,Control.DOWN,Control.UP,Control.RIGHT,Control.PAUSE,Control.RESET,Control.DODGE]){
 					inline bindKeys(i,[OptionUtils.getKey(i)]);
 				}
 

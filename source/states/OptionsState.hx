@@ -40,6 +40,7 @@ class OptionsState extends MusicBeatState
 					new ControlOption(controls,Control.DOWN),
 					new ControlOption(controls,Control.UP),
 					new ControlOption(controls,Control.RIGHT),
+					new ControlOption(controls,Control.DODGE),
 					new ControlOption(controls,Control.PAUSE),
 					new ControlOption(controls,Control.RESET),
 				]),
@@ -83,9 +84,10 @@ class OptionsState extends MusicBeatState
 				new ToggleOption("fcBasedComboColor","FC Combo Colouring","Makes the combo's colour changes with type of FC you have"),
 				new NoteskinOption("noteSkin","NoteSkin","The noteskin to use"),
 				new OptionCategory("Effects",[
-					new ToggleOption("picoCamshake","Train camera shake","Whether the train in week 3's background shakes the camera"),
+					new ToggleOption("ruinMod","Ruin the mod","Ruins the mod.")
+				//	new ToggleOption("picoCamshake","Train camera shake","Whether the train in week 3's background shakes the camera"),
 					//new ToggleOption("senpaiShaders","Week 6 shaders","Is the CRT effect active in week 6"),
-					new ScrollOption("senpaiShaderStrength","Week 6 shaders","How strong the week 6 shaders are",0,2,["Off","CRT","All"])
+				//	new ScrollOption("senpaiShaderStrength","Week 6 shaders","How strong the week 6 shaders are",0,2,["Off","CRT","All"])
 				]),
 			]),
 			new OptionCategory("Preferences",[

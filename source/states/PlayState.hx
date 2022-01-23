@@ -107,6 +107,17 @@ class PlayState extends MusicBeatState
 	public var opponent:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
+
+	public var cancerColors:Array<FlxColor> = [
+		0xff31a2fd,
+		0xff31fd8c,
+		0xfff794f7,
+		0xfff96d63,
+		0xfffba633
+	];
+	public var cancer:FlxSprite;
+	public var cancerTween:FlxTween;
+
 	public static var judgeMan:JudgementManager;
 	public static var startPos:Float = 0;
 	public static var charterPos:Float = 0;
@@ -114,9 +125,11 @@ class PlayState extends MusicBeatState
 	private var shownAccuracy:Float = 0;
 
 	private var renderedNotes:FlxTypedGroup<Note>;
+	private var crosshairs:FlxTypedGroup<Crosshair>;
 	private var noteSplashes:FlxTypedGroup<NoteSplash>;
 	private var playerNotes:Array<Note> = [];
 	private var unspawnNotes:Array<Note> = [];
+	private var unspawnCrosshairs:Array<Crosshair> = [];
 
 	private var strumLine:FlxSprite;
 	private var curSection:Int = 0;
@@ -341,11 +354,61 @@ class PlayState extends MusicBeatState
 			lua.setGlobalVar("curDecStep",0);
 			lua.setGlobalVar("songPosition",Conductor.songPosition);
 			lua.setGlobalVar("bpm",Conductor.bpm);
+			lua.setGlobalVar("crochet",Conductor.crochet);
+			lua.setGlobalVar("stepCrochet",Conductor.stepCrochet);
 			lua.setGlobalVar("XY","XY");
 			lua.setGlobalVar("X","X");
 			lua.setGlobalVar("Y","Y");
 			lua.setGlobalVar("width",FlxG.width);
 			lua.setGlobalVar("height",FlxG.height);
+
+			Lua_helper.add_callback(lua.state,"ruin", function(god:Bool){ // fuck you psych engine for blammed lights
+				// ily shadowmario and psych is cool but please god hardcode blammed lights on blammed :(
+				if(god){
+					if(cancerTween!=null){
+						cancerTween.cancel();
+					}
+					cancerTween = FlxTween.tween(cancer, {alpha: 1}, 1, {ease: FlxEase.quadInOut,
+						onComplete: function(twn:FlxTween) {
+							cancerTween = null;
+						}
+					});
+
+					var shitheads:Array<Character> = [boyfriend,gf,dad];
+					for(char in shitheads){
+						if(char.cancerTween!=null)
+							char.cancerTween.cancel();
+
+						char.cancerTween = FlxTween.color(char, 1, FlxColor.WHITE, 0xff31a2fd, {onComplete: function(twn:FlxTween) {
+							char.cancerTween = null;
+							char.theyHaveCancer=true;
+						}, ease: FlxEase.quadInOut});
+					}
+				}else{
+					if(cancerTween!=null){
+						cancerTween.cancel();
+					}
+					cancerTween = FlxTween.tween(cancer, {alpha: 0}, 1, {ease: FlxEase.quadInOut,
+						onComplete: function(twn:FlxTween) {
+							cancerTween = null;
+						}
+					});
+
+					var shitheads:Array<Character> = [boyfriend,gf,dad];
+					for(char in shitheads){
+						if(char.cancerTween!=null)
+							char.cancerTween.cancel();
+
+						char.theyHaveCancer=false;
+
+						char.cancerTween = FlxTween.color(char, 1, char.color, FlxColor.WHITE, {onComplete: function(twn:FlxTween) {
+							char.cancerTween = null;
+						}, ease: FlxEase.quadInOut});
+					}
+
+				}
+			});
+
 
 			Lua_helper.add_callback(lua.state,"log", function(string:String){
 				FlxG.log.add(string);
@@ -507,6 +570,7 @@ class PlayState extends MusicBeatState
 			OptionUtils.getKey(Control.DOWN),
 			OptionUtils.getKey(Control.UP),
 			OptionUtils.getKey(Control.RIGHT),
+			OptionUtils.getKey(Control.DODGE),
 		];
 
 		if (FlxG.sound.music != null)
@@ -685,6 +749,13 @@ class PlayState extends MusicBeatState
 		if(currentOptions.noStage)
 			curStage='blank';
 
+		cancer = new FlxSprite(FlxG.width/2,FlxG.height/2);
+		cancer.makeGraphic(Std.int(FlxG.width*4),Std.int(FlxG.height*4),FlxColor.BLACK);
+		cancer.screenCenter(XY);
+		cancer.scrollFactor.set(0,0);
+
+		cancer.alpha=0;
+
 		stage = new Stage(curStage,currentOptions);
 		switch(curStage){
 			case 'school' | 'schoolEvil':
@@ -773,6 +844,7 @@ class PlayState extends MusicBeatState
 		if(SONG.player1=='bf-neb')
 			boyfriend.y -= 75;
 
+		add(cancer);
 		add(gf);
 		add(stage.layers.get("gf"));
 		add(dad);
@@ -860,14 +932,18 @@ class PlayState extends MusicBeatState
 
 				for (note in section.sectionNotes)
 				{
-					//noteStrum, noteData, noteSus, Std.parseInt(placingType.selectedId)
 					var time = note[0];
 					var data = note[1];
 
-					if(data%2==0){
+					if(data%4==0){
+						var crosshair:Crosshair = new Crosshair(time);
+						crosshair.initialPos = getPosFromTime(time);
+						crosshair.x = FlxG.width/2 - Note.swagWidth*2 - 100;
+						crosshair.x += Note.swagWidth*4;
+						crosshair.x -= 54;
+						unspawnCrosshairs.push(crosshair);
 						loadedShotAnims.push(Conductor.getStep(time));
-					}else if(data%2==1){
-
+					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
 					}
 				}
@@ -965,6 +1041,7 @@ class PlayState extends MusicBeatState
 
 		strumLineNotes.cameras = [camReceptor];
 		renderedNotes.cameras = [camNotes];
+		crosshairs.cameras = [camNotes];
 		//judgeBin.cameras = [camRating];
 		noteSplashes.cameras = [camReceptor];
 		healthBar.cameras = [camHUD];
@@ -988,18 +1065,31 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 
 		var removing:Array<Note>=[];
+		var removingCross:Array<Crosshair> = [];
 		for(note in unspawnNotes){
 			if(note.strumTime<startPos){
 				removing.push(note);
 			}
 		}
-		for(note in removing){
-			if(note.isSustainNote){
-				noteCounter.set("holdTails",noteCounter.get("holdTails")-1);
-			}else{
-				noteCounter.set("taps",noteCounter.get("taps")-1);
+		for(cross in unspawnCrosshairs){
+			if(cross.strumTime<startPos){
+				removingCross.push(cross);
 			}
+		}
 
+		for(crosshair in removingCross){
+			unspawnCrosshairs.remove(crosshair);
+			destroyCrosshair(crosshair);
+		}
+
+		for(note in removing){
+			if(note.causesMiss && note.noteType=='default'){
+				if(note.isSustainNote){
+					noteCounter.set("holdTails",noteCounter.get("holdTails")-1);
+				}else{
+					noteCounter.set("taps",noteCounter.get("taps")-1);
+				}
+			}
 			unspawnNotes.remove(note);
 			destroyNote(note);
 		}
@@ -1091,6 +1181,9 @@ class PlayState extends MusicBeatState
 				currAnim=sprite.animation.curAnim.name;
 			trace(currAnim);
 			remove(sprite);
+
+			var blammedLIGHT = sprite.color;
+			var isBLAMMEDLIGHTS = sprite.theyHaveCancer;
 			// TODO: Make this BETTER!!!
 			if(spriteName=="bf"){
 				boyfriend = new Boyfriend(spriteX,spriteY,newCharacter,boyfriend.hasSprite);
@@ -1113,6 +1206,8 @@ class PlayState extends MusicBeatState
 			}else{
 				newSprite = new Character(spriteX,spriteY,newCharacter);
 			}
+			newSprite.theyHaveCancer = isBLAMMEDLIGHTS;
+			newSprite.color = blammedLIGHT;
 			healthBar.setIcons(boyfriend.iconName,dad.iconName);
 			if(currentOptions.healthBarColors)
 				healthBar.setColors(dad.iconColor,boyfriend.iconColor);
@@ -1223,8 +1318,8 @@ class PlayState extends MusicBeatState
 
 		inCutscene = false;
 
-		generateStaticArrows(0);
-		generateStaticArrows(1);
+		generateStaticArrows(0, 1);
+		generateStaticArrows(1, 0);
 
 		modManager = new ModManager(this);
 		modManager.registerModifiers();
@@ -1245,6 +1340,8 @@ class PlayState extends MusicBeatState
 		Conductor.rawSongPos = startPos;
 		Conductor.rawSongPos -= Conductor.crochet * 5;
 		Conductor.songPosition=Conductor.rawSongPos;
+		updateCurStep();
+		updateBeat();
 
 		if(startPos>0)canScore=false;
 
@@ -1384,6 +1481,16 @@ class PlayState extends MusicBeatState
 
 	var debugNum:Int = 0;
 
+	private function destroyCrosshair(crosshair:Crosshair){
+		crosshair.active = false;
+		crosshair.visible = false;
+
+		crosshair.kill();
+
+		crosshairs.remove(crosshair,true);
+		crosshair.destroy();
+	}
+
 	private function destroyNote(daNote:Note){
 		daNote.active = false;
 		daNote.visible = false;
@@ -1452,6 +1559,9 @@ class PlayState extends MusicBeatState
 
 		renderedNotes = new FlxTypedGroup<Note>();
 		add(renderedNotes);
+
+		crosshairs = new FlxTypedGroup<Crosshair>();
+		add(crosshairs);
 
 		var noteData:Array<SwagSection>;
 
@@ -1604,6 +1714,11 @@ class PlayState extends MusicBeatState
 		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.zIndex, Obj2.zIndex);
 	}
 
+	function sortByZ(wat:Int, Obj1:FNFSprite, Obj2:FNFSprite):Int
+	{
+		return FlxSort.byValues(FlxSort.ASCENDING, Obj1.z, Obj2.z);
+	}
+
 	// ADAPTED FROM QUAVER!!!
 	// https://github.com/Quaver/Quaver
 	// https://github.com/Quaver/Quaver
@@ -1624,7 +1739,7 @@ class PlayState extends MusicBeatState
 	// https://github.com/Quaver/Quaver
 	// ADAPTED FROM QUAVER!!!
 
-	private function generateStaticArrows(player:Int):Void
+	private function generateStaticArrows(player:Int, pN:Int):Void
 	{
 		for (i in 0...4)
 		{
@@ -1632,6 +1747,7 @@ class PlayState extends MusicBeatState
 			var clrs = ["purple","blue","green","red"];
 
 			var babyArrow:Receptor = new Receptor(0, center.y, i, currentOptions.noteSkin, noteModifier, Note.noteBehaviour);
+			babyArrow.playerNum = pN;
 			if(player==1)
 				noteSplashes.add(babyArrow.noteSplash);
 
@@ -1691,6 +1807,7 @@ class PlayState extends MusicBeatState
 			if (!isStoryMode)
 			{
 				babyArrow.desiredY -= 10;
+				babyArrow.y = babyArrow.desiredY;
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow,{desiredY: babyArrow.desiredY + 10, alpha:1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
@@ -1949,6 +2066,27 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
+
+	/*
+	public function getYPosition(note:Note, ?mult, ?followReceptor=true):Float{
+		var hitPos = playerStrums.members[note.noteData];
+		if(mult==null)mult=scrollSpeed;
+
+		if(!note.mustPress){
+			hitPos = dadStrums.members[note.noteData];
+		}
+
+		var desiredY = hitPos.desiredY;
+		if(followReceptor)desiredY+=hitPos.point.y;
+
+		return desiredY + ((note.initialPos-Conductor.currentTrackPos) * mult) - note.manualYOffset;
+	}
+	*/
+
+	public function getScrollPos(timeDiff:Float, ?speed:Float): Float{
+		return timeDiff * (0.45 * FlxMath.roundDecimal(speed==null?SONG.speed:speed, 2));
+	}
+
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -2046,7 +2184,9 @@ class PlayState extends MusicBeatState
 		}
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
 			dad.playAnim("shoot",true);
-			health -= 1.99 * (1/killShotCount);
+			boyfriend.holdTimer = 0;
+			boyfriend.playAnim("hit",true);
+			health -= 1.8 * (1/killShotCount);
 			loadedKillShots.shift();
 		}
 
@@ -2309,8 +2449,22 @@ class PlayState extends MusicBeatState
 					playerNotes.sort((a,b)->Std.int(a.strumTime-b.strumTime));
 				}
 
-				var index:Int = unspawnNotes.indexOf(dunceNote);
-				unspawnNotes.splice(index, 1);
+				unspawnNotes.shift();
+
+			}else{
+				break;
+			}
+		}
+
+		while(unspawnCrosshairs[0] != null)
+		{
+			if (Conductor.songPosition-unspawnCrosshairs[0].strumTime>-3000)
+			{
+				var crosshair:Crosshair = unspawnCrosshairs[0];
+
+				crosshairs.add(crosshair);
+
+				unspawnCrosshairs.shift();
 
 			}else{
 				break;
@@ -2332,6 +2486,38 @@ class PlayState extends MusicBeatState
 		if (generatedMusic)
 		{
 			if(startedCountdown){
+
+				crosshairs.forEachAlive(function(crosshair:Crosshair){
+					var revPerc:Float = modManager.get("reverse").getScrollReversePerc(1,0);
+					var scrollOffset = CoolUtil.scale(revPerc,0,1,50,FlxG.height - 150);
+					var scrollDirec = CoolUtil.scale(revPerc,0,1,1,-1);
+
+					var timeDiff:Float = Conductor.currentTrackPos-crosshair.initialPos;
+					crosshair.y = scrollOffset - (timeDiff * scrollDirec);
+
+					if (crosshair.y > FlxG.height)
+					{
+						crosshair.visible = false;
+					}
+					else
+					{
+						crosshair.visible = true;
+					}
+
+					if(crosshair!=null && crosshair.alive){
+						if (crosshair.tooLate)
+						{
+							if(!crosshair.wasHit){
+								health = -1; // perish, whore.
+								// set to -1 incase you gain hp right as you miss so you just die immediately
+							}
+							destroyCrosshair(crosshair);
+						}
+					}
+
+
+				});
+
 				if(currentOptions.allowOrderSorting)
 					renderedNotes.sort(sortByOrder);
 				renderedNotes.forEachAlive(function(daNote:Note)
@@ -2536,6 +2722,10 @@ class PlayState extends MusicBeatState
 			}
 
 		});
+
+		if(currentOptions.allowOrderSorting)
+			strumLineNotes.sort(sortByZ);
+
 
 		if (!inCutscene){
 			if(ScoreUtils.botPlay)
@@ -3031,6 +3221,7 @@ class PlayState extends MusicBeatState
 	}
 
 	private function keyPress(event:KeyboardEvent){
+		if(paused)return;
 		#if !NO_BOTPLAY
 		if(event.keyCode == FlxKey.F6){
 			ScoreUtils.botPlay = !ScoreUtils.botPlay;
@@ -3038,21 +3229,45 @@ class PlayState extends MusicBeatState
 		#end
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
+		trace(direction);
 		if(direction!=-1 && !pressedKeys[direction]){
 			pressedKeys[direction]=true;
-			handleInput(direction);
-			updateReceptors();
+			if(direction==4){
+				handleDodge();
+			}else{
+				handleInput(direction);
+				updateReceptors();
+			}
 		}
 
 	}
 
 	private function keyRelease(event:KeyboardEvent){
+		if(paused)return;
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
-		if(direction!=-1 && pressedKeys[direction]){
-			pressedKeys[direction]=false;
-			updateReceptors();
+		if(pressedKeys[direction]){
+			// if this gets too long, swap this to a switch/case
+			if(direction!=-1 && pressedKeys[direction]){
+				pressedKeys[direction]=false;
+				if(direction==4){
+
+				}else{
+					updateReceptors();
+				}
+			}
 		}
+	}
+
+	private function handleDodge(){
+		var hitting:Array<Crosshair> = getHittableCrosshairs();
+		hitting.sort((a,b)->Std.int(a.strumTime-b.strumTime)); // SHOULD be in order?
+		// But just incase, we do this sort
+		trace(hitting.length);
+		if(hitting.length>0)
+			dodge(hitting[0]);
+
+
 	}
 
 	private function handleInput(direction:Int){
@@ -3064,10 +3279,7 @@ class PlayState extends MusicBeatState
 			// TODO: chord cohesion, maybe
 			if(hitting.length>0){
 				boyfriend.holdTimer=0;
-				for(hit in hitting){
-					noteHit(hit);
-					break;
-				}
+				noteHit(hitting[0]);
 			}else{
 				if(currentOptions.ghosttapSounds)
 					FlxG.sound.play(Paths.sound('Ghost_Hit'),currentOptions.hitsoundVol/100);
@@ -3082,6 +3294,12 @@ class PlayState extends MusicBeatState
 	private function botplay(){
 		var holdArray:Array<Bool> = [false,false,false,false];
 		var controlArray:Array<Bool> = [false,false,false,false];
+		for(cross in crosshairs){
+			if(cross.strumTime <= Conductor.songPosition+25){
+				dodge(cross);
+			}
+		}
+
 		for(note in playerNotes){
 			if(note.mustPress && note.canBeHit && note.strumTime<=Conductor.songPosition+5){
 				if(note.sustainLength>0 && botplayHoldMaxTimes[note.noteData]<note.sustainLength){
@@ -3115,6 +3333,16 @@ class PlayState extends MusicBeatState
 		}
 
 		updateReceptors();
+	}
+
+	function getHittableCrosshairs(){
+		var cross:Array<Crosshair>=[];
+		for(crosshair in crosshairs){
+			if(crosshair.canBeHit && crosshair.alive && !crosshair.wasHit && !crosshair.tooLate){
+				cross.push(crosshair);
+			}
+		}
+		return cross;
 	}
 
 	function getHittableNotes(direction:Int=-1,excludeHolds:Bool=false){
@@ -3199,6 +3427,26 @@ class PlayState extends MusicBeatState
 			noteMiss(3);
 	}
 
+	function dodge(crosshair:Crosshair):Void
+	{
+		if(!crosshair.wasHit){
+			crosshair.wasHit=true;
+			var diff = Math.abs(crosshair.strumTime - Conductor.songPosition);
+
+			var damage = CoolUtil.scale(diff,50,166,0,2);
+			if(damage<0)damage=0;
+			health -= damage;
+
+			boyfriend.holdTimer = 0;
+			if(damage==0){
+				boyfriend.playAnim("dodge",true);
+			}else{
+				boyfriend.playAnim("hit",true);
+			}
+
+			destroyCrosshair(crosshair);
+		}
+	}
 
 	function noteHit(note:Note):Void
 	{
@@ -3421,6 +3669,17 @@ class PlayState extends MusicBeatState
 
 		stage.beatHit(curBeat);
 
+		if(curBeat%4==0){
+			var shitheads:Array<Character> = [boyfriend,gf,dad];
+			var colorIdx = FlxG.random.int(0, cancerColors.length-1, [cancerColors.indexOf(shitheads[0].color)]);
+			for(char in shitheads){
+				if(char.theyHaveCancer){
+					char.color = cancerColors[colorIdx];
+				}
+			}
+		}
+
+
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
@@ -3429,6 +3688,8 @@ class PlayState extends MusicBeatState
 				FlxG.log.add('CHANGED BPM!');
 				if(luaModchartExists && lua!=null){
 					lua.setGlobalVar("bpm",Conductor.bpm);
+					lua.setGlobalVar("crochet",Conductor.crochet);
+					lua.setGlobalVar("stepCrochet",Conductor.stepCrochet);
 				}
 			}
 			// else

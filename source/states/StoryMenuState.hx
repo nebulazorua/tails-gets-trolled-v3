@@ -23,6 +23,7 @@ import flixel.tweens.FlxEase;
 import flixel.input.mouse.FlxMouseEventManager;
 import Options;
 import flixel.effects.FlxFlicker;
+import flash.system.System;
 
 using StringTools;
 
@@ -36,7 +37,7 @@ class StoryIcon extends FlxSprite
 		this.cutscene=cutscene;
 		this.weekData=weekData;
 		antialiasing=true;
-		loadGraphic(Paths.imageog('newstorymenu/${image}'));
+		loadGraphic(Paths.image('newstorymenu/${image}'));
 		updateHitbox();
 	}
 }
@@ -62,6 +63,8 @@ class StoryMenuState extends MusicBeatState
 	var tweens:Map<FlxObject,FlxTween> = [];
 	var clickedObject:Dynamic;
 
+	var pissOff:Int = 0;
+	var clickTimer:Float = 0;
 	/*var unlockedSpaces:Array<SpaceData> = [
 		{cutscene: "tailsGetsTrolled", song: "talentless-fox", image: "ch_1" },
 		{cutscene: "sonicGetsTrolled", song: "no-villains", image: "ch_2" }
@@ -93,21 +96,6 @@ class StoryMenuState extends MusicBeatState
 	}
 
 	function startShit(icon:StoryIcon){
-		/*PlayState.storyPlaylist = [weekData.song];
-		PlayState.isStoryMode = true;
-
-		PlayState.storyDifficulty = 2;
-
-		PlayState.storyWeek = 0;
-		PlayState.campaignScore = 0;
-
-		var video:MP4Handler = new MP4Handler();
-		if (!isCutscene) // Checks if the current week is Tutorial.
-		{
-			video.playMP4(Paths.video(weekData.cutscene), new PlayState());
-			isCutscene = true;
-		}
-		PlayState.SONG = Song.loadFromJson('${weekData.song}-hard', weekData.song);*/
 		PlayState.setStoryWeek(icon.weekData,1);
 		if(icon.cutscene!=''){
 			var video:MP4Handler = new MP4Handler();
@@ -144,6 +132,17 @@ class StoryMenuState extends MusicBeatState
 				var object:FlxSprite = cast object;
 				object.scale.x = 1.1;
 				object.scale.y = .9;
+				clickTimer = 0;
+				pissOff++;
+				if(pissOff==10){
+					FlxG.sound.play(Paths.sound("notfinished"),2);
+					FlxG.camera.shake(0.005,0.25,null,true,X);
+				}else if(pissOff==20){
+					FlxG.sound.play(Paths.sound("ANGRY_TEXT_BOX"),2);
+					new FlxTimer().start(.5, function(tmr:FlxTimer){
+						System.exit(0);
+					});
+				}
 				tweens[object] = FlxTween.tween(object, {"scale.x": 1,"scale.y": 1}, 1.85, {
 					ease: FlxEase.elasticOut
 				});
@@ -224,7 +223,10 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-
+		clickTimer += elapsed;
+		if(clickTimer>=1){
+			pissOff=0;
+		}
 		if (controls.BACK && !movedBack && !selectedWeek)
 		{
 			FlxG.sound.play(Paths.sound('cancelMenu'));

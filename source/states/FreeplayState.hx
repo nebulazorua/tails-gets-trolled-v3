@@ -60,6 +60,7 @@ class FreeplayState extends MusicBeatState
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
+	public static var  ismain:Bool;
 
 	function onMouseDown(object:FlxObject){
 		for(idx in 0...grpSongs.members.length){
@@ -152,9 +153,16 @@ class FreeplayState extends MusicBeatState
 		for(week in EngineData.weekData){
 			addWeekData(week);
 		}*/
-		for(song in EngineData.freeplay){
-			addSongData(song);
-		}
+		if (ismain){
+				for(song in EngineData.freeplaymain){
+					addSongData(song);
+				}
+			}
+			else{
+				for(song in EngineData.freeplayremix){
+					addSongData(song);
+				}
+			}
 
 		/*
 		var otherSongs = Paths.getDirs("songs","assets");
@@ -373,7 +381,7 @@ class FreeplayState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new SidemenuState());
 		}
 
 		if (accepted)

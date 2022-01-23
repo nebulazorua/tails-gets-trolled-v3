@@ -10,6 +10,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxDestroyUtil;
 import flixel.math.FlxPoint;
 import sys.FileSystem;
+import flixel.tweens.FlxTween;
+
 import haxe.Json;
 import parsers.*;
 
@@ -43,6 +45,9 @@ typedef CharJson = {
 
 class Character extends FlxSprite
 {
+	public var theyHaveCancer:Bool = false;
+
+	public var cancerTween:FlxTween;
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 	public var offsetNames:Array<String>=[];
