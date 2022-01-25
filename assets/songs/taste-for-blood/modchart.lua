@@ -70,7 +70,7 @@ function queueEaseLB(start,len,...)
 end
 
 
-modMgr:set('suddenOffset',35)
+modMgr:set('suddenOffset',55)
 modMgr:set('hiddenOffset',-25)
 
 local stepCrochet = stepCrochet or ((60 / bpm)*1000) / 4
