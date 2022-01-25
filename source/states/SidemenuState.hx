@@ -41,7 +41,7 @@ using StringTools;
 
 class SidemenuState extends MusicBeatState
 {
-	public static var unlocked:Array<Bool> = [true, true, true, false];
+	public static var unlocked:Array<Bool> = [true, true, false, true];
 	var boxes:FlxTypedGroup<Box>;
 	var backdrops:FlxBackdrop;
 	var curSelected:Int = 0;
@@ -156,7 +156,7 @@ class SidemenuState extends MusicBeatState
 				FreeplayState.freeplayList = EngineData.freeplaymain;
 			case '1':
 				FreeplayState.freeplayList = EngineData.freeplayremix;
-			case '2':
+			case '3':
 				FreeplayState.freeplayList = EngineData.freeplayfanwork;
 		}
 		FlxG.switchState(new FreeplayState());
