@@ -37,11 +37,11 @@ class Healthbar extends FlxSpriteGroup {
 
 
     iconP1 = new HealthIcon(player1, true);
-    iconP1.y = bar.y - (iconP1.height / 2);
+    iconP1.y = bar.y - (iconP1.daSize / 2);
 
 
     iconP2 = new HealthIcon(player2, false);
-    iconP2.y = bar.y - (iconP2.height / 2);
+    iconP2.y = bar.y - (iconP2.daSize / 2);
     add(bg);
     add(bar);
     add(iconP1);

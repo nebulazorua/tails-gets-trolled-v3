@@ -290,6 +290,11 @@ class Character extends FlxSprite
 				leftToRight();
 			}
 		}
+
+		switch(curCharacter){
+			case 'shadow' | 'shadow-crazy':
+				specialanims.push("shoot");
+		}
 	}
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false, ?hasTexture:Bool=true)
@@ -425,16 +430,19 @@ class Character extends FlxSprite
 				}
 			}
 
-			switch (curCharacter)
-			{
-				case 'gf':
-					if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-						playAnim('danceRight');
-				case 'shadow' | 'shadow-crazy':
-					if (animation.curAnim.name == 'shoot' && animation.curAnim.finished)
-						playAnim('idle');
+			if(!debugMode){
+				switch (curCharacter)
+				{
+					case 'gf':
+						if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
+							playAnim('danceRight');
+					case 'shadow' | 'shadow-crazy':
+						if (animation.curAnim.name == 'shoot' && animation.curAnim.finished)
+							playAnim('idle');
+				}
 			}
 		}
+
 
 		super.update(elapsed);
 		if(animation.curAnim!=null)

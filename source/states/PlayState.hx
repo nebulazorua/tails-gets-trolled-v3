@@ -2639,30 +2639,33 @@ class PlayState extends MusicBeatState
 							if(opponent.animation.getByName(anim)==null){
 								anim = anim.replace(altAnim,"");
 							}
-							switch(dad.curCharacter){//cleaner code for this since we might have alot more animations in the later chapters
+							// vv shadowfi what the fuck just do it in character.hx
+							// maybe add to the character's .json idk
+							// for now i've dumped it into character.hx
+							// - neb
+
+							// OH YEA SPECAIL ANIMS SHOULD BE INTERRUPTABLE TOO!!
+							/*switch(dad.curCharacter){ //cleaner code for this since we might have alot more animations in the later chapters
 								case 'shadow' | 'shadow-crazy':
 									opponent.specialanims.push('shoot');
-							}
+							}*/
 							if(luaModchartExists && lua!=null){
 								lua.call("dadNoteHit",[Math.abs(daNote.noteData),daNote.strumTime,Conductor.songPosition,anim]); // TODO: Note lua class???
 							}
 						if(opponent.animation.curAnim!=null){
-							if ((opponent.specialanims.contains(opponent.animation.curAnim.name) && opponent.animation.curAnim.finished)
-								|| !opponent.specialanims.contains(opponent.animation.curAnim.name)){
-								var canHold = daNote.isSustainNote && opponent.animation.getByName(anim+"Hold")!=null;
-								if(canHold && !opponent.animation.curAnim.name.startsWith(anim)){
-									opponent.playAnim(anim,true);
-								}else if(currentOptions.pauseHoldAnims && !canHold){
-									opponent.playAnim(anim,true);
+							var canHold = daNote.isSustainNote && opponent.animation.getByName(anim+"Hold")!=null;
+							if(canHold && !opponent.animation.curAnim.name.startsWith(anim)){
+								opponent.playAnim(anim,true);
+							}else if(currentOptions.pauseHoldAnims && !canHold){
+								opponent.playAnim(anim,true);
 
-									if(daNote.holdParent && !daNote.isSustainEnd())
-										opponent.holding=true;
-									else{
-										opponent.holding=false;
-									}
-								}else if(!currentOptions.pauseHoldAnims && !canHold){
-									opponent.playAnim(anim,true);
+								if(daNote.holdParent && !daNote.isSustainEnd())
+									opponent.holding=true;
+								else{
+									opponent.holding=false;
 								}
+							}else if(!currentOptions.pauseHoldAnims && !canHold){
+								opponent.playAnim(anim,true);
 							}
 						}
 

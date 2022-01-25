@@ -291,6 +291,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         dadPosition.y -= 50;
 
         gfPosition.y -= 75;
+        gfVersion = 'gfbest';
         curStage = 'hillzoneShadow';
         var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg','chapter3'));
         bg.antialiasing = true;
@@ -326,6 +327,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         centerX = bg.getMidpoint().x;
         centerY = bg.getMidpoint().y;
       case 'highzoneShadow':
+        gfVersion = 'gfbest';
         bfPosition.x += 325;
         dadPosition.x -= 0;
         defaultCamZoom = 1;
@@ -349,6 +351,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
 
       case 'hillzoneDarkSonic':
+        gfVersion = 'gfbest';
         defaultCamZoom = 1;
         bfPosition.x += 100;
         var sky:FlxSprite = new FlxSprite().loadGraphic(Paths.image("tfbbg3","chapter3"));

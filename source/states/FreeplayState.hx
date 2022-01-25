@@ -228,12 +228,15 @@ class FreeplayState extends MusicBeatState
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].displayName, true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
+			songText.movementType = 'listManualX';
+			songText.wantedX = FlxG.width/2 - (songText.width+150)/2;
 
 			FlxMouseEventManager.add(songText,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 			grpSongs.add(songText);
 
 			var icon:HealthIcon = new HealthIcon(songs[i].freeplayIcon);
 			icon.sprTracker = songText;
+			icon.setGraphicSize(Std.int(icon.daSize));
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);

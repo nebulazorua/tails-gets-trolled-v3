@@ -254,6 +254,8 @@ class Alphabet extends FlxSpriteGroup
 			case 'list':
 				wantedY =  (scaledY * 120) + (FlxG.height * 0.48);
 				wantedX = offsetX;
+			case 'listManualX':
+				wantedY =  (scaledY * 120) + (FlxG.height * 0.48);
 			default:
 				wantedY = (scaledY * 120) + (FlxG.height * 0.48);
 				wantedX = offsetX;
