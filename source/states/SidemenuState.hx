@@ -41,7 +41,7 @@ using StringTools;
 
 class SidemenuState extends MusicBeatState
 {
-	public static var unlocked:Array<Bool> = [true, true, false, false];
+	public static var unlocked:Array<Bool> = [true, true, true, false];
 	var boxes:FlxTypedGroup<Box>;
 	var backdrops:FlxBackdrop;
 	var curSelected:Int = 0;
