@@ -71,12 +71,12 @@ class MainMenuState extends MusicBeatState
 	}
 
 	function accept(){
-		if (optionShit[curSelected] == 'donate')
+		if (optionShit[curSelected] == 'promo')
 		{
 			#if linux
-			Sys.command('/usr/bin/xdg-open', ["https://ninja-muffin24.itch.io/funkin", "&"]);
+			Sys.command('/usr/bin/xdg-open', ["http://tailsgetstrolled.org/", "&"]);
 			#else
-			FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
+			FlxG.openURL('http://tailsgetstrolled.org/');
 			#end
 		}
 		else
