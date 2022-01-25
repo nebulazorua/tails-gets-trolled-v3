@@ -109,11 +109,11 @@ class SidemenuState extends MusicBeatState
 
 		var white = new NoteEffect();
 
-		bf = new Boyfriend(0,0, 'bf');
+		bf = new Boyfriend(0,0, "bf-betterer");
 		bf.screenCenter();
 		bf.x += 490;
 		bf.y += 120;
-		bf.setGraphicSize(Std.int(bf.width * 1.25));
+		bf.setGraphicSize(Std.int(bf.width * 1.25 * bf.charData.scale));
 		bf.shader = white.shader;
 		bf.antialiasing = true;
 		white.setFlash(1);
@@ -153,12 +153,11 @@ class SidemenuState extends MusicBeatState
 		switch (thingy)
 		{
 			case '0':
-				FreeplayState.ismain = true;
-				FlxG.switchState(new FreeplayState());
+				FreeplayState.freeplayList = EngineData.freeplaymain;
 			case '1':
-				FreeplayState.ismain = false;
-				FlxG.switchState(new FreeplayState());
+				FreeplayState.freeplayList = EngineData.freeplayremix;
 		}
+		FlxG.switchState(new FreeplayState());
 	}
 
 	var idkanymore:String;

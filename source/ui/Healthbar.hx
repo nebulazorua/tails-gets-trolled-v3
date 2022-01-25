@@ -66,7 +66,7 @@ class Healthbar extends FlxSpriteGroup {
     iconP2.updateHitbox();
   }
   public function beatHit(curBeat:Float){
-    setIconSize(Std.int(iconP1.width+30),Std.int(iconP2.width+30));
+    setIconSize(Std.int(iconP1.daSize+30),Std.int(iconP2.daSize+30));
   }
 
   override function update(elapsed:Float){
@@ -82,8 +82,8 @@ class Healthbar extends FlxSpriteGroup {
 
     var percent = bar.percent;
     var opponentPercent = 100-bar.percent;
-    setIconSize(Std.int(FlxMath.lerp(iconP1.width, 150, Main.adjustFPS(0.1))),Std.int(FlxMath.lerp(iconP2.width, 150, Main.adjustFPS(0.1))));
-    var iconOffset:Int = 26;
+    setIconSize(Std.int(FlxMath.lerp(iconP1.width, iconP1.daSize, Main.adjustFPS(0.1))),Std.int(FlxMath.lerp(iconP2.width, iconP2.daSize, Main.adjustFPS(0.1))));
+    var iconOffset:Int = 12;
     iconP1.x = bar.x + (bar.width * (FlxMath.remapToRange(percent, 0, 100, 100, 0) * 0.01) - iconOffset);
     iconP2.x = bar.x + (bar.width * (FlxMath.remapToRange(percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 

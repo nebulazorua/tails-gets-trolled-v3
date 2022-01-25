@@ -17,6 +17,7 @@ class HealthIcon extends FlxSprite
 	public var lossIndex:Int=-1;
 	public var neutralIndex:Int=0;
 	public var winningIndex:Int=-1;
+	public var daSize:Float = 150;
 
 	public function changeCharacter(char:String){
 		var path = 'assets/characters/icons/${char}';
@@ -61,12 +62,15 @@ class HealthIcon extends FlxSprite
 		if(animation.curAnim!=null)
 			animation.curAnim.curFrame = neutralIndex;
 
-		if(char!='bf' && char!='gf' && char!='dad' && char!='face')
-			scale.set(.8,.8);
-
 		width=150;
 		height=150;
 		updateHitbox();
+
+		trace(char);
+		if(char!='bf' && char!='gf' && char!='dad' && char!='face'){
+			daSize*=.9;
+			scale.set(.9,.9);
+		}
 
 
 

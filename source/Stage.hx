@@ -25,7 +25,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     "tsuraran-fox" => "hillzoneTailsSwag",
     "no-villains" => "hillzoneSonic",
     "no-bitches" => "hillzoneSonic",
-    "die-batsards" => "hillzoneShadow"
+    "die-batsards" => "hillzoneShadow",
+    "high-shovel" => "highzoneShadow",
+    "taste-for-blood" => "hillzoneDarkSonic",
   ];
 
   public static var stageNames:Array<String> = [
@@ -33,7 +35,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     "hillzoneTails",
     "hillzoneTailsSwag",
     "hillzoneSonic",
-    "hillzoneShadow"
+    "hillzoneShadow",
+    "highzoneShadow",
+    "hillzoneDarkSonic",
   ];
 
   public var doDistractions:Bool = true;
@@ -280,6 +284,13 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         foreground.add(stageCurtains);
       case 'hillzoneShadow':
         defaultCamZoom = 1;
+        bfPosition.x += 265;
+        bfPosition.y -= 50;
+        //dadPosition.x -= 100;
+        dadPosition.x -= 125;
+        dadPosition.y -= 50;
+
+        gfPosition.y -= 75;
         curStage = 'hillzoneShadow';
         var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg','chapter3'));
         bg.antialiasing = true;
@@ -314,6 +325,52 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         centerX = bg.getMidpoint().x;
         centerY = bg.getMidpoint().y;
+      case 'highzoneShadow':
+        bfPosition.x += 325;
+        dadPosition.x -= 0;
+        defaultCamZoom = 1;
+        curStage = 'highzoneShadow';
+        var bg:FlxSprite = new FlxSprite(-350, -200).loadGraphic(Paths.image('stageback_HS','chapter3'));
+        bg.antialiasing = true;
+        bg.scrollFactor.set(0.4, 0.4);
+        bg.active = false;
+        add(bg);
+
+        var stageFront:FlxSprite = new FlxSprite(-725, 600).loadGraphic(Paths.image('stagefront_HS','chapter3'));
+        stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+        stageFront.updateHitbox();
+        stageFront.antialiasing = true;
+        stageFront.scrollFactor.set(1, 1);
+        stageFront.active = false;
+        add(stageFront);
+
+        centerX = bg.getMidpoint().x;
+        centerY = bg.getMidpoint().y;
+
+
+      case 'hillzoneDarkSonic':
+        defaultCamZoom = 1;
+        bfPosition.x += 100;
+        var sky:FlxSprite = new FlxSprite().loadGraphic(Paths.image("tfbbg3","chapter3"));
+        sky.antialiasing=true;
+        sky.scrollFactor.set(.3,.3);
+        sky.x = -458;
+        sky.y = -247;
+        add(sky);
+
+        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("tfbbg2","chapter3"));
+        bg.antialiasing=true;
+        bg.scrollFactor.set(.7,.7);
+        bg.x = -480.5;
+        bg.y = 410;
+        add(bg);
+
+        var fg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("tfbbg","chapter3"));
+        fg.antialiasing=true;
+        fg.scrollFactor.set(1, 1);
+        fg.x = -541;
+        fg.y = -96.5;
+        add(fg);
 
       case 'blank':
         centerX = 400;

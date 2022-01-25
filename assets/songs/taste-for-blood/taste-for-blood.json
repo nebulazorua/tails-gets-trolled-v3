@@ -11169,6 +11169,12 @@
 						1,
 						2325,
 						0
+					],
+					[
+						170400,
+						5,
+						2400,
+						0
 					]
 				],
 				"altAnim": false,
@@ -11466,12 +11472,30 @@
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 200,
 				"changeBPM": false,
 				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 200,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
 			},
 			{
 				"lengthInSteps": 16,
@@ -11487,9 +11511,9 @@
 		"initialSpeed": 1.62,
 		"sliderVelocities": null,
 		"song": "taste-for-blood",
-		"validScore": true,
 		"needsVoices": true,
-		"stage": "hillzoneShadow",
+		"stage": "hillzoneDarkSonic",
+		"validScore": true,
 		"bpm": 200,
 		"speed": 3.6
 	}
