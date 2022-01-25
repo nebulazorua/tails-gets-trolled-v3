@@ -156,6 +156,8 @@ class SidemenuState extends MusicBeatState
 				FreeplayState.freeplayList = EngineData.freeplaymain;
 			case '1':
 				FreeplayState.freeplayList = EngineData.freeplayremix;
+			case '2':
+				FreeplayState.freeplayList = EngineData.freeplayfanwork;
 		}
 		FlxG.switchState(new FreeplayState());
 	}
