@@ -8,6 +8,8 @@ class Crosshair extends FlxSprite {
   public var wasHit:Bool = false;
   public var canBeHit:Bool = false;
   public var tooLate:Bool = false;
+  public var goodWindow:Float = 45;
+  public var damage:Float = 0;
   public var initialPos:Float = 0;
   public static var swagWidth:Float = 169 * .7;
   override function update(elapsed:Float){
@@ -20,7 +22,7 @@ class Crosshair extends FlxSprite {
     else
       canBeHit = false;
 
-    if(diff<-hitbox){
+    if(diff<= -goodWindow){
       tooLate=true;
     }
   }

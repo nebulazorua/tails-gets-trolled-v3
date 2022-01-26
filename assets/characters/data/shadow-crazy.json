@@ -1,15 +1,10 @@
 {
 	"charOffset": [
-		0,
-		100
+		-15,
+		80
 	],
-	"camOffset": [
-		75,
-		50
-	],
-	"spritesheet": "shadow crazy",
 	"singDur": 6.1,
-	"scale": 0.8,
+	"spritesheet": "shadow crazy",
 	"anims": [
 		{
 			"offsets": [
@@ -23,8 +18,8 @@
 		},
 		{
 			"offsets": [
-				80,
-				49
+				81,
+				-25
 			],
 			"fps": 24,
 			"prefix": "up crazy",
@@ -33,8 +28,8 @@
 		},
 		{
 			"offsets": [
-				0,
-				51
+				19,
+				-25
 			],
 			"fps": 24,
 			"prefix": "left crazy",
@@ -43,8 +38,8 @@
 		},
 		{
 			"offsets": [
-				-71,
-				48
+				-14,
+				-43
 			],
 			"fps": 24,
 			"prefix": "right crazy",
@@ -53,8 +48,8 @@
 		},
 		{
 			"offsets": [
-				-48,
-				-230
+				-25,
+				-266
 			],
 			"fps": 24,
 			"prefix": "down crazy",
@@ -63,14 +58,29 @@
 		},
 		{
 			"offsets": [
-				10,
-				-14
+				4,
+				59
 			],
 			"fps": 24,
 			"prefix": "shoot crazy",
 			"looped": false,
 			"name": "shoot"
+		},
+		{
+			"prefix": "die",
+			"offsets": [
+				40,
+				0
+			],
+			"fps": 24,
+			"name": "die",
+			"looped": false
 		}
+	],
+	"scale": 0.8,
+	"camOffset": [
+		-65,
+		-40
 	],
 	"flipX": false,
 	"iconName": "shadow-crazy",

@@ -112,6 +112,9 @@ class OptionsState extends MusicBeatState
 				new ToggleOption("freeplayPreview","Song preview in freeplay","Whether songs get played as you hover over them in Freeplay"),
 				new StateOption("Judgement Position",new JudgeCustomizationState()),
 			]),
+			new OptionCategory("Tails Gets Trolled",[
+				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not.")
+			]),
 			new OptionCategory("Performance",[
 				new StepOption("fps","FPS Cap",30,30,360,"","","The FPS the game tries to run at",true,function(value:Float,step:Float){
 					Main.setFPSCap(Std.int(value));

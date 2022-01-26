@@ -260,63 +260,6 @@ class PlayState extends MusicBeatState
 
 	var velocityMarkers:Array<Float>=[];
 
-	// sometimes i wonder why im allowed to program LOL
-	var shotAnims:Map<String,Array<Float>> = [
-		"die-batsards"=>[ // this is for the anims
-			192,
-			1020,
-			1080,
-			1083,
-			1752,
-			1756,
-			1775,
-			1780,
-			1783,
-			1788,
-			1815,
-			1820,
-			1832,
-			1836,
-			1840,
-			1844,
-			1846,
-			1871,
-		]
-	];
-	var killShots:Map<String,Array<Float>> = [ // these will take you to near death if you have max hp when the shots start
-		"die-batsards"=>[
-			1984,
-			1986,
-			1990,
-			1992,
-			1993,
-			1996,
-			1997,
-			1999,
-			2000,
-			2001,
-			2002,
-			2003,
-			2004,
-			2005
-		]
-	];
-
-	var shotMechanics:Map<String,Array<Array<Float>>> = [ // this is for the mechanic
-		"die-batsards"=>[ // steps where the shots should happen
-			[192,1], // step, shots
-			[1020,1],
-			[1080,2],
-			[1752,2],
-			[1775,2],
-			[1785,2],
-			[1815,1],
-			[1820,1],
-			[1831,1],
-			[1838,3]
-		]
-	];
-
 	public static var sliderVelocities:Array<Song.VelocityChange>;
 	var killShotCount:Int = 1;
 	var loadedShotAnims:Array<Null<Float>>=[];
@@ -862,9 +805,13 @@ class PlayState extends MusicBeatState
 				focus='bf';
 			case 2:
 				focus='dad';
+			case 3:
+				focus = 'center';
 		}
 
+
 		if(currentOptions.noChars){
+			focus='center';
 			remove(gf);
 			remove(dad);
 			remove(boyfriend);
@@ -908,20 +855,11 @@ class PlayState extends MusicBeatState
 
 		generateSong();
 
-		/*var currentShotSteps:Array<Array<Float>> = [
-			[]; // anims
-			[]; // kill shots
-			[]; // mechanics
-		];*/
-
-		//loadedShotAnims = shotAnims.get(SONG.song.toLowerCase());
-		//loadedKillShots = killShots.get(SONG.song.toLowerCase());
-		loadedShotMechanics = shotMechanics.get(SONG.song.toLowerCase());
+		loadedShotMechanics = [];
 		loadedShotAnims=[];
 		loadedKillShots=[];
 
 		if(FileSystem.exists(Paths.chart("shots",songData.chartName.toLowerCase()))){
-			trace("SHOTS");
 			var shit = Song.loadFromJson("shots",songData.chartName.toLowerCase());
 
 			// LOADING SHOT ANIMATIONS IN!
@@ -942,7 +880,7 @@ class PlayState extends MusicBeatState
 						crosshair.x += Note.swagWidth*4;
 						crosshair.x -= 54;
 						unspawnCrosshairs.push(crosshair);
-						loadedShotAnims.push(Conductor.getStep(time));
+						//loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
 					}
@@ -2178,13 +2116,13 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		// TODO: modManager.queueFunction() maybe?
-		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
+		/*if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
 			dad.playAnim("shoot",true);
 			loadedShotAnims.shift();
-		}
+		}*/
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
 			dad.playAnim("shoot",true);
-			boyfriend.holdTimer = 0;
+			boyfriend.noIdleTimer = Conductor.stepCrochet * 2;
 			boyfriend.playAnim("hit",true);
 			health -= 1.8 * (1/killShotCount);
 			loadedKillShots.shift();
@@ -2263,38 +2201,39 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			if(currentOptions.staticCam==3 || currentOptions.noChars){
-				var centerX = (stage.centerX==-1)?(((dadMid.x+ opponent.camOffset.x) + (bfMid.x- stage.camOffset.x))/2):stage.centerX;
-				var centerY = (stage.centerY==-1)?(((dadMid.y+ opponent.camOffset.y) + (bfMid.y- stage.camOffset.y))/2):stage.centerY;
-				camFollow.setPosition(centerX,centerY);
-			}else{
-				var focusedChar:Null<Character>=null;
-				switch(focus){
-					case 'dad':
-						focusedChar=opponent;
-						camFollow.setPosition(dadMid.x + opponent.camOffset.x, dadMid.y + opponent.camOffset.y);
-					case 'bf':
-						focusedChar=boyfriend;
-						camFollow.setPosition(bfMid.x - stage.camOffset.x  + boyfriend.camOffset.x, bfMid.y - stage.camOffset.y + boyfriend.camOffset.y);
-					case 'gf':
-						focusedChar=gf;
-						camFollow.setPosition(gfMid.x + gf.camOffset.x, gfMid.y + gf.camOffset.y);
-				}
-				if(currentOptions.camFollowsAnims){
-					if(focusedChar.animation.curAnim!=null){
-						switch (focusedChar.animation.curAnim.name){
-							case 'singUP' | 'singUP-alt' | 'singUPmiss':
-								camFollow.y -= 15 * focusedChar.camMovementMult;
-							case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
-								camFollow.y += 15 * focusedChar.camMovementMult;
-							case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
-								camFollow.x -= 15 * focusedChar.camMovementMult;
-							case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
-								camFollow.x += 15 * focusedChar.camMovementMult;
-						}
+
+			var focusedChar:Null<Character>=null;
+			switch(focus){
+				case 'dad':
+					focusedChar=opponent;
+					camFollow.setPosition(dadMid.x + opponent.camOffset.x, dadMid.y + opponent.camOffset.y);
+				case 'bf':
+					focusedChar=boyfriend;
+					camFollow.setPosition(bfMid.x - stage.camOffset.x  + boyfriend.camOffset.x, bfMid.y - stage.camOffset.y + boyfriend.camOffset.y);
+				case 'gf':
+					focusedChar=gf;
+					camFollow.setPosition(gfMid.x + gf.camOffset.x, gfMid.y + gf.camOffset.y);
+				case 'center':
+					focusedChar = null;
+					var centerX = (stage.centerX==-1)?(((dadMid.x+ opponent.camOffset.x) + (bfMid.x- stage.camOffset.x))/2):stage.centerX;
+					var centerY = (stage.centerY==-1)?(((dadMid.y+ opponent.camOffset.y) + (bfMid.y- stage.camOffset.y))/2):stage.centerY;
+					camFollow.setPosition(centerX,centerY);
+			}
+			if(currentOptions.camFollowsAnims){
+				if(focusedChar!=null && focusedChar.animation.curAnim!=null){
+					switch (focusedChar.animation.curAnim.name){
+						case 'singUP' | 'singUP-alt' | 'singUPmiss':
+							camFollow.y -= 15 * focusedChar.camMovementMult;
+						case 'singDOWN' | 'singDOWN-alt' | 'singDOWNmiss':
+							camFollow.y += 15 * focusedChar.camMovementMult;
+						case 'singLEFT' | 'singLEFT-alt' | 'singLEFTmiss':
+							camFollow.x -= 15 * focusedChar.camMovementMult;
+						case 'singRIGHT' | 'singRIGHT-alt' | 'singRIGHTmiss':
+							camFollow.x += 15 * focusedChar.camMovementMult;
 					}
 				}
 			}
+
 		}
 
 		if (camZooming)
@@ -2495,7 +2434,7 @@ class PlayState extends MusicBeatState
 					var timeDiff:Float = Conductor.currentTrackPos-crosshair.initialPos;
 					crosshair.y = scrollOffset - (timeDiff * scrollDirec);
 
-					if (crosshair.y > FlxG.height)
+					if (crosshair.y > FlxG.height || crosshair.wasHit)
 					{
 						crosshair.visible = false;
 					}
@@ -2507,9 +2446,24 @@ class PlayState extends MusicBeatState
 					if(crosshair!=null && crosshair.alive){
 						if (crosshair.tooLate)
 						{
+							dad.playAnim("shoot",true);
 							if(!crosshair.wasHit){
 								health = -1; // perish, whore.
 								// set to -1 incase you gain hp right as you miss so you just die immediately
+							}else{
+
+								health -= crosshair.damage;
+
+								camGame.zoom *= 1.35;
+								camGame.shake(0.025,0.1);
+								if(crosshair.damage==0 && boyfriend.noIdleTimer<=0){
+									boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
+									boyfriend.playAnim("dodge",true);
+								}else if(crosshair.damage>0){
+									boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
+									boyfriend.playAnim("hit",true);
+								}
+
 							}
 							destroyCrosshair(crosshair);
 						}
@@ -3434,20 +3388,26 @@ class PlayState extends MusicBeatState
 	{
 		if(!crosshair.wasHit){
 			crosshair.wasHit=true;
-			var diff = Math.abs(crosshair.strumTime - Conductor.songPosition);
+			crosshair.visible=false;
+			var trueDiff = crosshair.strumTime - Conductor.songPosition;
+			var diff = Math.abs(trueDiff);
 
-			var damage = CoolUtil.scale(diff,50,166,0,2);
+			var damage = CoolUtil.scale(diff,crosshair.goodWindow,crosshair.hitbox,0,2);
 			if(damage<0)damage=0;
-			health -= damage;
+			crosshair.damage = damage;
 
-			boyfriend.holdTimer = 0;
-			if(damage==0){
-				boyfriend.playAnim("dodge",true);
-			}else{
-				boyfriend.playAnim("hit",true);
+			boyfriend.noIdleTimer = Conductor.stepCrochet * (damage>0?2:4);
+			boyfriend.playAnim("dodge",true);
+
+			if(currentOptions.shotsGetJudged){
+				if(damage == 0){
+					popUpScore("good",-trueDiff);
+				}else{
+					popUpScore("bad",-trueDiff);
+				}
 			}
 
-			destroyCrosshair(crosshair);
+			// destroyCrosshair(crosshair);
 		}
 	}
 

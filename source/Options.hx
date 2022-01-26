@@ -51,7 +51,7 @@ class OptionUtils
 		for(f in fields)
 			if(Reflect.getProperty(options,f)!=null)
 				Reflect.setField(options,f,Reflect.field(saveFile.data,f));
-		
+
 	}
 
 	public static function getKIdx(control:Control){
@@ -120,6 +120,7 @@ class Options
 	public var smJudges:Bool = false;
 	public var judgeX:Float = 0;
 	public var judgeY:Float = 0;
+	public var shotsGetJudged:Bool = false;
 	public var fcBasedComboColor:Bool = false;
 	public var ruinMod:Bool = false;
 

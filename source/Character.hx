@@ -58,6 +58,7 @@ class Character extends FlxSprite
 	public var iconColor:FlxColor = 0xFF31B0D1;
 	public var iconName:String = '';
 	public var holdTimer:Float = 0;
+	public var noIdleTimer:Float = 0;
 	public var posOffset = FlxPoint.get(0,0);
 	public var camOffset = FlxPoint.get(150,-100);
 	public var charData:CharJson;
@@ -294,6 +295,7 @@ class Character extends FlxSprite
 		switch(curCharacter){
 			case 'shadow' | 'shadow-crazy':
 				specialanims.push("shoot");
+				specialanims.push("die");
 		}
 	}
 
@@ -405,6 +407,8 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+		noIdleTimer -= elapsed*1000;
+		if(noIdleTimer<0)noIdleTimer=0;
 		if (!isPlayer)
 		{
 			if(animation.curAnim!=null){
@@ -457,7 +461,7 @@ class Character extends FlxSprite
 	 */
 	public function dance(?forced:Bool)
 	{
-		if (!disabledDance && animation.curAnim!=null)
+		if (!disabledDance && animation.curAnim!=null && noIdleTimer<=0)
 		{
 			if(forced==null)forced=beatDancer;
 

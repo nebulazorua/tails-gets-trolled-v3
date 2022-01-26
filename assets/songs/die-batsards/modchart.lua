@@ -25,22 +25,37 @@ local charSteps = {
 }
 local zoomed=false;
 
+local oldFocus = 'bf';
+
 local oStep = curStep;
 function stepHit(step)
-    local setChar='';
-	for i = 1, #charSteps do
-		local v= charSteps[i]
-		local step = v.step;
-		local char = v.char;
-		if(curStep<step)then
-			break;
-		end
-		setChar=char;
-	end
+    if(not getOption"noChars")then
+        local setChar='';
+        for i = 1, #charSteps do
+            local v= charSteps[i]
+            local step = v.step;
+            local char = v.char;
+            if(curStep<step)then
+                break;
+            end
+            setChar=char;
+        end
 
-    if(dad.curCharacter~=setChar and setChar~='')then
-        print(setChar)
-        dad:changeCharacter(setChar)
+        if(dad.curCharacter~=setChar and setChar~='')then
+            dad:changeCharacter(setChar)
+        end
+        
+
+        
+        if(step==1720 and dad.curCharacter == 'shadow-crazy')then
+            oldFocus = getVar"focus";
+            setVar("focus","dad")
+            dad:playAnim("die")
+        end
+
+        if(step==1727)then
+            setVar("focus",oldFocus)
+        end
     end
 
     if(step>=1727 and step<1984 and not zoomed)then
@@ -65,8 +80,6 @@ function stepHit(step)
 end
 
 function update(elapsed)
-
-
     for i = #tweens,1,-1 do
         if(tweens[i]:update(elapsed))then
             table.remove(tweens,i)

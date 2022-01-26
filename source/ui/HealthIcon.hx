@@ -62,6 +62,7 @@ class HealthIcon extends FlxSprite
 		if(animation.curAnim!=null)
 			animation.curAnim.curFrame = neutralIndex;
 
+		daSize = 150;
 		if(char!='bf' && char!='gf' && char!='dad' && char!='face'){
 			daSize*=.975;
 		}
