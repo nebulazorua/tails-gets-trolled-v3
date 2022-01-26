@@ -45,7 +45,6 @@ class OptionsState extends MusicBeatState
 					new ControlOption(controls,Control.RESET),
 				]),
 				new ToggleOption("resetKey","Reset key","Toggle pressing the bound key to instantly die"),
-				#if !FORCE_LUA_MODCHARTS new ToggleOption("loadModcharts","Load Lua modcharts","Toggles lua modcharts"), #end
 				new ToggleOption("ghosttapping","Ghost-tapping","Allows you to press keys while no notes are able to be hit."),
 				new ToggleOption("failForMissing","Sudden Death","FC or die"),
 				#if !NO_BOTPLAY new ToggleOption("botPlay","BotPlay","Let a bot play for you"), #end
