@@ -11,7 +11,7 @@ class Crosshair extends FlxSprite {
   public var goodWindow:Float = 45;
   public var damage:Float = 0;
   public var initialPos:Float = 0;
-  public static var swagWidth:Float = 169 * .7;
+  public static var swagWidth:Float = 974 * .7;
   override function update(elapsed:Float){
     super.update(elapsed);
     var diff = strumTime-Conductor.songPosition;

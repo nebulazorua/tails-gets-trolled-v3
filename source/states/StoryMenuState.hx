@@ -24,6 +24,7 @@ import flixel.input.mouse.FlxMouseEventManager;
 import Options;
 import flixel.effects.FlxFlicker;
 import flash.system.System;
+import flixel.system.FlxSound;
 
 using StringTools;
 
@@ -63,6 +64,7 @@ class StoryMenuState extends MusicBeatState
 	var tweens:Map<FlxObject,FlxTween> = [];
 	var clickedObject:Dynamic;
 
+	var sound:FlxSound;
 	var pissOff:Int = 0;
 	var clickTimer:Float = 0;
 	/*var unlockedSpaces:Array<SpaceData> = [
@@ -134,14 +136,22 @@ class StoryMenuState extends MusicBeatState
 				object.scale.y = .9;
 				clickTimer = 0;
 				pissOff++;
-				if(pissOff==10){
-					FlxG.sound.play(Paths.sound("notfinished"),2);
-					FlxG.camera.shake(0.005,0.25,null,true,X);
-				}else if(pissOff==20){
-					FlxG.sound.play(Paths.sound("ANGRY_TEXT_BOX"),2);
-					new FlxTimer().start(.5, function(tmr:FlxTimer){
-						System.exit(0);
-					});
+				if(pissOff>=10){
+					pissOff=0;
+					if(sound!=null && sound.playing==true){
+						FlxG.sound.play(Paths.sound("ANGRY_TEXT_BOX"),2);
+						new FlxTimer().start(.5, function(tmr:FlxTimer){
+							System.exit(0);
+						});
+					}else{
+						sound = FlxG.sound.play(Paths.sound("notfinished"),2);
+						sound.onComplete = function(){
+								sound.stop();
+								sound.destroy();
+								sound=null;
+						}
+						FlxG.camera.shake(0.005,0.25,null,true,X);
+					}
 				}
 				tweens[object] = FlxTween.tween(object, {"scale.x": 1,"scale.y": 1}, 1.85, {
 					ease: FlxEase.elasticOut

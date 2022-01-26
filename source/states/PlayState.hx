@@ -876,9 +876,11 @@ class PlayState extends MusicBeatState
 					if(data%4==0){
 						var crosshair:Crosshair = new Crosshair(time);
 						crosshair.initialPos = getPosFromTime(time);
-						crosshair.x = FlxG.width/2 - Note.swagWidth*2 - 100;
-						crosshair.x += Note.swagWidth*4;
-						crosshair.x -= 54;
+						crosshair.x = FlxG.width/2 - crosshair.width/2;
+						if(!currentOptions.middleScroll){
+							crosshair.x += Note.swagWidth * 2;
+							crosshair.x += 92;
+						}
 						unspawnCrosshairs.push(crosshair);
 						//loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
@@ -1770,7 +1772,6 @@ class PlayState extends MusicBeatState
 		if(judgeMan.judgementCounter.get("miss")>0){
 			fcType='';
 		}else{
-			trace(judgeMan.judgementCounter.get("bad")+judgeMan.judgementCounter.get("shit"),noteCounter.get("taps")/2);
 			if((judgeMan.judgementCounter.get("bad")+judgeMan.judgementCounter.get("shit"))>=noteCounter.get("taps")/2)
 				fcType = ' (WTFC)';
 			else if(judgeMan.judgementCounter.get("bad")>0 || judgeMan.judgementCounter.get("shit")>0)
@@ -3220,7 +3221,6 @@ class PlayState extends MusicBeatState
 		var hitting:Array<Crosshair> = getHittableCrosshairs();
 		hitting.sort((a,b)->Std.int(a.strumTime-b.strumTime)); // SHOULD be in order?
 		// But just incase, we do this sort
-		trace(hitting.length);
 		if(hitting.length>0)
 			dodge(hitting[0]);
 

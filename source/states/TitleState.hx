@@ -40,10 +40,14 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var songPos:Float = 0;
 
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
+	var startedIntro:Bool = false;
+
+	var shit:FlxSound;
 
 	override public function create():Void
 	{
@@ -209,8 +213,12 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 
-		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-		FlxG.sound.music.fadeIn(4, 0, 0.7);
+		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		FlxG.sound.music.pause();
+		shit = FlxG.sound.play(Paths.music('freakyIntro'));
+
+		shit.fadeIn(4, 0, 0.7);
+		startedIntro=true;
 
 		if (initialized)
 			skipIntro();
@@ -239,92 +247,98 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music != null)
-			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-
-		if (FlxG.keys.justPressed.F)
-		{
-			FlxG.fullscreen = !FlxG.fullscreen;
-		}
-
-		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
-
-		#if mobile
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed)
-			{
-				pressedEnter = true;
+		if(startedIntro){
+			if (FlxG.sound.music != null && FlxG.sound.music.playing)
+				Conductor.songPosition = songPos+FlxG.sound.music.time;
+			else{
+				Conductor.songPosition += elapsed*1000;
+				songPos=Conductor.songPosition;
 			}
-		}
-		#end
+			// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
-		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-		if (gamepad != null)
-		{
-			if (gamepad.justPressed.START)
-				pressedEnter = true;
-
-			#if switch
-			if (gamepad.justPressed.B)
-				pressedEnter = true;
-			#end
-		}
-
-		if (pressedEnter && !transitioning && skippedIntro)
-		{
-
-			#if !switch
-			//NGio.unlockMedal(60960);
-
-			// If it's Friday according to da clock
-			if (Date.now().getDay() == 5)
-				//NGio.unlockMedal(61034);
-			#end
-			titleText.animation.play('press',true);
-
-			if(!EngineData.options.oldTitle)
+			if (FlxG.keys.justPressed.F)
 			{
-				speaker.animation.play('lit',true);
-				//bg.visible = false;
-				bgLit.visible = true;
+				FlxG.fullscreen = !FlxG.fullscreen;
 			}
 
-			FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
-			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+			var pressedEnter:Bool = FlxG.keys.justPressed.ENTER;
 
-			transitioning = true;
-			// FlxG.sound.music.stop();
-
-			new FlxTimer().start(2, function(tmr:FlxTimer)
+			#if mobile
+			for (touch in FlxG.touches.list)
 			{
-				// Check if version is outdated
-
-				var version:String = "v" + Application.current.meta.get('version');
-
-				/*if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
+				if (touch.justPressed)
 				{
-					FlxG.switchState(new OutdatedSubState());
-					trace('OLD VERSION!');
-					trace('old ver');
-					trace(version.trim());
-					trace('cur ver');
-					trace(NGio.GAME_VER_NUMS.trim());
+					pressedEnter = true;
 				}
-				else
-				{
-					FlxG.switchState(new MainMenuState());
-				}*/
-				FlxG.switchState(new MainMenuState());
-			});
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
-		}
+			}
+			#end
 
-		if (pressedEnter && !skippedIntro)
-		{
-			skipIntro();
+			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+			if (gamepad != null)
+			{
+				if (gamepad.justPressed.START)
+					pressedEnter = true;
+
+				#if switch
+				if (gamepad.justPressed.B)
+					pressedEnter = true;
+				#end
+			}
+
+			if (pressedEnter && !transitioning && skippedIntro)
+			{
+
+				#if !switch
+				//NGio.unlockMedal(60960);
+
+				// If it's Friday according to da clock
+				if (Date.now().getDay() == 5)
+					//NGio.unlockMedal(61034);
+				#end
+				titleText.animation.play('press',true);
+
+				if(!EngineData.options.oldTitle)
+				{
+					speaker.animation.play('lit',true);
+					//bg.visible = false;
+					bgLit.visible = true;
+				}
+
+				FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
+				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+
+				transitioning = true;
+				// FlxG.sound.music.stop();
+
+				new FlxTimer().start(2, function(tmr:FlxTimer)
+				{
+					// Check if version is outdated
+
+					var version:String = "v" + Application.current.meta.get('version');
+
+					/*if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
+					{
+						FlxG.switchState(new OutdatedSubState());
+						trace('OLD VERSION!');
+						trace('old ver');
+						trace(version.trim());
+						trace('cur ver');
+						trace(NGio.GAME_VER_NUMS.trim());
+					}
+					else
+					{
+						FlxG.switchState(new MainMenuState());
+					}*/
+					FlxG.switchState(new MainMenuState());
+				});
+				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
+			}
+
+			if (pressedEnter && !skippedIntro)
+			{
+				skipIntro();
+			}
 		}
 
 		super.update(elapsed);
@@ -435,6 +449,8 @@ class TitleState extends MusicBeatState
 			remove(ngSpr);
 
 			FlxG.camera.flash(FlxColor.WHITE, 2);
+			shit.fadeOut(.2,0);
+			FlxG.sound.music.play();
 			remove(credGroup);
 			skippedIntro = true;
 		}
