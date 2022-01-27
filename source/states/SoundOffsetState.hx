@@ -88,18 +88,18 @@ class SoundOffsetState extends MusicBeatState
   override function update(elapsed:Float){
     if(playingAudio){
       if (FlxG.sound.music.volume > 0)
-      {
-        FlxG.sound.music.volume -= 0.5 * FlxG.elapsed;
-      }
+  			FlxG.sound.music.volume -= 0.25 * (elapsed/(1/120));
+
+  		if(FlxG.sound.music.volume < 0)FlxG.sound.music.volume = 0;
       beatCounter+=elapsed*1000;
       status.text = "Audio is playing";
       Conductor.changeBPM(50);
       Conductor.songPosition += FlxG.elapsed * 1000;
     }else{
-      if (FlxG.sound.music.volume < 0.7)
-      {
-        FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-      }
+      if (FlxG.sound.music.volume < 1.5)
+  			FlxG.sound.music.volume += 0.25 * (elapsed/(1/120));
+
+  		if(FlxG.sound.music.volume > 1.5)FlxG.sound.music.volume = 1.5;
       status.text = "Audio is paused";
       Conductor.changeBPM(0);
       Conductor.songPosition = 0;

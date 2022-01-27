@@ -378,10 +378,10 @@ class FreeplayState extends MusicBeatState
 		super.update(elapsed);
 		backdrops.x -= .25*(elapsed/(1/120));
 		backdrops.y += .25*(elapsed/(1/120));
-		if (FlxG.sound.music.volume < 0.7)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
+		if (FlxG.sound.music.volume < 1.5)
+			FlxG.sound.music.volume += 0.25 * (elapsed/(1/120));
+
+		if(FlxG.sound.music.volume > 1.5)FlxG.sound.music.volume = 1.5;
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, Main.adjustFPS(0.4)));
 

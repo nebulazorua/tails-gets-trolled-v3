@@ -1310,6 +1310,31 @@ class PlayState extends MusicBeatState
 
 		var swagCounter:Int = 0;
 
+		var popup:FlxSprite = new FlxSprite().loadGraphic(Paths.image('popups/${SONG.song.toLowerCase()}'));
+		popup.setGraphicSize(Std.int(popup.width*.85));
+		popup.x -= popup.width;
+		popup.screenCenter(Y);
+		popup.scrollFactor.set();
+		popup.cameras = [camHUD];
+		FlxTween.tween(popup, {x: 25}, 1, {
+			ease: FlxEase.quartInOut,
+			startDelay: 1,
+			onComplete: function(twn:FlxTween)
+			{
+				FlxTween.tween(popup, {x: -popup.width}, 1, {
+					ease: FlxEase.quartInOut,
+					startDelay: 1.75,
+					onComplete: function(twn:FlxTween)
+					{
+						popup.destroy();
+					}
+				});
+			}
+		});
+
+		add(popup);
+
+
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			dad.dance();

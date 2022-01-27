@@ -181,10 +181,10 @@ class SidemenuState extends MusicBeatState
 		backdrops.y += 1*(elapsed/(1/120));
 		Conductor.songPosition = FlxG.sound.music.time;
 
-		if (FlxG.sound.music.volume < 0.7)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
+		if (FlxG.sound.music.volume < 1.5)
+			FlxG.sound.music.volume += 0.25 * (elapsed/(1/120));
+
+		if(FlxG.sound.music.volume > 1.5)FlxG.sound.music.volume = 1.5;
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;

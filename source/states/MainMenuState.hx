@@ -307,9 +307,10 @@ class MainMenuState extends MusicBeatState
 		});
 
 		layering.sort(sortByOrder);
-		if (FlxG.sound.music.volume < 0.8)
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+		if (FlxG.sound.music.volume < 1.5)
+			FlxG.sound.music.volume += 0.25 * (elapsed/(1/120));
 
+		if(FlxG.sound.music.volume > 1.5)FlxG.sound.music.volume = 1.5;
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
