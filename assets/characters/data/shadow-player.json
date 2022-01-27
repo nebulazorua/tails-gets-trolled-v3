@@ -12,52 +12,52 @@
 	"spritesheet": "shadow",
 	"anims": [
 		{
+			"prefix": "shoot",
 			"offsets": [
-				0,
-				0
+				275,
+				78
 			],
 			"fps": 24,
-			"prefix": "idle",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
+			"prefix": "shoot",
 			"offsets": [
-				-256,
-				-11
+				275,
+				78
 			],
 			"fps": 24,
-			"prefix": "up",
 			"name": "singUP",
 			"looped": false
 		},
 		{
+			"prefix": "shoot",
 			"offsets": [
-				52,
-				-21
+				275,
+				78
 			],
 			"fps": 24,
-			"prefix": "right",
 			"name": "singLEFT",
 			"looped": false
 		},
 		{
+			"prefix": "shoot",
 			"offsets": [
-				-146,
-				-42
+				275,
+				78
 			],
 			"fps": 24,
-			"prefix": "left",
 			"name": "singRIGHT",
 			"looped": false
 		},
 		{
+			"prefix": "shoot",
 			"offsets": [
-				-261,
-				-261
+				275,
+				78
 			],
 			"fps": 24,
-			"prefix": "down",
 			"name": "singDOWN",
 			"looped": false
 		},
@@ -69,26 +69,6 @@
 			"fps": 24,
 			"prefix": "shoot",
 			"name": "shoot",
-			"looped": false
-		},
-		{
-			"prefix": "shoot",
-			"offsets": [
-				275,
-				78
-			],
-			"fps": 24,
-			"name": "singDOWN-alt",
-			"looped": false
-		},
-		{
-			"prefix": "shoot",
-			"offsets": [
-				275,
-				78
-			],
-			"fps": 24,
-			"name": "singUP-alt",
 			"looped": false
 		},
 		{
@@ -118,6 +98,36 @@
 				78
 			],
 			"fps": 24,
+			"name": "singUP-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singDOWN-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singDOWNmiss",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
 			"name": "singRIGHTmiss",
 			"looped": false
 		},
@@ -129,16 +139,6 @@
 			],
 			"fps": 24,
 			"name": "singLEFTmiss",
-			"looped": false
-		},
-		{
-			"prefix": "",
-			"offsets": [
-				0,
-				0
-			],
-			"fps": null,
-			"name": "",
 			"looped": false
 		},
 		{

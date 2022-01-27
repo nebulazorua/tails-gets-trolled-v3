@@ -2164,6 +2164,12 @@ class PlayState extends MusicBeatState
 		// TODO: modManager.queueFunction() maybe?
 		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
 			dad.playAnim("shoot",true);
+			if(stage.tailsShocked!=null)
+				stage.tailsShocked.animation.play("shock",true);
+
+			if(stage.knuxShocked!=null)
+				stage.knuxShocked.animation.play("shock",true);
+
 			loadedShotAnims.shift();
 		}
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){

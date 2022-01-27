@@ -6,7 +6,7 @@
 		}
 	],
 	"song": {
-		"player1": "bf-better",
+		"player1": "bf",
 		"notes": [
 			{
 				"sectionNotes": [
@@ -2747,11 +2747,6 @@
 					],
 					[
 						61050,
-						3,
-						0
-					],
-					[
-						61050,
 						4,
 						0
 					]
@@ -5422,11 +5417,6 @@
 				"sectionNotes": [
 					[
 						105600,
-						7,
-						825
-					],
-					[
-						105600,
 						2,
 						0
 					],
@@ -5488,6 +5478,24 @@
 					[
 						106650,
 						2,
+						0
+					],
+					[
+						105600,
+						7,
+						225,
+						0
+					],
+					[
+						105900,
+						4,
+						225,
+						0
+					],
+					[
+						106200,
+						7,
+						225,
 						0
 					]
 				],
@@ -6242,11 +6250,6 @@
 				"sectionNotes": [
 					[
 						115200,
-						7,
-						825
-					],
-					[
-						115200,
 						3,
 						0
 					],
@@ -6308,6 +6311,24 @@
 					[
 						116250,
 						2,
+						0
+					],
+					[
+						115200,
+						7,
+						225,
+						0
+					],
+					[
+						115500,
+						4,
+						225,
+						0
+					],
+					[
+						115800,
+						7,
+						225,
 						0
 					]
 				],
@@ -10020,6 +10041,24 @@
 			},
 			{
 				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 200,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"lengthInSteps": 16,
 				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
@@ -10032,9 +10071,9 @@
 		"initialSpeed": 1.395,
 		"sliderVelocities": null,
 		"song": "No-Villains",
-		"stage": "hillzoneSonic",
 		"needsVoices": true,
 		"validScore": true,
+		"stage": "hillzoneSonic",
 		"speed": 3.1,
 		"bpm": 200
 	}

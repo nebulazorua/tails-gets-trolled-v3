@@ -172,6 +172,7 @@ class MainMenuState extends MusicBeatState
 
 		backdrops = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
 		backdrops.color = 0xFF467aeb;
+		backdrops.alpha = 0.3;
 		backdrops.x -= 35;
 		add(backdrops);
 

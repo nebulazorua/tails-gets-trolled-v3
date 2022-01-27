@@ -52,6 +52,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
   var knuckles:FlxSprite;
   var tails:FlxSprite;
 
+  public var knuxShocked:FlxSprite;
+  public var tailsShocked:FlxSprite;
+
   // philly bg
   public var lightFadeShader:BuildingEffect;
   public var phillyCityLights:FlxTypedGroup<FlxSprite>;
@@ -332,11 +335,27 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         knuckles = new FlxSprite();
         knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
-        knuckles.animation.addByPrefix("knuckles","knuckles bg scared",6,false);
+        knuckles.animation.addByPrefix("knuckles","knuckles bg scared",12,false);
         knuckles.animation.play("knuckles",true);
         knuckles.x = 323;
         knuckles.y = 94;
         add(knuckles);
+
+        tailsShocked = new FlxSprite();
+        tailsShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+        tailsShocked.animation.addByPrefix("shock","scared mark",6,false);
+        tailsShocked.animation.play("shock",true);
+        tailsShocked.x = 773;
+        tailsShocked.y = 5;
+        add(tailsShocked);
+
+        knuxShocked = new FlxSprite();
+        knuxShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+        knuxShocked.animation.addByPrefix("shock","scared mark",6,false);
+        knuxShocked.animation.play("shock",true);
+        knuxShocked.x = 300;
+        knuxShocked.y = -35;
+        add(knuxShocked);
 
         boppers.push([knuckles,"knuckles",2]);
         boppers.push([tails,"tails",2]);
