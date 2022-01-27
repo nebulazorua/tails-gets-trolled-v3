@@ -1314,6 +1314,7 @@ class PlayState extends MusicBeatState
 		popup.setGraphicSize(Std.int(popup.width*.85));
 		popup.x -= popup.width;
 		popup.screenCenter(Y);
+		popup.antialiasing=true;
 		popup.scrollFactor.set();
 		popup.cameras = [camHUD];
 		FlxTween.tween(popup, {x: 25}, 1, {

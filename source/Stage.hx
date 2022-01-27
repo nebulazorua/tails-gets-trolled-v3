@@ -48,6 +48,10 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 	var lightningOffset:Int = 8;
 
 
+  // shadow bg
+  var knuckles:FlxSprite;
+  var tails:FlxSprite;
+
   // philly bg
   public var lightFadeShader:BuildingEffect;
   public var phillyCityLights:FlxTypedGroup<FlxSprite>;
@@ -317,6 +321,26 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         grass.antialiasing = true;
         grass.active = false;
         add(grass);
+
+        tails = new FlxSprite();
+        tails.frames = Paths.getSparrowAtlas('tails_bg','chapter3');
+        tails.animation.addByPrefix("tails","tails bg scared",6,false);
+        tails.animation.play("tails",true);
+        tails.x = 651;
+        tails.y = 70;
+        add(tails);
+
+        knuckles = new FlxSprite();
+        knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
+        knuckles.animation.addByPrefix("knuckles","knuckles bg scared",6,false);
+        knuckles.animation.play("knuckles",true);
+        knuckles.x = 323;
+        knuckles.y = 94;
+        add(knuckles);
+
+        boppers.push([knuckles,"knuckles",2]);
+        boppers.push([tails,"tails",2]);
+
       case 'highzoneShadow':
         gfVersion = 'gfbest';
         bfPosition.x += 325;
@@ -408,60 +432,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
       d.dance();
     }
 
-    if(doDistractions){
-
-      switch(curStage){
-        case 'limo':
-          if (FlxG.random.bool(10) && fastCarCanDrive)
-            fastCarDrive();
-        case 'spooky':
-          if (FlxG.random.bool(10) && beat > lightningStrikeBeat + lightningOffset)
-          {
-            lightningStrikeBeat = beat;
-            lightningStrikeShit();
-          }
-        case 'philly':
-          if (!trainMoving)
-            trainCooldown += 1;
-
-          if (beat%4== 0)
-          {
-            phillyCityLights.forEach(function(light:FlxSprite)
-            {
-              light.visible = false;
-            });
-
-            curLight = FlxG.random.int(0, phillyCityLights.length - 1);
-
-            phillyCityLights.members[curLight].visible = true;
-            phillyCityLights.members[curLight].alpha = 1;
-            lightFadeShader.setAlpha(0);
-          }
-
-          if (beat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-          {
-            trainCooldown = FlxG.random.int(-4, 0);
-            trainStart();
-          }
-      }
-    }
   }
 
   override function update(elapsed:Float){
-    switch(curStage){
-      case 'philly':
-        if (trainMoving)
-        {
-          trainFrameTiming += elapsed;
-
-          if (trainFrameTiming >= 1 / 24)
-          {
-            updateTrainPos();
-            trainFrameTiming = 0;
-          }
-        }
-        lightFadeShader.addAlpha((Conductor.crochet / 1000) * FlxG.elapsed * 1.5);
-    }
 
 
     super.update(elapsed);
