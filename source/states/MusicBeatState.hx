@@ -69,6 +69,7 @@ class MusicBeatState extends FlxUIState
 		}
 		#end
 
+		YourMomState.update(elapsed);
 		super.update(elapsed);
 	}
 

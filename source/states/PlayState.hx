@@ -885,6 +885,8 @@ class PlayState extends MusicBeatState
 						//loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
+					}else if(data%4==2){
+						loadedShotAnims.push(Conductor.getStep(time));
 					}
 				}
 			}
@@ -2117,16 +2119,18 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		// TODO: modManager.queueFunction() maybe?
-		/*if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
+		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
 			dad.playAnim("shoot",true);
 			loadedShotAnims.shift();
-		}*/
+		}
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
 			dad.playAnim("shoot",true);
-			boyfriend.noIdleTimer = Conductor.stepCrochet * 2;
-			boyfriend.playAnim("hit",true);
 			health -= 1.8 * (1/killShotCount);
 			loadedKillShots.shift();
+			if(!boyfriend.disabledDance){
+				boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
+				boyfriend.playAnim("hit",true);
+			}
 		}
 
 		if (startingSong)

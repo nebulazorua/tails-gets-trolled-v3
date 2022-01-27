@@ -3,9 +3,11 @@
 		0,
 		0
 	],
+	"spritesheet": "BOYFRIEND3",
+	"singDur": 4,
 	"camOffset": [
-		0,
-		0
+		-250,
+		-75
 	],
 	"anims": [
 		{
@@ -19,12 +21,12 @@
 			"name": "idle"
 		},
 		{
-			"prefix": "BF NOTE UP0",
 			"offsets": [
 				-45,
 				33
 			],
 			"fps": 24,
+			"prefix": "BF NOTE UP0",
 			"name": "singUP",
 			"looped": false
 		},
@@ -49,24 +51,24 @@
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE DOWN0",
 			"offsets": [
-				-34,
-				-48
+				-30,
+				-43
 			],
 			"fps": 24,
-			"name": "singDOWN",
-			"looped": false
+			"prefix": "BF NOTE DOWN0",
+			"looped": false,
+			"name": "singDOWN"
 		},
 		{
 			"offsets": [
-				-30,
+				-54,
 				36
 			],
 			"fps": 24,
 			"prefix": "BF NOTE UP MISS",
-			"name": "singUPmiss",
-			"looped": false
+			"looped": false,
+			"name": "singUPmiss"
 		},
 		{
 			"offsets": [
@@ -110,46 +112,6 @@
 		},
 		{
 			"offsets": [
-				20,
-				5
-			],
-			"fps": 24,
-			"prefix": "BF dies",
-			"looped": false,
-			"name": "firstDeath"
-		},
-		{
-			"offsets": [
-				20,
-				-1
-			],
-			"fps": 24,
-			"prefix": "BF Dead Loop",
-			"looped": true,
-			"name": "deathLoop"
-		},
-		{
-			"offsets": [
-				20,
-				63
-			],
-			"fps": 24,
-			"prefix": "BF Dead confirm",
-			"looped": false,
-			"name": "deathConfirm"
-		},
-		{
-			"offsets": [
-				-4,
-				0
-			],
-			"fps": 24,
-			"prefix": "BF idle shaking",
-			"looped": true,
-			"name": "scared"
-		},
-		{
-			"offsets": [
 				-3,
 				4
 			],
@@ -159,12 +121,12 @@
 			"name": "singUP-alt"
 		},
 		{
+			"prefix": "boyfriend dodge",
 			"offsets": [
-				7,
-				-20
+				71,
+				-24
 			],
 			"fps": 24,
-			"prefix": "boyfriend dodge",
 			"name": "dodge",
 			"looped": false
 		},
@@ -177,10 +139,18 @@
 			"prefix": "BF hit",
 			"name": "hit",
 			"looped": false
+		},
+		{
+			"prefix": "BF FUNKIN DIE",
+			"offsets": [
+				-15,
+				37
+			],
+			"fps": 24,
+			"name": "fuckingdies",
+			"looped": false
 		}
 	],
-	"spritesheet": "BOYFRIEND3",
-	"singDur": 4,
 	"flipX": false,
 	"antialiasing": true,
 	"iconName": "bf-ch3",

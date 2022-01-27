@@ -220,7 +220,7 @@ class MainMenuState extends MusicBeatState
 			menuItems.add(menuItem);
 
 			var artBox = new FNFSprite(menuItem.x,menuItem.y);
-			artBox.loadGraphic(Paths.image('mainmenu/art'));
+			artBox.loadGraphic(Paths.image('mainmenu/artblocks/${optionShit[i]}'));
 			artBox.scrollFactor.set();
 			artBox.antialiasing=true;
 			artBox.ID = i;
@@ -261,11 +261,11 @@ class MainMenuState extends MusicBeatState
 		return null;
 	}
 
-	var radiusX = 400;
-	var radiusY = 300;
+	var radiusX = 450;
+	var radiusY = 350;
 
 	var originX = FlxG.width/2;
-	var originY = FlxG.height/2 + 350;
+	var originY = FlxG.height/2 + 300;
 	var lerpSpeed = .125;
 	override function update(elapsed:Float)
 	{
@@ -302,7 +302,6 @@ class MainMenuState extends MusicBeatState
 				but.updateHitbox();
 				but.x = (obj.x - (but.width-obj.width)/2);
 				but.y = (obj.y + (415 * scaleX));
-
 			}
 
 		});

@@ -1344,24 +1344,6 @@
 				"typeOfSection": 0,
 				"sectionNotes": [
 					[
-						165333.333333333,
-						1,
-						0,
-						0
-					],
-					[
-						165583.333333333,
-						1,
-						0,
-						0
-					],
-					[
-						165750,
-						1,
-						9.66338120633736e-12,
-						0
-					],
-					[
 						166000,
 						1,
 						9.54969436861575e-12,
@@ -1383,6 +1365,24 @@
 						166500,
 						1,
 						9.54969436861575e-12,
+						0
+					],
+					[
+						165750,
+						1,
+						9.66338120633736e-12,
+						0
+					],
+					[
+						165583.333333333,
+						1,
+						0,
+						0
+					],
+					[
+						165333.333333333,
+						1,
+						0,
 						0
 					]
 				],
@@ -1436,39 +1436,57 @@
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 180,
 				"changeBPM": false,
 				"mustHitSection": true
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 180,
 				"changeBPM": false,
 				"mustHitSection": true
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 180,
 				"changeBPM": false,
 				"mustHitSection": true
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 180,
 				"changeBPM": false,
 				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 180,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 180
 			},
 			{
 				"lengthInSteps": 16,
@@ -1480,12 +1498,12 @@
 				"mustHitSection": true
 			}
 		],
-		"initialSpeed": 2.25,
+		"initialSpeed": 1,
 		"sliderVelocities": null,
 		"song": "Die-Batsards",
-		"stage": "hillzoneShadow",
 		"validScore": true,
 		"needsVoices": false,
+		"stage": "hillzoneShadow",
 		"speed": 5,
 		"bpm": 180
 	}
