@@ -3,6 +3,7 @@ import ui.*;
 import modchart.*;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 
 class AlphaModifier extends Modifier {
   public static var fadeDistY = 120;
@@ -71,6 +72,13 @@ class AlphaModifier extends Modifier {
     var alphaMod = 1 - getSubmodPercent("alpha",player) * (1-getSubmodPercent("noteAlpha",player));
     note.desiredAlpha = ((alpha>=0.5?1:0)*alphaMod);
 
+    var r:Int = Std.int(getSubmodPercent("flashR",player) * 100);
+    var g:Int = Std.int(getSubmodPercent("flashG",player) * 100);
+    var b:Int = Std.int(getSubmodPercent("flashB",player) * 100);
+
+    var flashColor = FlxColor.fromRGB(r,g,b);
+
+    note.effect.setFlashColor(flashColor);
     note.effect.setFlash(glow);
 
   }
@@ -89,7 +97,7 @@ class AlphaModifier extends Modifier {
   }
 
   override function getSubmods(){
-    var subMods:Array<String> = ["noteAlpha", "alpha", "hidden","hiddenOffset","sudden","suddenOffset","blink","randomVanish","dark"];
+    var subMods:Array<String> = ["noteAlpha", "alpha", "hidden","hiddenOffset","sudden","suddenOffset","blink","randomVanish","dark", "flashR", "flashG", "flashB"];
     return subMods;
   }
 }

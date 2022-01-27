@@ -8,20 +8,84 @@ import openfl.utils.Assets;
 import flixel.FlxG;
 import openfl.Lib;
 import flixel.math.FlxPoint;
+import flixel.util.FlxColor;
 
 using StringTools;
 typedef ShaderEffect = {
   var shader:Dynamic;
 }
 
+class HighEffect {
+  public var shader: HighShader = new HighShader();
+  public function new(){
+    shader.iTime.value = [0];
+    shader.effectiveness.value = [0];
+  }
+  public function setHigh(motherfuckingcocksuckeranalcumfartshit:Float){
+    shader.effectiveness.value = [motherfuckingcocksuckeranalcumfartshit];
+  }
+  public function update(elapsed:Float){
+    shader.iTime.value[0] += elapsed;
+  }
+}
+
+class HighShader extends FlxShader{
+  @:glFragmentSource('
+    #pragma header
+    uniform float iTime;
+    uniform float effectiveness;
+    void main()
+    {
+
+      vec2 fragCoord = gl_FragCoord;
+      vec2 iResolution = openfl_TextureSize;
+
+      float focusPower = (20.0 + sin(iTime*4.)*3.) * effectiveness;
+      int focusDetail = 12;
+
+
+      vec2 uv = fragCoord.xy / iResolution.xy;
+      vec2 focus = uv - vec2(0.5);
+
+
+
+      vec4 outColor;
+      outColor = vec4(0, 0, 0, 0);
+
+
+      for (int i=0; i<focusDetail; i++) {
+        float power = 1.0 - focusPower * (1.0/iResolution.x) * (float(i)*0.75);
+        outColor += flixel_texture2D(bitmap, focus * power + vec2(0.5));
+      }
+
+      outColor.rgba *= 1.0 / float(focusDetail);
+
+      gl_FragColor = outColor;
+    }
+  ')
+  public function new()
+  {
+    super();
+  }
+}
+
 class NoteEffect {
   public var shader: NoteShader = new NoteShader();
   public function new(){
     shader.flash.value = [0];
+    shader.flashR.value=[0];
+    shader.flashG.value=[0];
+    shader.flashB.value=[0];
   }
 
   public function setFlash(val: Float){
     shader.flash.value=[val];
+  }
+
+  public function setFlashColor(val:FlxColor){
+    shader.flashR.value=[val.redFloat];
+    shader.flashG.value=[val.greenFloat];
+    shader.flashB.value=[val.blueFloat];
   }
 
 }
@@ -71,6 +135,9 @@ class NoteShader extends FlxShader
   @:glFragmentSource('
     #pragma header
     uniform float flash;
+    uniform float flashR;
+    uniform float flashG;
+    uniform float flashB;
 
     float scaleNum(float x, float l1, float h1, float l2, float h2){
         return ((x - l1) * (h2 - l2) / (h1 - l1) + l2);
@@ -81,7 +148,7 @@ class NoteShader extends FlxShader
         vec4 col = flixel_texture2D(bitmap, openfl_TextureCoordv);
         vec4 newCol = col;
         if(flash!=0 && col.a>0)
-          newCol = mix(col,vec4(0.0,0.0,0.0,col.a),flash);
+          newCol = mix(col,vec4(flashR,flashG,flashB,col.a),flash);
 
         gl_FragColor = newCol;
     }

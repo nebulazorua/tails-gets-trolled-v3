@@ -218,6 +218,8 @@ class PlayState extends MusicBeatState
 	var lightFadeShader:BuildingEffect;
 	var vcrDistortionHUD:VCRDistortionEffect;
 	var vcrDistortionGame:VCRDistortionEffect;
+
+	var highShader:HighEffect;
 	var phillyTrain:FlxSprite;
 	var trainSound:FlxSound;
 
@@ -304,6 +306,11 @@ class PlayState extends MusicBeatState
 			lua.setGlobalVar("Y","Y");
 			lua.setGlobalVar("width",FlxG.width);
 			lua.setGlobalVar("height",FlxG.height);
+
+			if(highShader!=null)
+				Lua_helper.add_callback(lua.state,"setHighness", function(ejaculation:Float){
+					highShader.setHigh(ejaculation);
+				});
 
 			Lua_helper.add_callback(lua.state,"ruin", function(god:Bool){ // fuck you psych engine for blammed lights
 				// ily shadowmario and psych is cool but please god hardcode blammed lights on blammed :(
@@ -701,42 +708,49 @@ class PlayState extends MusicBeatState
 
 		stage = new Stage(curStage,currentOptions);
 		switch(curStage){
-			case 'school' | 'schoolEvil':
-			noteModifier='pixel';
-			uiModifier='pixel';
-			if(currentOptions.senpaiShaderStrength>0){ // they're on
-				if(vcrDistortionHUD!=null){
-					if(currentOptions.senpaiShaderStrength>=2){ // sempai shader strength
-						switch(songData.chartName.toLowerCase()){
-							case 'roses':
-								vcrDistortionHUD.setVignetteMoving(false);
-								vcrDistortionGame.setVignette(false);
-								vcrDistortionGame.setGlitchModifier(.025);
-								vcrDistortionHUD.setGlitchModifier(.025);
-							case 'thorns':
-								vcrDistortionGame.setGlitchModifier(.2);
-								vcrDistortionHUD.setGlitchModifier(.2);
-							case _: // default
-								vcrDistortionHUD.setVignetteMoving(false);
-								vcrDistortionGame.setVignette(false);
-								vcrDistortionHUD.setDistortion(false);
-								vcrDistortionGame.setDistortion(false);
-						}
-					}else{
-						vcrDistortionHUD.setVignetteMoving(false);
-						vcrDistortionGame.setVignette(false);
-						vcrDistortionHUD.setDistortion(false);
-						vcrDistortionGame.setDistortion(false);
-					}
-					vcrDistortionGame.setNoise(false);
-					vcrDistortionHUD.setNoise(true);
+			case 'highzoneShadow':
+				highShader = new HighEffect();
 
-					modchart.addCamEffect(vcrDistortionGame);
-					modchart.addHudEffect(vcrDistortionHUD);
-					modchart.addNoteEffect(vcrDistortionHUD);
+				modchart.addCamEffect(highShader);
+				modchart.addNoteEffect(highShader);
+			case 'school' | 'schoolEvil':
+				noteModifier='pixel';
+				uiModifier='pixel';
+				if(currentOptions.senpaiShaderStrength>0){ // they're on
+					if(vcrDistortionHUD!=null){
+						if(currentOptions.senpaiShaderStrength>=2){ // sempai shader strength
+							switch(songData.chartName.toLowerCase()){
+								case 'roses':
+									vcrDistortionHUD.setVignetteMoving(false);
+									vcrDistortionGame.setVignette(false);
+									vcrDistortionGame.setGlitchModifier(.025);
+									vcrDistortionHUD.setGlitchModifier(.025);
+								case 'thorns':
+									vcrDistortionGame.setGlitchModifier(.2);
+									vcrDistortionHUD.setGlitchModifier(.2);
+								case _: // default
+									vcrDistortionHUD.setVignetteMoving(false);
+									vcrDistortionGame.setVignette(false);
+									vcrDistortionHUD.setDistortion(false);
+									vcrDistortionGame.setDistortion(false);
+							}
+						}else{
+							vcrDistortionHUD.setVignetteMoving(false);
+							vcrDistortionGame.setVignette(false);
+							vcrDistortionHUD.setDistortion(false);
+							vcrDistortionGame.setDistortion(false);
+						}
+						vcrDistortionGame.setNoise(false);
+						vcrDistortionHUD.setNoise(true);
+
+						modchart.addCamEffect(vcrDistortionGame);
+						modchart.addHudEffect(vcrDistortionHUD);
+						modchart.addNoteEffect(vcrDistortionHUD);
+					}
 				}
-			}
 		}
+
+
 
 		/*ameCam3D = new RaymarchEffect();
 		hudCam3D = new RaymarchEffect();
@@ -882,11 +896,11 @@ class PlayState extends MusicBeatState
 							crosshair.x += 92;
 						}
 						unspawnCrosshairs.push(crosshair);
-						//loadedShotAnims.push(Conductor.getStep(time));
+						loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
 					}else if(data%4==2){
-						loadedShotAnims.push(Conductor.getStep(time));
+						//loadedShotAnims.push(Conductor.getStep(time));
 					}
 				}
 			}
@@ -2038,6 +2052,9 @@ class PlayState extends MusicBeatState
 			vcrDistortionHUD.update(elapsed);
 			vcrDistortionGame.update(elapsed);
 		}
+		if(highShader!=null){
+			highShader.update(elapsed);
+		}
 		modManager.update(elapsed);
 		opponent = opponents.length>0?opponents[opponentIdx]:dad;
 
@@ -2349,6 +2366,11 @@ class PlayState extends MusicBeatState
 					vocals.stop();
 					inst.stop();
 
+					if(highShader!=null){
+						modchart.removeNoteEffect(highShader);
+						modchart.removeCamEffect(highShader);
+					}
+					
 					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y));
 
 					// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
@@ -2440,27 +2462,21 @@ class PlayState extends MusicBeatState
 					crosshair.y = scrollOffset - (timeDiff * scrollDirec);
 
 					if (crosshair.y > FlxG.height || crosshair.wasHit)
-					{
 						crosshair.visible = false;
-					}
 					else
-					{
 						crosshair.visible = true;
-					}
+
 
 					if(crosshair!=null && crosshair.alive){
 						if (crosshair.tooLate)
 						{
-							dad.playAnim("shoot",true);
+							//dad.playAnim("shoot",true);
 							if(!crosshair.wasHit){
 								health = -1; // perish, whore.
 								// set to -1 incase you gain hp right as you miss so you just die immediately
 							}else{
 
 								health -= crosshair.damage;
-
-								camGame.zoom *= 1.35;
-								camGame.shake(0.025,0.1);
 								if(crosshair.damage==0 && boyfriend.noIdleTimer<=0){
 									boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
 									boyfriend.playAnim("dodge",true);
@@ -3400,6 +3416,8 @@ class PlayState extends MusicBeatState
 			if(damage<0)damage=0;
 			crosshair.damage = damage;
 
+			camGame.zoom *= 1.1;
+			camGame.shake(0.025,0.05);
 			boyfriend.noIdleTimer = Conductor.stepCrochet * (damage>0?2:4);
 			boyfriend.playAnim("dodge",true);
 
@@ -3614,7 +3632,6 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
-
 
 		if(luaModchartExists && lua!=null){
 			lua.setGlobalVar("curStep",curStep);

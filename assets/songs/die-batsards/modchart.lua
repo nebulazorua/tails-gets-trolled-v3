@@ -21,7 +21,7 @@ local camshit = {zoom = getVar("defaultCamZoom")} -- work around for tweening ca
 local defaultZoom = getVar("defaultCamZoom");
 
 local charSteps = {
-    {step=1720,char='shadow-crazy'},
+    {step=1719,char='shadow-crazy'},
 }
 local zoomed=false;
 
@@ -45,26 +45,34 @@ function stepHit(step)
             dad:changeCharacter(setChar)
         end
         
-
-        
-        if(step==1720 and dad.curCharacter == 'shadow-crazy')then
+        if(step==1719 and dad.curCharacter == 'shadow-crazy')then
             oldFocus = getVar"focus";
             setVar("focus","dad")
             dad:playAnim("die")
         end
 
-        if(step==1727)then
-            setVar("focus",oldFocus)
+        if(step==2730)then
+            setVar("focus",getVar"turn")
         end
     end
 
-    if(step>=1727 and step<1984 and not zoomed)then
+    if(step>=1719 and step<1984 and not zoomed)then
         zoomed=true;
         tween(camshit,{zoom=1.6},1.5,"inOutQuad")
     end
     if(step>=1984 and zoomed)then
         zoomed=false;
-        tween(camshit,{zoom=defaultZoom},1.5,"inOutQuad")
+        tween(camshit,{zoom=defaultZoom*.85},1.5,"inOutQuad")
+    end
+    if(step==1989)then
+        bf.disabledDance=true;
+        bf:playAnim("fuckingdies")
+    end
+    if(step>=1984 and step<2016 and getVar"focus"~='bf')then
+        setVar("focus","bf")
+    end
+    if(step>=2024 and getVar"focus"~='center')then
+        setVar("focus","center")
     end
     for s = oStep, step do
         if(getOption"ruinMod")then

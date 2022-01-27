@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="shadowbg.png">
+	<!-- Created with Adobe Animate version 18.0.1.115 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Symbol 70000" x="1" y="1" width="2075" height="290" frameX="-8" frameY="0" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70001" x="1" y="1" width="2075" height="290" frameX="-8" frameY="0" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70002" x="1" y="1" width="2075" height="290" frameX="-8" frameY="0" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70003" x="1" y="292" width="2033" height="293" frameX="-34" frameY="-16" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70004" x="1" y="292" width="2033" height="293" frameX="-34" frameY="-16" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70005" x="1" y="292" width="2033" height="293" frameX="-34" frameY="-16" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70006" x="1" y="586" width="2065" height="312" frameX="-23" frameY="-2" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70007" x="1" y="586" width="2065" height="312" frameX="-23" frameY="-2" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70008" x="1" y="586" width="2065" height="312" frameX="-23" frameY="-2" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70009" x="1" y="899" width="2036" height="213" frameX="-28" frameY="-70" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70010" x="1" y="899" width="2036" height="213" frameX="-28" frameY="-70" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70011" x="1" y="899" width="2036" height="213" frameX="-28" frameY="-70" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70012" x="2038" y="899" width="2035" height="330" frameX="0" frameY="-21" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70013" x="2038" y="899" width="2035" height="330" frameX="0" frameY="-21" frameWidth="2088" frameHeight="351"/>
+	<SubTexture name="Symbol 70014" x="2038" y="899" width="2035" height="330" frameX="0" frameY="-21" frameWidth="2088" frameHeight="351"/>
+</TextureAtlas>

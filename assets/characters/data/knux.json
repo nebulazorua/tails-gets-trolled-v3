@@ -1,0 +1,111 @@
+{
+	"charOffset": [
+		-300,
+		35
+	],
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "idle anim",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				-138,
+				413
+			],
+			"fps": 24,
+			"prefix": "up anim",
+			"looped": false,
+			"name": "singUP"
+		},
+		{
+			"offsets": [
+				-68,
+				167
+			],
+			"fps": 24,
+			"prefix": "left anim",
+			"looped": false,
+			"name": "singLEFT"
+		},
+		{
+			"offsets": [
+				-172,
+				64
+			],
+			"fps": 24,
+			"prefix": "right",
+			"looped": false,
+			"name": "singRIGHT"
+		},
+		{
+			"offsets": [
+				-81,
+				-19
+			],
+			"fps": 24,
+			"prefix": "down",
+			"looped": false,
+			"name": "singDOWN"
+		},
+		{
+			"offsets": [
+				-31,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim",
+			"looped": false,
+			"name": "singUP-alt"
+		},
+		{
+			"offsets": [
+				-31,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim",
+			"looped": false,
+			"name": "singDOWN-alt"
+		},
+		{
+			"offsets": [
+				-31,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim",
+			"looped": false,
+			"name": "singLEFT-alt"
+		},
+		{
+			"offsets": [
+				-31,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim",
+			"looped": false,
+			"name": "singRIGHT-alt"
+		}
+	],
+	"spritesheet": "knuckles2",
+	"camOffset": [
+		150,
+		65
+	],
+	"scale": 0.7,
+	"singDur": 6.1,
+	"flipX": false,
+	"iconName": "knuckles",
+	"antialiasing": true,
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFFFF0000"
+}

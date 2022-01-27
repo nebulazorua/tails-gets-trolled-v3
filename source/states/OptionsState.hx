@@ -112,7 +112,8 @@ class OptionsState extends MusicBeatState
 				new StateOption("Judgement Position",new JudgeCustomizationState()),
 			]),
 			new OptionCategory("Tails Gets Trolled",[
-				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not.")
+				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not."),
+				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel")
 			]),
 			new OptionCategory("Performance",[
 				new StepOption("fps","FPS Cap",30,30,360,"","","The FPS the game tries to run at",true,function(value:Float,step:Float){

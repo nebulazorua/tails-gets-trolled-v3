@@ -323,9 +323,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         grass.screenCenter();
         grass.offset.set(-150,100);
         add(grass);
-
-        centerX = bg.getMidpoint().x;
-        centerY = bg.getMidpoint().y;
       case 'highzoneShadow':
         gfVersion = 'gfbest';
         bfPosition.x += 325;
@@ -345,9 +342,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         stageFront.scrollFactor.set(1, 1);
         stageFront.active = false;
         add(stageFront);
-
-        centerX = bg.getMidpoint().x;
-        centerY = bg.getMidpoint().y;
 
 
       case 'hillzoneDarkSonic':

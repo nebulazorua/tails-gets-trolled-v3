@@ -22,7 +22,7 @@ class Crosshair extends FlxSprite {
     else
       canBeHit = false;
 
-    if(diff<= -goodWindow){
+    if(diff<=-hitbox){
       tooLate=true;
     }
   }

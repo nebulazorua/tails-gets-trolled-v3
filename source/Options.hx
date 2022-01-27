@@ -122,6 +122,7 @@ class Options
 	public var judgeY:Float = 0;
 	public var shotsGetJudged:Bool = false;
 	public var fcBasedComboColor:Bool = false;
+	public var getHigh:Bool = true;
 	public var ruinMod:Bool = false;
 
 	// performance
