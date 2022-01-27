@@ -28,8 +28,11 @@ import flixel.util.FlxTimer;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
+import math.Random;
 import ui.*;
 using StringTools;
+import Shaders;
+import openfl.filters.ShaderFilter;
 
 class TitleState extends MusicBeatState
 {
@@ -79,11 +82,10 @@ class TitleState extends MusicBeatState
 
 	var logoBl:FlxSprite;
 	var gfDance:FlxSprite;
-	var speaker:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
-	var bg:FlxSprite;
-	var bgLit:FlxSprite;
+	var bg:Stage;
+	var highShader:HighEffect;
 
 	function startIntro()
 	{
@@ -100,58 +102,32 @@ class TitleState extends MusicBeatState
 			// music.play();
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(180);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		// bg.antialiasing = true;
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
+
+		bg = new Stage(Random.fromArray(Stage.stageNames),EngineData.options);// new FlxSprite(FlxG.width, FlxG.height).loadGraphic(Paths.image('titleBG'));
 		add(bg);
 
+		if(bg.curStage=='highzoneShadow'){
+			highShader = new HighEffect();
+			FlxG.camera.setFilters([new ShaderFilter(highShader.shader)]);
+		}
 
-		bg = new FlxSprite(FlxG.width, FlxG.height).loadGraphic(Paths.image('titleBG'));
-		bg.updateHitbox();
-		bg.screenCenter();
-		bg.antialiasing = true;
-		add(bg);
-		bg.visible = true;
-
-		bgLit = new FlxSprite(FlxG.width, FlxG.height).loadGraphic(Paths.image('titleBGLit'));
-		bgLit.updateHitbox();
-		bgLit.screenCenter();
-		bgLit.antialiasing = true;
-		add(bgLit);
-		bgLit.visible = false;
-
-		logoBl = new FlxSprite(285, -70);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		var titleNames = Paths.getDirs("titles");
+		var titleShit = Random.fromArray(titleNames);
+		logoBl = new FlxSprite(0);
+		logoBl.frames = Paths.getSparrowAtlas('titles/${titleShit}/logoBumpin');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
 		logoBl.setGraphicSize(Std.int(logoBl.width * 0.72));
 		logoBl.scrollFactor.set();
 		logoBl.updateHitbox();
-
-		speaker = new FlxSprite(FlxG.width * 0.5, FlxG.height * 0.4);
-		speaker.frames = Paths.getSparrowAtlas('titleSpeaker');
-		speaker.animation.addByPrefix('lit', 'speakers', 24);
-		speaker.animation.addByPrefix('normal', 'alt speakers', 24);
-		speaker.screenCenter(X);
-		speaker.setGraphicSize(Std.int(speaker.width * 0.72));
-		speaker.antialiasing = true;
-		add(speaker);
-
-		speaker.animation.play('normal',true);
-
+		logoBl.screenCenter(XY);
 
 		//i know its wasteful but im a lazy ass
 
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
-		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
-		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
 		titleText = new FlxSprite(FlxG.width * 0.099, FlxG.height * 0.825);
 
 		add(logoBl);
@@ -239,6 +215,10 @@ class TitleState extends MusicBeatState
 				Conductor.songPosition += elapsed*1000;
 				songPos=Conductor.songPosition;
 			}
+
+			if(highShader!=null)
+				highShader.update(elapsed);
+
 			// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 			if (FlxG.keys.justPressed.F)
@@ -276,9 +256,7 @@ class TitleState extends MusicBeatState
 
 				titleText.animation.play('press',true);
 
-				speaker.animation.play('lit',true);
 				//bg.visible = false;
-				bgLit.visible = true;
 
 
 				FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
@@ -355,12 +333,6 @@ class TitleState extends MusicBeatState
 		super.beatHit();
 
 		logoBl.animation.play('bump');
-		danceLeft = !danceLeft;
-
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft');
 
 		FlxG.log.add(curBeat);
 
@@ -368,48 +340,30 @@ class TitleState extends MusicBeatState
 		{
 			case 1:
 				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
-			// credTextShit.text += '\npresent...';
-			// credTextShit.addText();
 			case 4:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = 'In association \nwith';
-			// credTextShit.screenCenter();
 			case 5:
 				createCoolText(['In association', 'with']);
 			case 7:
 				addMoreText('newgrounds');
 				ngSpr.visible = true;
-			// credTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;
-			// credTextShit.visible = false;
-
-			// credTextShit.text = 'Shoutouts Tom Fulp';
-			// credTextShit.screenCenter();
 			case 9:
 				createCoolText([curWacky[0]]);
-			// credTextShit.visible = true;
 			case 11:
 				addMoreText(curWacky[1]);
-			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();
-			// credTextShit.visible = false;
-			// credTextShit.text = "Friday";
-			// credTextShit.screenCenter();
 			case 13:
 				addMoreText('Friday');
-			// credTextShit.visible = true;
 			case 14:
 				addMoreText('Night');
-			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Funkin');
 
 			case 16:
 				skipIntro();

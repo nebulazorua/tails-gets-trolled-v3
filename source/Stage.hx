@@ -31,7 +31,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
   ];
 
   public static var stageNames:Array<String> = [
-    "stage",
     "hillzoneTails",
     "hillzoneTailsSwag",
     "hillzoneSonic",
@@ -364,7 +363,7 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         gfVersion = 'gfbest';
         bfPosition.x += 325;
         dadPosition.x -= 0;
-        defaultCamZoom = 1;
+        defaultCamZoom = .9;
         curStage = 'highzoneShadow';
         var bg:FlxSprite = new FlxSprite(-350, -200).loadGraphic(Paths.image('stageback_HS','chapter3'));
         bg.antialiasing = true;
