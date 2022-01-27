@@ -78,6 +78,14 @@ class SidemenuState extends MusicBeatState
 		changeSelection(-event.delta);
 	}
 
+	var players:Map<String,String> = [
+		"tails" => "bf",
+		"sonic" => "bf-better",
+		"shadow" => "bf-betterer",
+		"knux" => "bf-betterer"
+	];
+
+
 	override function create()
 	{
 		super.create();
@@ -103,26 +111,26 @@ class SidemenuState extends MusicBeatState
 		backdrops = new FlxBackdrop(Paths.image('freeplay/bluestuff'), 0.2, 0.2, true, true);
 		backdrops.x -= 35;
 		add(backdrops);
-		new FlxTimer().start(0.0000001, function(tmr:FlxTimer){
-			backdrops.y += 1;
-		},0);
 
 		var white = new NoteEffect();
 
-		bf = new Boyfriend(0,0, "bf-betterer");
-		bf.screenCenter();
-		bf.x += 490;
-		bf.y += 120;
+		var opp = Random.fromArray(['shadow','sonic','tails','knux']);
+		var player = players.get(opp);
+		bf = new Boyfriend(0,0, player);
 		bf.setGraphicSize(Std.int(bf.width * 1.25 * bf.charData.scale));
+		bf.updateHitbox();
+		bf.screenCenter();
+		bf.x += 465 + bf.posOffset.x;
+		bf.y += 100 + bf.posOffset.y;
 		bf.shader = white.shader;
 		bf.antialiasing = true;
 		white.setFlash(1);
 		add(bf);
 
-		p2 = new Character(0,0, Random.fromArray(['shadow','sonic','tails']));
+		p2 = new Character(0,0, opp);
 		p2.screenCenter();
 		p2.shader = white.shader;
-		p2.x -= 600;
+		p2.x -= 510;
 		p2.y -= 150;
 		p2.setGraphicSize(Std.int(p2.width * 1.18));
 		if (p2.curCharacter == 'shadow')
@@ -154,10 +162,13 @@ class SidemenuState extends MusicBeatState
 		{
 			case '0':
 				FreeplayState.freeplayList = EngineData.freeplaymain;
+				FreeplayState.category = 'story';
 			case '1':
 				FreeplayState.freeplayList = EngineData.freeplayremix;
+				FreeplayState.category = 'remixes';
 			case '3':
 				FreeplayState.freeplayList = EngineData.freeplayfanwork;
+				FreeplayState.category = 'fanworks';
 		}
 		FlxG.switchState(new FreeplayState());
 	}
@@ -167,6 +178,7 @@ class SidemenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		backdrops.y += 1*(elapsed/(1/120));
 		Conductor.songPosition = FlxG.sound.music.time;
 
 		if (FlxG.sound.music.volume < 0.7)

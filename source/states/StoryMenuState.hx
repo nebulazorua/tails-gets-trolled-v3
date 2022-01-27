@@ -144,9 +144,13 @@ class StoryMenuState extends MusicBeatState
 					}else{
 						sound = FlxG.sound.play(Paths.sound("notfinished"),2);
 						sound.onComplete = function(){
-							sound.stop();
-							sound.destroy();
-							sound=null;
+							if(sound!=null){
+								FlxG.sound.defaultSoundGroup.remove(sound);
+								sound.group=null;
+								sound.stop();
+								sound.destroy();
+								sound=null;
+							}
 						}
 						FlxG.camera.shake(0.005,0.25,null,true,X);
 					}
@@ -263,6 +267,13 @@ class StoryMenuState extends MusicBeatState
 	override function switchTo(next:FlxState){
 		// Do all cleanup of stuff here! This makes it so you dont need to copy+paste shit to every switchState
 		//FlxG.stage.removeEventListener(MouseEvent.MOUSE_WHEEL,scroll);
+		if(sound!=null){
+			FlxG.sound.defaultSoundGroup.remove(sound);
+			sound.group=null;
+			sound.stop();
+			sound.destroy();
+			sound=null;
+		}
 
 		return super.switchTo(next);
 	}

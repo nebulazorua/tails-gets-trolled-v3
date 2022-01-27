@@ -283,45 +283,39 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         foreground.add(stageCurtains);
       case 'hillzoneShadow':
-        defaultCamZoom = 1;
-        bfPosition.x += 265;
-        bfPosition.y -= 50;
-        //dadPosition.x -= 100;
-        dadPosition.x -= 125;
-        dadPosition.y -= 50;
+        defaultCamZoom = .9;
+        bfPosition.x = 1029;
+        bfPosition.y = 384;
 
-        gfPosition.y -= 75;
+        //dadPosition.x -= 100;
+        dadPosition.x = -125;
+        dadPosition.y = -10;
+
+        gfPosition.x = 305;
+        gfPosition.y = 10;
         gfVersion = 'gfbest';
         curStage = 'hillzoneShadow';
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg','chapter3'));
+        var bg:FlxSprite = new FlxSprite(-835,-550).loadGraphic(Paths.image('shadowbg','chapter3'));
         bg.antialiasing = true;
         bg.scrollFactor.set(1.05, 1.05);
         bg.active = false;
-        bg.screenCenter();
-        bg.offset.set(-150,100);
         add(bg);
 
-        var thisthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg3','chapter3'));
+        var thisthing:FlxSprite = new FlxSprite(-880,-730).loadGraphic(Paths.image('shadowbg3','chapter3'));
         thisthing.antialiasing = true;
         thisthing.scrollFactor.set(1.025, 1.025);
         thisthing.active = false;
-        thisthing.screenCenter();
-        thisthing.offset.set(-150,100);
         add(thisthing);
 
-        var thisotherthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg2','chapter3'));
+        var thisotherthing:FlxSprite = new FlxSprite(-815,-375).loadGraphic(Paths.image('shadowbg2','chapter3'));
         thisotherthing.antialiasing = true;
         thisotherthing.scrollFactor.set(1.025, 1.025);
         thisotherthing.active = false;
-        thisotherthing.screenCenter();
-        thisotherthing.offset.set(-150,100);
         add(thisotherthing);
 
-        var grass:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg4','chapter3'));
+        var grass:FlxSprite = new FlxSprite(-815,450).loadGraphic(Paths.image('shadowbg4','chapter3'));
         grass.antialiasing = true;
         grass.active = false;
-        grass.screenCenter();
-        grass.offset.set(-150,100);
         add(grass);
       case 'highzoneShadow':
         gfVersion = 'gfbest';

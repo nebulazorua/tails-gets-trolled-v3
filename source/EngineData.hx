@@ -25,13 +25,13 @@ class EngineData {
     new SongData("No Villains",'sonic',1,'no-villains'),
     new SongData("Die Batsards",'shadow',2,'die-batsards'),
     new SongData("High Shovel",'shadow',0,'high-shovel'),
-    new SongData("Taste For Blood",'sonic-dark',0,'taste-for-blood'),
+    new SongData("TFB",'sonic-dark',0,'taste-for-blood'),
   ];
   public static var freeplayremix:Array<SongData> = [
     new SongData("Tsuraran Fox",'tails',1,'tsuraran-fox'),
     new SongData("No Heroes",'sonic',1,'no-heroes'),
-    new SongData("No Bitches Matasaki",'sonic',1,'no-bitches-matasaki'),
-    new SongData("No Bitches Penkaru",'sonic',1,'no-bitches-penkaru'),
+    new SongData("No Bitches M",'sonic',1,'no-bitches-matasaki'),
+    new SongData("No Bitches P",'sonic',1,'no-bitches-penkaru'),
   ];
   public static var freeplayfanwork:Array<SongData> = [
     new SongData("Groovy Fox",'tails',0,'groovy-fox'),

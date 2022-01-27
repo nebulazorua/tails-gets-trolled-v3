@@ -952,7 +952,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 
-		botplayTxt = new FlxText(0, 80, 0, "[BOTPLAY]", 30);
+		botplayTxt = new FlxText(0, 80, 0, "[BUTTPLUG]", 30);
 		botplayTxt.visible = ScoreUtils.botPlay;
 		botplayTxt.cameras = [camHUD];
 		botplayTxt.screenCenter(X);
@@ -2370,7 +2370,7 @@ class PlayState extends MusicBeatState
 						modchart.removeNoteEffect(highShader);
 						modchart.removeCamEffect(highShader);
 					}
-					
+
 					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y));
 
 					// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));

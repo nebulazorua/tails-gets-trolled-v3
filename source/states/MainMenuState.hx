@@ -27,6 +27,7 @@ import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
 import flixel.util.FlxSort;
+import flixel.addons.display.FlxBackdrop;
 
 class MainMenuState extends MusicBeatState
 {
@@ -37,6 +38,7 @@ class MainMenuState extends MusicBeatState
 	var artBoxes:FlxTypedGroup<FNFSprite>;
 	var layering:FlxTypedGroup<FNFSprite>;
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'promo'];
+	var backdrops:FlxBackdrop;
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -89,6 +91,10 @@ class MainMenuState extends MusicBeatState
 				magenta.visible=true;
 			}
 
+			FlxTween.tween(FlxG.camera, {zoom: 1.1}, 0.85, {
+				ease: FlxEase.quartOut
+			});
+
 			menuItems.forEach(function(spr:FlxSprite)
 			{
 				if (curSelected != spr.ID)
@@ -112,11 +118,8 @@ class MainMenuState extends MusicBeatState
 							{
 								case 'story mode':
 									FlxG.switchState(new StoryMenuState());
-									trace("Story Menu Selected");
 								case 'freeplay':
 									FlxG.switchState(new SidemenuState());
-									trace("Freeplay Menu Selected");
-
 								case 'options':
 									FlxG.switchState(new OptionsState());
 							}
@@ -129,11 +132,8 @@ class MainMenuState extends MusicBeatState
 							{
 								case 'story mode':
 									FlxG.switchState(new StoryMenuState());
-									trace("Story Menu Selected");
 								case 'freeplay':
 									FlxG.switchState(new SidemenuState());
-									trace("Freeplay Menu Selected");
-
 								case 'options':
 									FlxG.switchState(new OptionsState());
 							}
@@ -161,27 +161,27 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		/*var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.13;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = true;
-		add(bg);
+		add(bg);*/
+
+		backdrops = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
+		backdrops.color = 0xFF467aeb;
+		backdrops.x -= 35;
+		add(backdrops);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuBGMagenta'));
-		magenta.scrollFactor.x = 0;
-		magenta.scrollFactor.y = 0.13;
-		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
-		magenta.updateHitbox();
-		magenta.screenCenter();
+		magenta = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
 		magenta.visible = false;
-		magenta.antialiasing = true;
-
+		magenta.color = 0xFFe84a5d;
+		magenta.x -= 35;
 		add(magenta);
 
 		menuItems = new FlxTypedGroup<FNFSprite>();
@@ -336,6 +336,10 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 
+		backdrops.x += .5*(elapsed/(1/120));
+		backdrops.y += .5*(elapsed/(1/120));
+		magenta.x = backdrops.x;
+		magenta.y = backdrops.y;
 		super.update(elapsed);
 
 	}
