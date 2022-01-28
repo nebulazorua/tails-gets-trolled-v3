@@ -138,9 +138,62 @@ class MainMenuState extends MusicBeatState
 	}
 
 	function pressSideMenu(which:Int){
+		selectedSomethin = true;
+		FlxG.sound.play(Paths.sound('confirmMenu'));
+		if(OptionUtils.options.menuFlash){
+			FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+		}else{
+			magenta.visible=true;
+		}
+
+
+		menuItems.forEach(function(spr:FlxSprite)
+		{
+			FlxTween.tween(spr, {alpha: 0}, 0.4, {
+				ease: FlxEase.quadOut,
+				onComplete: function(twn:FlxTween)
+				{
+					spr.kill();
+				}
+			});
+		});
+
+		sideMenuItems.forEach(function(spr:FlxSprite)
+		{
+			if (which != spr.ID)
+			{
+				FlxTween.tween(spr, {alpha: 0}, 0.4, {
+					ease: FlxEase.quadOut,
+					onComplete: function(twn:FlxTween)
+					{
+						spr.kill();
+					}
+				});
+			}
+			else
+			{
+				if(OptionUtils.options.menuFlash){
+					FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+					{
+						sideAction(which);
+					});
+				}else{
+					new FlxTimer().start(1, function(tmr:FlxTimer){
+						sideAction(which);
+					});
+				}
+			}
+		});
+	}
+
+	function sideAction(which:Int){
 		switch(which){
+			case 0:
+				FlxG.switchState(new MainMenuState()); // credits
+			case 1:
+				FlxG.switchState(new MainMenuState()); // jukebox
 			case 2:
-				FlxG.switchState(new GFSelectState());
+				FlxG.switchState(new GFSelectState()); // gf
 		}
 	}
 
@@ -165,6 +218,17 @@ class MainMenuState extends MusicBeatState
 
 			FlxTween.tween(FlxG.camera, {zoom: 1.1}, 0.85, {
 				ease: FlxEase.quartOut
+			});
+
+			sideMenuItems.forEach(function(spr:FlxSprite)
+			{
+				FlxTween.tween(spr, {alpha: 0}, 0.4, {
+					ease: FlxEase.quadOut,
+					onComplete: function(twn:FlxTween)
+					{
+						spr.kill();
+					}
+				});
 			});
 
 			menuItems.forEach(function(spr:FlxSprite)
@@ -359,6 +423,8 @@ class MainMenuState extends MusicBeatState
 
 			obj.z = (idx-curSelected);//FlxMath.lerp(obj.z,(idx-curSelected),Main.adjustFPS(lerpSpeed));
 			obj.zIndex = -obj.y;
+			obj.visible = but.visible;
+			obj.alpha = but.alpha;
 
 			var input = (idx - curSelected) * FlxAngle.asRadians(360 / menuItems.length);
 			var desiredX = FlxMath.fastSin(input)*radiusX;
@@ -422,6 +488,8 @@ class MainMenuState extends MusicBeatState
 		backdrops.y += .5*(elapsed/(1/120));
 		magenta.x = backdrops.x;
 		magenta.y = backdrops.y;
+
+		backdrops.visible = !magenta.visible;
 		super.update(elapsed);
 
 	}
