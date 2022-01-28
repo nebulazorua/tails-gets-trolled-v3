@@ -140,15 +140,17 @@ class StoryMenuState extends MusicBeatState
 					pissOff=0;
 					if(sound!=null && sound.playing==true){
 						FlxG.sound.play(Paths.sound("ANGRY_TEXT_BOX"),2);
-						new FlxTimer().start(.5, function(tmr:FlxTimer){
-							System.exit(0);
-						});
+						YourMomState.isSo = 'fat';
 					}else{
 						sound = FlxG.sound.play(Paths.sound("notfinished"),2);
 						sound.onComplete = function(){
+							if(sound!=null){
+								FlxG.sound.defaultSoundGroup.remove(sound);
+								sound.group=null;
 								sound.stop();
 								sound.destroy();
 								sound=null;
+							}
 						}
 						FlxG.camera.shake(0.005,0.25,null,true,X);
 					}
@@ -165,7 +167,6 @@ class StoryMenuState extends MusicBeatState
 			var isChap = isChapter(object);
 			if(isChap){
 				if(tweens[object]!=null)tweens[object].cancel();
-
 				tweens[object] = FlxTween.tween(object, {"scale.x": 1.05,"scale.y": 1.05}, .25, {
 					ease: FlxEase.quadInOut
 				});
@@ -266,6 +267,13 @@ class StoryMenuState extends MusicBeatState
 	override function switchTo(next:FlxState){
 		// Do all cleanup of stuff here! This makes it so you dont need to copy+paste shit to every switchState
 		//FlxG.stage.removeEventListener(MouseEvent.MOUSE_WHEEL,scroll);
+		if(sound!=null){
+			FlxG.sound.defaultSoundGroup.remove(sound);
+			sound.group=null;
+			sound.stop();
+			sound.destroy();
+			sound=null;
+		}
 
 		return super.switchTo(next);
 	}

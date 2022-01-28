@@ -31,7 +31,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
   ];
 
   public static var stageNames:Array<String> = [
-    "stage",
     "hillzoneTails",
     "hillzoneTailsSwag",
     "hillzoneSonic",
@@ -47,6 +46,13 @@ class Stage extends FlxTypedGroup<FlxBasic> {
   var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
 
+
+  // shadow bg
+  var knuckles:FlxSprite;
+  var tails:FlxSprite;
+
+  public var knuxShocked:FlxSprite;
+  public var tailsShocked:FlxSprite;
 
   // philly bg
   public var lightFadeShader:BuildingEffect;
@@ -189,12 +195,12 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
   }
 
-  public function new(stage:String,currentOptions:Options){
+  public function new(stage:String,currentOptions:Options, distractions:Bool=true){
     super();
     if(stage=='halloween')stage='spooky'; // for kade engine shenanigans
     curStage=stage;
     this.currentOptions=currentOptions;
-
+    doDistractions = distractions;
     overlay.scrollFactor.set(0,0); // so the "overlay" layer stays static
 
     switch (stage){
@@ -283,54 +289,83 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         foreground.add(stageCurtains);
       case 'hillzoneShadow':
-        defaultCamZoom = 1;
-        bfPosition.x += 265;
-        bfPosition.y -= 50;
-        //dadPosition.x -= 100;
-        dadPosition.x -= 125;
-        dadPosition.y -= 50;
+        defaultCamZoom = .9;
+        bfPosition.x = 1029;
+        bfPosition.y = 384;
 
-        gfPosition.y -= 75;
+        //dadPosition.x -= 100;
+        dadPosition.x = -125;
+        dadPosition.y = -10;
+
+        gfPosition.x = 305;
+        gfPosition.y = 10;
         gfVersion = 'gfbest';
         curStage = 'hillzoneShadow';
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg','chapter3'));
+        var bg:FlxSprite = new FlxSprite(-835,-550).loadGraphic(Paths.image('shadowbg','chapter3'));
         bg.antialiasing = true;
         bg.scrollFactor.set(1.05, 1.05);
         bg.active = false;
-        bg.screenCenter();
-        bg.offset.set(-150,100);
         add(bg);
 
-        var thisthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg3','chapter3'));
+        var thisthing:FlxSprite = new FlxSprite(-880,-730).loadGraphic(Paths.image('shadowbg3','chapter3'));
         thisthing.antialiasing = true;
         thisthing.scrollFactor.set(1.025, 1.025);
         thisthing.active = false;
-        thisthing.screenCenter();
-        thisthing.offset.set(-150,100);
         add(thisthing);
 
-        var thisotherthing:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg2','chapter3'));
+        var thisotherthing:FlxSprite = new FlxSprite(-815,-375).loadGraphic(Paths.image('shadowbg2','chapter3'));
         thisotherthing.antialiasing = true;
         thisotherthing.scrollFactor.set(1.025, 1.025);
         thisotherthing.active = false;
-        thisotherthing.screenCenter();
-        thisotherthing.offset.set(-150,100);
         add(thisotherthing);
 
-        var grass:FlxSprite = new FlxSprite().loadGraphic(Paths.image('shadowbg4','chapter3'));
+        var grass:FlxSprite = new FlxSprite(-815,450).loadGraphic(Paths.image('shadowbg4','chapter3'));
         grass.antialiasing = true;
         grass.active = false;
-        grass.screenCenter();
-        grass.offset.set(-150,100);
         add(grass);
 
-        centerX = bg.getMidpoint().x;
-        centerY = bg.getMidpoint().y;
+        if(doDistractions){
+          tails = new FlxSprite();
+          tails.frames = Paths.getSparrowAtlas('tails_bg','chapter3');
+          tails.animation.addByPrefix("tails","tails bg scared",6,false);
+          tails.animation.play("tails",true);
+          tails.x = 651;
+          tails.y = 70;
+          add(tails);
+
+          knuckles = new FlxSprite();
+          knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
+          knuckles.animation.addByPrefix("knuckles","knuckles bg scared",12,false);
+          knuckles.animation.play("knuckles",true);
+          knuckles.x = 323;
+          knuckles.y = 94;
+          add(knuckles);
+
+          tailsShocked = new FlxSprite();
+          tailsShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+          tailsShocked.animation.addByPrefix("shock","scared mark",6,false);
+          tailsShocked.animation.play("shock",true);
+          tailsShocked.x = 773;
+          tailsShocked.y = 5;
+          add(tailsShocked);
+
+          knuxShocked = new FlxSprite();
+          knuxShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+          knuxShocked.animation.addByPrefix("shock","scared mark",6,false);
+          knuxShocked.animation.play("shock",true);
+          knuxShocked.x = 300;
+          knuxShocked.y = -35;
+          add(knuxShocked);
+
+          boppers.push([knuckles,"knuckles",2]);
+          boppers.push([tails,"tails",2]);
+        }
+
       case 'highzoneShadow':
         gfVersion = 'gfbest';
         bfPosition.x += 325;
         dadPosition.x -= 0;
-        defaultCamZoom = 1;
+        defaultCamZoom = .9;
         curStage = 'highzoneShadow';
         var bg:FlxSprite = new FlxSprite(-350, -200).loadGraphic(Paths.image('stageback_HS','chapter3'));
         bg.antialiasing = true;
@@ -345,9 +380,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         stageFront.scrollFactor.set(1, 1);
         stageFront.active = false;
         add(stageFront);
-
-        centerX = bg.getMidpoint().x;
-        centerY = bg.getMidpoint().y;
 
 
       case 'hillzoneDarkSonic':
@@ -420,60 +452,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
       d.dance();
     }
 
-    if(doDistractions){
-
-      switch(curStage){
-        case 'limo':
-          if (FlxG.random.bool(10) && fastCarCanDrive)
-            fastCarDrive();
-        case 'spooky':
-          if (FlxG.random.bool(10) && beat > lightningStrikeBeat + lightningOffset)
-          {
-            lightningStrikeBeat = beat;
-            lightningStrikeShit();
-          }
-        case 'philly':
-          if (!trainMoving)
-            trainCooldown += 1;
-
-          if (beat%4== 0)
-          {
-            phillyCityLights.forEach(function(light:FlxSprite)
-            {
-              light.visible = false;
-            });
-
-            curLight = FlxG.random.int(0, phillyCityLights.length - 1);
-
-            phillyCityLights.members[curLight].visible = true;
-            phillyCityLights.members[curLight].alpha = 1;
-            lightFadeShader.setAlpha(0);
-          }
-
-          if (beat % 8 == 4 && FlxG.random.bool(30) && !trainMoving && trainCooldown > 8)
-          {
-            trainCooldown = FlxG.random.int(-4, 0);
-            trainStart();
-          }
-      }
-    }
   }
 
   override function update(elapsed:Float){
-    switch(curStage){
-      case 'philly':
-        if (trainMoving)
-        {
-          trainFrameTiming += elapsed;
-
-          if (trainFrameTiming >= 1 / 24)
-          {
-            updateTrainPos();
-            trainFrameTiming = 0;
-          }
-        }
-        lightFadeShader.addAlpha((Conductor.crochet / 1000) * FlxG.elapsed * 1.5);
-    }
 
 
     super.update(elapsed);

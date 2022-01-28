@@ -3,6 +3,10 @@
 		0,
 		300
 	],
+	"camOffset": [
+		-100,
+		-200
+	],
 	"singDur": 4,
 	"spritesheet": "BOYFRIEND3",
 	"anims": [

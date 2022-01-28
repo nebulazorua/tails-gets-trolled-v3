@@ -76,7 +76,7 @@ class Highscore
 		// TODO: make ^ this work so highscore shit is dependant on judge windows
 
 
-		return daSong;
+		return daSong.toLowerCase();
 	}
 
 	public static function getScore(song:String, diff:Int):Int

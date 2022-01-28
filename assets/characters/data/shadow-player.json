@@ -1,0 +1,161 @@
+{
+	"charOffset": [
+		-100,
+		-335
+	],
+	"camOffset": [
+		100,
+		250
+	],
+	"scale": 0.8,
+	"singDur": 6.1,
+	"spritesheet": "shadow",
+	"anims": [
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "idle",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"prefix": "shoot",
+			"name": "shoot",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singRIGHT-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singLEFT-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singUP-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singDOWN-alt",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singDOWNmiss",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singRIGHTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singLEFTmiss",
+			"looped": false
+		},
+		{
+			"prefix": "shoot",
+			"offsets": [
+				275,
+				78
+			],
+			"fps": 24,
+			"name": "singUPmiss",
+			"looped": false
+		}
+	],
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "shadow",
+	"beatDancer": false,
+	"healthColor": "0xFF232341",
+	"format": "andromeda"
+}

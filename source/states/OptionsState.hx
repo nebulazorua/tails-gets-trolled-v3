@@ -16,6 +16,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import Options;
 import flixel.graphics.FlxGraphic;
 import ui.*;
+import flixel.addons.display.FlxBackdrop;
 using StringTools;
 
 #if desktop
@@ -31,6 +32,8 @@ class OptionsState extends MusicBeatState
 	private var optionDesc:FlxText;
 	private var curSelected:Int = 0;
 	public static var category:Dynamic;
+	var backdrops:FlxBackdrop;
+	var nebFur:FlxBackdrop;
 
 	private function createDefault(){
 		defCat = new OptionCategory("Default",[
@@ -74,8 +77,6 @@ class OptionsState extends MusicBeatState
 				new ToggleOption("allowNoteModifiers","Allow note modifiers","Whether note modifiers (e.g pixel notes in week 6) get used"),
 				new StepOption("backTrans","BG Darkness",10,0,100,"%","","How dark the background is",true),
 				new ScrollOption("staticCam","Camera Focus","Who the camera should focus on",0,OptionUtils.camFocuses.length-1,OptionUtils.camFocuses),
-				new ToggleOption("oldMenus","Vanilla Menus","Forces the vanilla menus to be used"),
-				new ToggleOption("oldTitle","Vanilla Title Screen","Forces the vanilla title to be used"),
 				new ToggleOption("healthBarColors","Healthbar Colours","Whether the healthbar colour changes with the character"),
 				new ToggleOption("persistentCombo","Combo doesnt fade","Combo stays on screen instead of fading out"),
 				new ToggleOption("onlyScore","Minimal Information","Only shows your score below the hp bar"),
@@ -112,7 +113,8 @@ class OptionsState extends MusicBeatState
 				new StateOption("Judgement Position",new JudgeCustomizationState()),
 			]),
 			new OptionCategory("Tails Gets Trolled",[
-				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not.")
+				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not."),
+				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel")
 			]),
 			new OptionCategory("Performance",[
 				new StepOption("fps","FPS Cap",30,30,360,"","","The FPS the game tries to run at",true,function(value:Float,step:Float){
@@ -142,16 +144,20 @@ class OptionsState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Changing options", null);
 		#end
+
+		backdrops = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
+		backdrops.color = 0xFF9145de;
+		backdrops.x -= 35;
+		add(backdrops);
+
+		nebFur = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
+		nebFur.color = 0xFF616161;
+		nebFur.alpha = 0;
+		nebFur.x -= 35;
+		add(nebFur);
+
 		createDefault();
 		category=defCat;
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBG"));
-
-		menuBG.color = 0xFFA271DE;
-		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
-		menuBG.updateHitbox();
-		menuBG.screenCenter();
-		menuBG.antialiasing = true;
-		add(menuBG);
 
 		optionText = new FlxTypedGroup<Option>();
 		add(optionText);
@@ -234,6 +240,12 @@ class OptionsState extends MusicBeatState
 			back = controls.BACK;
 		}
 
+		backdrops.x += .5*(elapsed/(1/120));
+		backdrops.y -= .5*(elapsed/(1/120));
+
+		nebFur.x = backdrops.x;
+		nebFur.y = backdrops.y;
+
 		if (upP)
 		{
 			changeSelection(-1);
@@ -258,6 +270,13 @@ class OptionsState extends MusicBeatState
 
 			}
 		}
+
+		if(category!=defCat)
+			nebFur.alpha = FlxMath.lerp(nebFur.alpha,1,Main.adjustFPS(0.1));
+		else
+			nebFur.alpha = FlxMath.lerp(nebFur.alpha,0,Main.adjustFPS(0.1));
+
+
 		if(option.type!="Category"){
 			if(leftP){
 				if(option.left()) {

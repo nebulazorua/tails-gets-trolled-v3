@@ -258,9 +258,8 @@ class CharacterEditorState extends MusicBeatState {
     FlxCamera.defaultCameras = [camGame];
     Conductor.changeBPM(160);
     FlxG.sound.playMusic(Paths.music('breakfast','shared'));
-    stage = new Stage('stage',EngineData.options);
+    stage = new Stage('stage',EngineData.options, false);
     add(stage);
-    stage.doDistractions=false;
 
     healthBar = new Healthbar(0,FlxG.height*.9,'bf','bf');
     healthBar.value = 2;

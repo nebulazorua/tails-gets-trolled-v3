@@ -27,7 +27,7 @@ import ui.*;
 import Sys;
 import sys.FileSystem;
 #end
-
+import flixel.addons.display.FlxBackdrop;
 
 using StringTools;
 
@@ -53,6 +53,9 @@ class FreeplayState extends MusicBeatState
 	var lerpScore:Int = 0;
 	var curDifficultyIdx:Int = 0;
 	var intendedScore:Int = 0;
+	var backdrops:FlxBackdrop;
+
+	public static var category:String = 'story';
 
 	var songNames:Array<String>=[];
 
@@ -217,8 +220,20 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/lists/${category}/bg'));
 		add(bg);
+
+		backdrops = new FlxBackdrop(Paths.image('freeplay/lists/${category}/grid'), 0.2, 0.2, true, true);
+		backdrops.alpha = 0.2;
+		backdrops.x -= 35;
+		add(backdrops);
+
+		var box:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/lists/box'));
+		box.alpha = .75;
+		add(box);
+
+
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -230,7 +245,7 @@ class FreeplayState extends MusicBeatState
 			songText.targetY = i;
 			songText.movementType = 'listManualX';
 			songText.wantedX = FlxG.width/2 - (songText.width+150)/2;
-
+			songText.gotoTargetPosition();
 			FlxMouseEventManager.add(songText,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 			grpSongs.add(songText);
 
@@ -248,17 +263,23 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		var topBar:FlxSprite = new FlxSprite().loadGraphic(Paths.image('freeplay/lists/${category}/topbar'));
+		topBar.screenCenter(X);
+		topBar.y = 0;
+		add(topBar);
+
+		scoreText = new FlxText(635, 52, 0, "", 48);
 		// scoreText.autoSize = false;
-		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
+		scoreText.setFormat(Paths.font("arial.ttf"), 48, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
-		scoreBG.alpha = 0.6;
-		add(scoreBG);
+		//var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		//scoreBG.alpha = 0.6;
+		//add(scoreBG);
 
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
+		diffText.visible = false;
 		add(diffText);
 
 		add(scoreText);
@@ -355,18 +376,19 @@ class FreeplayState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		backdrops.x -= .25*(elapsed/(1/120));
+		backdrops.y += .25*(elapsed/(1/120));
+		if (FlxG.sound.music.volume < 1.5)
+			FlxG.sound.music.volume += 0.25 * (elapsed/(1/120));
 
-		if (FlxG.sound.music.volume < 0.7)
-		{
-			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
+		if(FlxG.sound.music.volume > 1.5)FlxG.sound.music.volume = 1.5;
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, Main.adjustFPS(0.4)));
 
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
-		scoreText.text = "PERSONAL BEST:" + lerpScore;
+		scoreText.text = '${lerpScore}';
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;

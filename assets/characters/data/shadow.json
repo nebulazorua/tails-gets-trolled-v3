@@ -5,11 +5,11 @@
 	],
 	"camOffset": [
 		75,
-		50
+		100
 	],
-	"spritesheet": "shadow",
-	"singDur": 6.1,
 	"scale": 0.8,
+	"singDur": 6.1,
+	"spritesheet": "shadow",
 	"anims": [
 		{
 			"offsets": [
@@ -18,48 +18,48 @@
 			],
 			"fps": 24,
 			"prefix": "idle",
-			"name": "idle",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"prefix": "up",
+			"offsets": [
+				49,
+				-23
+			],
+			"fps": 24,
+			"name": "singUP",
 			"looped": false
 		},
 		{
-			"offsets": [
-				24,
-				-11
-			],
-			"fps": 24,
-			"prefix": "up",
-			"looped": false,
-			"name": "singUP"
-		},
-		{
-			"offsets": [
-				-31,
-				-21
-			],
-			"fps": 24,
 			"prefix": "left",
-			"looped": false,
-			"name": "singLEFT"
-		},
-		{
 			"offsets": [
-				-29,
-				-42
+				4,
+				-39
 			],
 			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
 			"prefix": "right",
-			"looped": false,
-			"name": "singRIGHT"
-		},
-		{
 			"offsets": [
-				-70,
-				-261
+				-27,
+				-56
 			],
 			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
 			"prefix": "down",
-			"looped": false,
-			"name": "singDOWN"
+			"offsets": [
+				-23,
+				-262
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -68,14 +68,14 @@
 			],
 			"fps": 24,
 			"prefix": "shoot",
-			"looped": false,
-			"name": "shoot"
+			"name": "shoot",
+			"looped": false
 		}
 	],
 	"flipX": false,
-	"iconName": "shadow",
 	"antialiasing": true,
+	"iconName": "shadow",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF232341"
+	"healthColor": "0xFF232341",
+	"format": "andromeda"
 }

@@ -11165,13 +11165,13 @@
 				"sectionNotes": [
 					[
 						170400,
-						1,
-						2325,
+						3,
+						2400,
 						0
 					],
 					[
 						170400,
-						5,
+						6,
 						2400,
 						0
 					]
@@ -11509,12 +11509,48 @@
 			},
 			{
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
 				"bpm": 200,
 				"changeBPM": false,
 				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 200,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 200
 			},
 			{
 				"lengthInSteps": 16,
@@ -11529,10 +11565,10 @@
 		"initialSpeed": 1.395,
 		"sliderVelocities": null,
 		"song": "taste-for-blood",
-		"validScore": true,
 		"needsVoices": true,
 		"stage": "hillzoneDarkSonic",
-		"speed": 3.1,
+		"validScore": true,
+		"speed": 3.5,
 		"bpm": 200
 	}
 }
