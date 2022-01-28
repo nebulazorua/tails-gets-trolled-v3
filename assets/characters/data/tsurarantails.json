@@ -3,6 +3,13 @@
 		0,
 		0
 	],
+	"camOffset": [
+		150,
+		65
+	],
+	"scale": 0.7,
+	"singDur": 4,
+	"spritesheet": "swagtails",
 	"anims": [
 		{
 			"offsets": [
@@ -15,57 +22,50 @@
 			"name": "idle"
 		},
 		{
-			"prefix": "up",
 			"offsets": [
 				-17,
 				13
 			],
 			"fps": 24,
+			"prefix": "up",
 			"name": "singUP",
 			"looped": false
 		},
 		{
-			"prefix": "left",
 			"offsets": [
 				18,
 				-6
 			],
 			"fps": 24,
+			"prefix": "left",
 			"name": "singLEFT",
 			"looped": false
 		},
 		{
-			"prefix": "right",
 			"offsets": [
 				0,
 				-36
 			],
 			"fps": 24,
+			"prefix": "right",
 			"name": "singRIGHT",
 			"looped": false
 		},
 		{
-			"prefix": "down",
 			"offsets": [
 				1,
 				-11
 			],
 			"fps": 24,
+			"prefix": "down",
 			"name": "singDOWN",
 			"looped": false
 		}
 	],
-	"scale": 0.7,
-	"camOffset": [
-		150,
-		0
-	],
-	"spritesheet": "swagtails",
-	"singDur": 4,
 	"flipX": false,
 	"antialiasing": true,
-	"iconName": "tails",
+	"iconName": "swagtails",
 	"beatDancer": false,
-	"healthColor": "0xFFFECB00",
+	"healthColor": "0xFF003CFF",
 	"format": "andromeda"
 }

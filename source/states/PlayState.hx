@@ -413,7 +413,7 @@ class PlayState extends MusicBeatState
 				stage.layers.get("dad").add(char);
 			});
 
-			Lua_helper.add_callback(lua.state,"newSprite", function(?x:Int=0,?y:Int=0,?drawBehind:Bool=false,?spriteName:String){
+			Lua_helper.add_callback(lua.state,"newSprite", function(?x:Int=0,?y:Int=0,?drawBehind:Bool=false, ?spriteName:String){
 				var sprite = new FlxSprite(x,y);
 				var name = "UnnamedSprite"+unnamedLuaSprites;
 
@@ -429,7 +429,7 @@ class PlayState extends MusicBeatState
 				if(drawBehind){
 					stage.add(sprite);
 				}else{
-					add(sprite);
+					stage.foreground.add(sprite);
 				};
 			});
 
@@ -707,12 +707,15 @@ class PlayState extends MusicBeatState
 		cancer.alpha=0;
 
 		stage = new Stage(curStage,currentOptions);
-		switch(curStage){
-			case 'highzoneShadow':
-				highShader = new HighEffect();
 
-				modchart.addCamEffect(highShader);
-				modchart.addNoteEffect(highShader);
+		if(currentOptions.getHigh){
+			highShader = new HighEffect();
+
+			modchart.addCamEffect(highShader);
+			modchart.addNoteEffect(highShader);
+		}
+
+		switch(curStage){
 			case 'school' | 'schoolEvil':
 				noteModifier='pixel';
 				uiModifier='pixel';

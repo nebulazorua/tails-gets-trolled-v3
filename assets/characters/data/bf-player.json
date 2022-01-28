@@ -1,12 +1,7 @@
 {
 	"charOffset": [
 		0,
-		0
-	],
-	"singDur": 4,
-	"camOffset": [
-		0,
-		0
+		35
 	],
 	"anims": [
 		{
@@ -20,82 +15,82 @@
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE UP0",
 			"offsets": [
 				-87,
 				40
 			],
 			"fps": 24,
+			"prefix": "BF NOTE UP0",
 			"name": "singUP",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE LEFT0",
 			"offsets": [
 				5,
 				-9
 			],
 			"fps": 24,
+			"prefix": "BF NOTE LEFT0",
 			"name": "singLEFT",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE RIGHT0",
 			"offsets": [
 				-50,
 				-4
 			],
 			"fps": 24,
+			"prefix": "BF NOTE RIGHT0",
 			"name": "singRIGHT",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE DOWN0",
 			"offsets": [
 				-20,
 				-44
 			],
 			"fps": 24,
+			"prefix": "BF NOTE DOWN0",
 			"name": "singDOWN",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE UP MISS",
 			"offsets": [
 				-19,
 				91
 			],
 			"fps": 24,
+			"prefix": "BF NOTE UP MISS",
 			"name": "singUPmiss",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE RIGHT MISS",
 			"offsets": [
 				-42,
 				39
 			],
 			"fps": 24,
+			"prefix": "BF NOTE RIGHT MISS",
 			"name": "singRIGHTmiss",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE LEFT MISS",
 			"offsets": [
 				-6,
 				47
 			],
 			"fps": 24,
+			"prefix": "BF NOTE LEFT MISS",
 			"name": "singLEFTmiss",
 			"looped": false
 		},
 		{
-			"prefix": "BF NOTE DOWN MISS",
 			"offsets": [
 				-8,
 				-22
 			],
 			"fps": 24,
+			"prefix": "BF NOTE DOWN MISS",
 			"name": "singDOWNmiss",
 			"looped": true
 		},
@@ -161,6 +156,11 @@
 		}
 	],
 	"spritesheet": "BOYFRIEND",
+	"singDur": 4,
+	"camOffset": [
+		0,
+		0
+	],
 	"flipX": false,
 	"antialiasing": true,
 	"iconName": "bf",

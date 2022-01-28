@@ -56,9 +56,9 @@ local oStep = curStep;
 function stepHit(cStep)
     for step = oStep+1, cStep do 
         if(step==1152)then
-            --if(getOption"ruinMod")then
-                --ruin(true)
-            --else
+            if(getOption"ruinMod")then
+                ruin(true)
+            else
                 smonk1.x = smonk1.x - 600;
                 smonk2.x = smonk2.x + 600;
                 smonk3.x = smonk3.x - 300;
@@ -70,7 +70,7 @@ function stepHit(cStep)
                 smonk2:tween({x = smonk2.x - 600, alpha = 1}, (stepCrochet * 48) / 1000, "quadInOut");
                 smonk3:tween({x = smonk3.x + 300, alpha = 0.5}, (stepCrochet * 64) / 1000, "quadInOut");
                 smonk4:tween({x = smonk4.x - 300, alpha = 0.5}, (stepCrochet * 64) / 1000, "quadInOut");
-            --end
+            end
         end
         
     end

@@ -22,6 +22,7 @@ import flixel.tweens.FlxTween;
 import haxe.DynamicAccess;
 import openfl.display.GraphicsShader;
 import states.*;
+import flixel.util.FlxColor;
 import ui.*;
 typedef LuaProperty = {
     var defaultValue:Any;
@@ -347,6 +348,22 @@ class LuaSprite extends LuaClass {
 
   private static var getPropertyC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(getProperty);
 
+  private static function setProperty(l:StatePointer):Int{
+    // 1 = self
+    // 2 = property
+    // 3 = value
+    var property = LuaL.checkstring(state,2);
+    var value = Lua.tostring(state,3);
+    Lua.getfield(state,1,"spriteName");
+    var spriteName = Lua.tostring(state,-1);
+    var sprite = PlayState.currentPState.luaSprites[spriteName];
+    Reflect.setProperty(sprite,property,value);
+    return 0;
+  }
+
+  private static var setPropertyC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(setProperty);
+
+
   private static function addSpriteAnimByPrefix(l:StatePointer):Int{
     // 1 = self
     // 2 = anim name
@@ -589,6 +606,72 @@ class LuaSprite extends LuaClass {
 
   }
 
+  private static function tweenColor(l:StatePointer):Int{
+    // 1 = self
+    // 2 = startColour
+    // 3 = endColour
+    // 4 = time
+    // 5 = easing-style
+    var startColour:FlxColor = cast LuaL.checknumber(state,2);
+    var endColour:FlxColor = cast LuaL.checknumber(state,3);
+    var time = LuaL.checknumber(state,4);
+    var style = LuaL.checkstring(state,5);
+    Lua.getfield(state,1,"spriteName");
+    var spriteName = Lua.tostring(state,-1);
+    var sprite = PlayState.currentPState.luaSprites[spriteName];
+    var luaObj = LuaStorage.objects[spriteName];
+    /*FlxTween.tween(sprite,properties,time,{
+      ease: Reflect.field(FlxEase,style),
+    });*/
+    FlxTween.color(sprite, time, startColour, endColour, {
+      ease: Reflect.field(FlxEase,style),
+    });
+    return 1;
+
+  }
+
+  private static function changeLayer(l:StatePointer):Int{
+    // 1 = self
+    // 2 = newLayer
+    var layer = LuaL.checkstring(state,2);
+    Lua.getfield(state,1,"spriteName");
+    var spriteName = Lua.tostring(state,-1);
+    var sprite = PlayState.currentPState.luaSprites[spriteName];
+    var stage = PlayState.currentPState.stage;
+    var layers:Array<String> = ["boyfriend","gf","dad"];
+    if(stage.members.contains(sprite)){
+      stage.remove(sprite);
+    }
+
+    if(stage.foreground.members.contains(sprite)){
+      stage.foreground.remove(sprite);
+    }
+
+    if(stage.overlay.members.contains(sprite)){
+      stage.overlay.remove(sprite);
+    }
+
+    for(shit in layers){
+      if(stage.layers.get(shit).members.contains(sprite)){
+        stage.layers.get(shit).remove(sprite);
+      }
+    }
+
+    switch(layer){
+      case 'dad' | 'boyfriend' | 'gf':
+        stage.layers.get(layer).add(sprite);
+      case 'foreground':
+        stage.foreground.add(sprite);
+      case 'overlay':
+        stage.overlay.add(sprite);
+      case 'stage':
+        stage.add(sprite);
+    }
+
+    return 0;
+
+  }
+
   private static var changeAnimFramerateC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(changeAnimFramerate);
   private static var animExistsC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(animExists);
   private static var addSpriteAnimByPrefixC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(addSpriteAnimByPrefix);
@@ -599,7 +682,8 @@ class LuaSprite extends LuaClass {
   private static var setFramesC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(setFrames);
   private static var playAnimSpriteC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(playAnimSprite);
   private static var tweenC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tween);
-
+  private static var tweenColorC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenColor);
+  private static var changeLayerC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(changeLayer);
   public function new(sprite:FlxSprite,name:String,?addToGlobal:Bool=true){
     super();
     className=name;
@@ -696,6 +780,17 @@ class LuaSprite extends LuaClass {
           return 0;
         }
       },
+      "tweenColor"=>{
+        defaultValue:0,
+        getter:function(l:State,data:Any){
+          Lua.pushcfunction(l,tweenColorC);
+          return 1;
+        },
+        setter:function(l:State){
+          LuaL.error(l,"tweenColor is read-only.");
+          return 0;
+        }
+      },
       "getProperty"=>{
         defaultValue:0,
         getter:function(l:State,data:Any){
@@ -704,6 +799,17 @@ class LuaSprite extends LuaClass {
         },
         setter:function(l:State){
           LuaL.error(l,"getProperty is read-only.");
+          return 0;
+        }
+      },
+      "setProperty"=>{
+        defaultValue:0,
+        getter:function(l:State,data:Any){
+          Lua.pushcfunction(l,setPropertyC);
+          return 1;
+        },
+        setter:function(l:State){
+          LuaL.error(l,"setProperty is read-only.");
           return 0;
         }
       },
@@ -726,6 +832,17 @@ class LuaSprite extends LuaClass {
         },
         setter:function(l:State){
           LuaL.error(l,"screenCenter is read-only.");
+          return 0;
+        }
+      },
+      "changeLayer"=>{
+        defaultValue:0,
+        getter:function(l:State,data:Any){
+          Lua.pushcfunction(l,changeLayerC);
+          return 1;
+        },
+        setter:function(l:State){
+          LuaL.error(l,"changeLayer is read-only.");
           return 0;
         }
       },

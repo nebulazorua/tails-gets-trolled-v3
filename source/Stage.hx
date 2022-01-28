@@ -478,9 +478,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
     if (startedMoving)
     {
-      if(currentOptions.picoCamshake)
-        PlayState.currentPState.camGame.shake(.0025,.1,null,true,X);
-
       phillyTrain.x -= 400;
 
       if (phillyTrain.x < -2000 && !trainFinishing)

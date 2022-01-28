@@ -3,13 +3,6 @@
 		0,
 		0
 	],
-	"camOffset": [
-		150,
-		0
-	],
-	"spritesheet": "tails",
-	"singDur": 4,
-	"scale": 0.7,
 	"anims": [
 		{
 			"offsets": [
@@ -18,8 +11,8 @@
 			],
 			"fps": 24,
 			"prefix": "idle",
-			"name": "idle",
-			"looped": false
+			"looped": false,
+			"name": "idle"
 		},
 		{
 			"offsets": [
@@ -28,8 +21,8 @@
 			],
 			"fps": 24,
 			"prefix": "up",
-			"looped": false,
-			"name": "singUP"
+			"name": "singUP",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -38,8 +31,8 @@
 			],
 			"fps": 24,
 			"prefix": "left",
-			"looped": false,
-			"name": "singLEFT"
+			"name": "singLEFT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -48,8 +41,8 @@
 			],
 			"fps": 24,
 			"prefix": "right",
-			"looped": false,
-			"name": "singRIGHT"
+			"name": "singRIGHT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -58,14 +51,21 @@
 			],
 			"fps": 24,
 			"prefix": "down",
-			"looped": false,
-			"name": "singDOWN"
+			"name": "singDOWN",
+			"looped": false
 		}
 	],
+	"scale": 0.7,
+	"camOffset": [
+		150,
+		65
+	],
+	"spritesheet": "tails",
+	"singDur": 4,
 	"flipX": false,
-	"iconName": "tails",
 	"antialiasing": true,
+	"iconName": "tails",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFFFECB00"
+	"healthColor": "0xFFFECB00",
+	"format": "andromeda"
 }

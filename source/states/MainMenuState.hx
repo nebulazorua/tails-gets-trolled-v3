@@ -43,6 +43,7 @@ class MainMenuState extends MusicBeatState
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'promo'];
 	var sideOptions:Array<String> = ['credits','jukebox','gf'];
 	var backdrops:FlxBackdrop;
+	var tweens:Map<FlxObject,FlxTween> = [];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -58,7 +59,27 @@ class MainMenuState extends MusicBeatState
 
 	function onMouseDown(object:FlxObject){
 		if(!selectedSomethin){
+			for(idx in 0...sideMenuItems.length){
+				var obj = sideMenuItems.members[idx];
+				if(object==obj){
+					pressSideMenu(idx);
+					var object:FlxSprite = cast object;
+					object.scale.x = 1;
+					object.scale.y = 1;
 
+					if(tweens[object]!=null)tweens[object].cancel();
+
+					tweens[object] = FlxTween.tween(object, {"scale.x": 1.1,"scale.y": 1.1}, .6, {
+						ease: FlxEase.elasticOut,
+						onComplete:function(twn:FlxTween){
+							twn.cancel();
+							tweens[object]=null;
+							twn.destroy();
+						}
+					});
+
+				}
+			}
 		}
 	}
 
@@ -68,16 +89,54 @@ class MainMenuState extends MusicBeatState
 
 	function onMouseOver(object:FlxObject){
 		if(!selectedSomethin){
+			for(idx in 0...sideMenuItems.length){
+				var obj = sideMenuItems.members[idx];
+				if(obj==object){
+					if(tweens[object]!=null)tweens[object].cancel();
 
+					tweens[object] = FlxTween.tween(object, {"scale.x": 1.1,"scale.y": 1.1}, .15, {
+						ease: FlxEase.quadOut,
+						onComplete:function(twn:FlxTween){
+							twn.cancel();
+							tweens[object]=null;
+							twn.destroy();
+						}
+					});
+				}
+			}
 		}
 	}
 
 	function onMouseOut(object:FlxObject){
+		if(!selectedSomethin){
+			for(idx in 0...sideMenuItems.length){
+				var obj = sideMenuItems.members[idx];
+				if(obj==object){
+					if(tweens[object]!=null)tweens[object].cancel();
 
+					tweens[object] = FlxTween.tween(object, {"scale.x": 1,"scale.y": 1}, .15, {
+						ease: FlxEase.quadOut,
+						onComplete:function(twn:FlxTween){
+							twn.cancel();
+							tweens[object]=null;
+							twn.destroy();
+						}
+					});
+				}
+			}
+		}
 	}
+
 
 	function scroll(event:MouseEvent){
 		changeItem(-event.delta);
+	}
+
+	function pressSideMenu(which:Int){
+		trace(which);
+		switch(which){
+
+		}
 	}
 
 	function accept(){
@@ -216,7 +275,6 @@ class MainMenuState extends MusicBeatState
 		layering = new FlxTypedGroup<FNFSprite>();
 		add(layering);
 
-
 		for (i in 0...sideOptions.length){
 			var menuItem = new FNFSprite(0, 10 + (i * 90));
 			menuItem.loadGraphic(Paths.image('mainmenu/${sideOptions[i]}'));
@@ -224,6 +282,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing=true;
 			menuItem.ID = i;
+
+			FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
 
 			sideMenuItems.add(menuItem);
 

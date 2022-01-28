@@ -3,10 +3,11 @@
 		0,
 		0
 	],
+	"spritesheet": "BOYFRIEND2",
 	"singDur": 4,
 	"camOffset": [
 		0,
-		0
+		25
 	],
 	"anims": [
 		{
@@ -16,48 +17,48 @@
 			],
 			"fps": 24,
 			"prefix": "BF idle dance",
-			"name": "idle",
-			"looped": false
+			"looped": false,
+			"name": "idle"
 		},
 		{
-			"prefix": "BF NOTE UP instance 10",
 			"offsets": [
 				-45,
 				20
 			],
 			"fps": 24,
-			"name": "singUP",
-			"looped": false
+			"prefix": "BF NOTE UP instance 10",
+			"looped": false,
+			"name": "singUP"
 		},
 		{
-			"prefix": "BF NOTE LEFT instance 10",
 			"offsets": [
 				-5,
 				-6
 			],
 			"fps": 24,
-			"name": "singLEFT",
-			"looped": false
+			"prefix": "BF NOTE LEFT instance 10",
+			"looped": false,
+			"name": "singLEFT"
 		},
 		{
-			"prefix": "BF NOTE RIGHT instance 10",
 			"offsets": [
 				-57,
 				-7
 			],
 			"fps": 24,
-			"name": "singRIGHT",
-			"looped": false
+			"prefix": "BF NOTE RIGHT instance 10",
+			"looped": false,
+			"name": "singRIGHT"
 		},
 		{
-			"prefix": "BF NOTE DOWN instance 10",
 			"offsets": [
 				-20,
 				-41
 			],
 			"fps": 24,
-			"name": "singDOWN",
-			"looped": false
+			"prefix": "BF NOTE DOWN instance 10",
+			"looped": false,
+			"name": "singDOWN"
 		},
 		{
 			"offsets": [
@@ -66,38 +67,38 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE UP MISS",
-			"name": "singUPmiss",
-			"looped": false
+			"looped": false,
+			"name": "singUPmiss"
 		},
 		{
-			"prefix": "BF NOTE RIGHT MISS",
 			"offsets": [
 				-50,
 				21
 			],
 			"fps": 24,
-			"name": "singRIGHTmiss",
-			"looped": false
+			"prefix": "BF NOTE RIGHT MISS",
+			"looped": false,
+			"name": "singRIGHTmiss"
 		},
 		{
-			"prefix": "BF NOTE LEFT MISS",
 			"offsets": [
 				2,
 				39
 			],
 			"fps": 24,
-			"name": "singLEFTmiss",
-			"looped": false
+			"prefix": "BF NOTE LEFT MISS",
+			"looped": false,
+			"name": "singLEFTmiss"
 		},
 		{
-			"prefix": "BF NOTE DOWN MISS",
 			"offsets": [
 				-29,
 				-14
 			],
 			"fps": 24,
-			"name": "singDOWNmiss",
-			"looped": false
+			"prefix": "BF NOTE DOWN MISS",
+			"looped": false,
+			"name": "singDOWNmiss"
 		},
 		{
 			"offsets": [
@@ -106,8 +107,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF HEY",
-			"name": "hey",
-			"looped": false
+			"looped": false,
+			"name": "hey"
 		},
 		{
 			"offsets": [
@@ -116,8 +117,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF dies",
-			"name": "firstDeath",
-			"looped": false
+			"looped": false,
+			"name": "firstDeath"
 		},
 		{
 			"offsets": [
@@ -126,8 +127,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF Dead Loop",
-			"name": "deathLoop",
-			"looped": true
+			"looped": true,
+			"name": "deathLoop"
 		},
 		{
 			"offsets": [
@@ -136,8 +137,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF Dead confirm",
-			"name": "deathConfirm",
-			"looped": false
+			"looped": false,
+			"name": "deathConfirm"
 		},
 		{
 			"offsets": [
@@ -146,8 +147,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF idle shaking",
-			"name": "scared",
-			"looped": true
+			"looped": true,
+			"name": "scared"
 		},
 		{
 			"offsets": [
@@ -156,15 +157,14 @@
 			],
 			"fps": 24,
 			"prefix": "BF HEY",
-			"name": "singUP-alt",
-			"looped": false
+			"looped": false,
+			"name": "singUP-alt"
 		}
 	],
-	"spritesheet": "BOYFRIEND2",
 	"flipX": false,
 	"antialiasing": true,
 	"iconName": "bf",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF31B0D1"
+	"healthColor": "0xFF31B0D1",
+	"format": "andromeda"
 }
