@@ -1,0 +1,151 @@
+{
+	"charOffset": [
+		-225,
+		-400
+	],
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "idle anim",
+			"looped": false,
+			"name": "idle"
+		},
+		{
+			"offsets": [
+				-117,
+				-12
+			],
+			"fps": 24,
+			"prefix": "up anim",
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"offsets": [
+				20,
+				-6
+			],
+			"fps": 24,
+			"prefix": "left anim0",
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"offsets": [
+				28,
+				-12
+			],
+			"fps": 24,
+			"prefix": "right anim0",
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-28,
+				-32
+			],
+			"fps": 24,
+			"prefix": "down anim0",
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"offsets": [
+				67,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim0",
+			"name": "singUP-alt",
+			"looped": false
+		},
+		{
+			"offsets": [
+				67,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim0",
+			"name": "singDOWN-alt",
+			"looped": false
+		},
+		{
+			"offsets": [
+				67,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim0",
+			"name": "singLEFT-alt",
+			"looped": false
+		},
+		{
+			"offsets": [
+				67,
+				-16
+			],
+			"fps": 24,
+			"prefix": "cough anim0",
+			"name": "singRIGHT-alt",
+			"looped": false
+		},
+		{
+			"offsets": [
+				27,
+				-11
+			],
+			"fps": 24,
+			"prefix": "right miss anim0",
+			"looped": false,
+			"name": "singRIGHTmiss"
+		},
+		{
+			"offsets": [
+				224,
+				339
+			],
+			"fps": 24,
+			"prefix": "left miss anim0",
+			"looped": false,
+			"name": "singLEFTmiss"
+		},
+		{
+			"offsets": [
+				-121,
+				-12
+			],
+			"fps": 24,
+			"prefix": "up miss anim0",
+			"looped": false,
+			"name": "singUPmiss"
+		},
+		{
+			"offsets": [
+				468,
+				524
+			],
+			"fps": 24,
+			"prefix": "down miss anim0",
+			"looped": false,
+			"name": "singDOWNmiss"
+		}
+	],
+	"spritesheet": "shadow wielder",
+	"camOffset": [
+		125,
+		200
+	],
+	"scale": 0.7,
+	"singDur": 6.1,
+	"flipX": false,
+	"iconName": "shadowhigh",
+	"antialiasing": true,
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFF2D2D2D"
+}

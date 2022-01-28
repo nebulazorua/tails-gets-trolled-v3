@@ -62,13 +62,23 @@ class MainMenuState extends MusicBeatState
 			for(idx in 0...sideMenuItems.length){
 				var obj = sideMenuItems.members[idx];
 				if(object==obj){
-					pressSideMenu(idx);
-					var object:FlxSprite = cast object;
-					object.scale.x = 1;
-					object.scale.y = 1;
-
 					if(tweens[object]!=null)tweens[object].cancel();
+					var object:FlxSprite = cast object;
+					object.scale.x = .9;
+					object.scale.y = .9;
+				}
+			}
+		}
+	}
 
+	function onMouseUp(object:FlxObject){
+		if(!selectedSomethin){
+			for(idx in 0...sideMenuItems.length){
+				var obj = sideMenuItems.members[idx];
+				if(object==obj && obj.scale.x == .9 && obj.scale.y == .9){
+					var object:FlxSprite = cast object;
+					pressSideMenu(idx);
+					if(tweens[object]!=null)tweens[object].cancel();
 					tweens[object] = FlxTween.tween(object, {"scale.x": 1.1,"scale.y": 1.1}, .6, {
 						ease: FlxEase.elasticOut,
 						onComplete:function(twn:FlxTween){
@@ -77,14 +87,9 @@ class MainMenuState extends MusicBeatState
 							twn.destroy();
 						}
 					});
-
 				}
 			}
 		}
-	}
-
-	function onMouseUp(object:FlxObject){
-
 	}
 
 	function onMouseOver(object:FlxObject){
@@ -133,9 +138,9 @@ class MainMenuState extends MusicBeatState
 	}
 
 	function pressSideMenu(which:Int){
-		trace(which);
 		switch(which){
-
+			case 2:
+				FlxG.switchState(new GFSelectState());
 		}
 	}
 

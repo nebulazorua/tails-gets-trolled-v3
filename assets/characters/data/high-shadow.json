@@ -1,0 +1,111 @@
+{
+	"charOffset": [
+		-300,
+		0
+	],
+	"camOffset": [
+		150,
+		65
+	],
+	"scale": 0.7,
+	"singDur": 6.1,
+	"spritesheet": "shadow wielder",
+	"anims": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"fps": 24,
+			"prefix": "idle anim",
+			"name": "idle",
+			"looped": false
+		},
+		{
+			"prefix": "up anim",
+			"offsets": [
+				237,
+				-14
+			],
+			"fps": 24,
+			"name": "singUP",
+			"looped": false
+		},
+		{
+			"prefix": "right anim0",
+			"offsets": [
+				-12,
+				-5
+			],
+			"fps": 24,
+			"name": "singLEFT",
+			"looped": false
+		},
+		{
+			"prefix": "left anim0",
+			"offsets": [
+				18,
+				-11
+			],
+			"fps": 24,
+			"name": "singRIGHT",
+			"looped": false
+		},
+		{
+			"prefix": "down anim0",
+			"offsets": [
+				26,
+				-33
+			],
+			"fps": 24,
+			"name": "singDOWN",
+			"looped": false
+		},
+		{
+			"prefix": "cough anim",
+			"offsets": [
+				-25,
+				-16
+			],
+			"fps": 24,
+			"name": "singUP-alt",
+			"looped": false
+		},
+		{
+			"prefix": "cough anim",
+			"offsets": [
+				-25,
+				-16
+			],
+			"fps": 24,
+			"name": "singDOWN-alt",
+			"looped": false
+		},
+		{
+			"prefix": "cough anim",
+			"offsets": [
+				-25,
+				-16
+			],
+			"fps": 24,
+			"name": "singLEFT-alt",
+			"looped": false
+		},
+		{
+			"prefix": "cough anim",
+			"offsets": [
+				-25,
+				-16
+			],
+			"fps": 24,
+			"name": "singRIGHT-alt",
+			"looped": false
+		}
+	],
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "shadow",
+	"beatDancer": false,
+	"healthColor": "0xFF2D2D2D",
+	"format": "andromeda"
+}
