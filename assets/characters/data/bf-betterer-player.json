@@ -1,16 +1,7 @@
 {
 	"charOffset": [
 		0,
-<<<<<<< HEAD
-		0
-	],
-	"singDur": 4,
-	"camOffset": [
-		0,
-		0
-=======
 		-15
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 	],
 	"anims": [
 		{
@@ -60,13 +51,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE DOWN0",
-<<<<<<< HEAD
-			"looped": false,
-			"name": "singDOWN"
-=======
 			"name": "singDOWN",
 			"looped": false
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 		},
 		{
 			"offsets": [
@@ -75,8 +61,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE UP MISS",
-			"looped": false,
-			"name": "singUPmiss"
+			"name": "singUPmiss",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -109,42 +95,17 @@
 			"name": "singDOWNmiss"
 		},
 		{
-			"prefix": "BF HEY",
 			"offsets": [
-				-4,
+				-3,
 				4
 			],
 			"fps": 24,
-<<<<<<< HEAD
-			"name": "hey",
-			"looped": false
-		},
-		{
-			"prefix": "BF dies",
-			"offsets": [
-				21,
-				5
-			],
-			"fps": 24,
-			"name": "firstDeath",
-			"looped": false
-=======
 			"prefix": "BF HEY",
 			"name": "hey",
 			"looped": false
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 		},
 		{
-			"prefix": "BF Dead Loop",
 			"offsets": [
-<<<<<<< HEAD
-				-18,
-				5
-			],
-			"fps": 24,
-			"name": "deathLoop",
-			"looped": true
-=======
 				-3,
 				4
 			],
@@ -152,33 +113,9 @@
 			"prefix": "BF HEY",
 			"name": "singUP-alt",
 			"looped": false
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
-		},
-		{
-			"prefix": "BF Dead confirm",
-			"offsets": [
-<<<<<<< HEAD
-				-17,
-				67
-			],
-			"fps": 24,
-			"name": "deathConfirm",
-			"looped": false
 		},
 		{
 			"offsets": [
-				-4,
-				0
-			],
-			"fps": 24,
-			"prefix": "BF idle shaking",
-			"name": "scared",
-			"looped": true
-		},
-		{
-			"prefix": "BF HEY",
-			"offsets": [
-=======
 				71,
 				-24
 			],
@@ -189,44 +126,16 @@
 		},
 		{
 			"offsets": [
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 				-2,
 				4
 			],
 			"fps": 24,
-<<<<<<< HEAD
-			"name": "singUP-alt",
-			"looped": false
-=======
 			"prefix": "BF hit",
 			"looped": false,
 			"name": "hit"
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 		},
 		{
-			"prefix": "boyfriend dodge",
 			"offsets": [
-<<<<<<< HEAD
-				72,
-				-20
-			],
-			"fps": 24,
-			"name": "dodge",
-			"looped": false
-		},
-		{
-			"prefix": "BF hit",
-			"offsets": [
-				-2,
-				4
-			],
-			"fps": 24,
-			"name": "hit",
-			"looped": false
-		}
-	],
-	"spritesheet": "BOYFRIEND3",
-=======
 				-15,
 				37
 			],
@@ -242,7 +151,6 @@
 		-250,
 		-75
 	],
->>>>>>> 92307f186630907373a36666a628e65acc2f813a
 	"flipX": false,
 	"antialiasing": true,
 	"iconName": "bf-ch3",
