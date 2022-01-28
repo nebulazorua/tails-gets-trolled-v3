@@ -13,8 +13,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF idle dance",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -23,8 +23,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE UP0",
-			"looped": false,
-			"name": "singUP"
+			"name": "singUP",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -33,8 +33,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE LEFT0",
-			"looped": false,
-			"name": "singRIGHT"
+			"name": "singRIGHT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -43,8 +43,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE RIGHT0",
-			"looped": false,
-			"name": "singLEFT"
+			"name": "singLEFT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -53,8 +53,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE DOWN0",
-			"looped": false,
-			"name": "singDOWN"
+			"name": "singDOWN",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -63,8 +63,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE UP MISS",
-			"looped": false,
-			"name": "singUPmiss"
+			"name": "singUPmiss",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -73,8 +73,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE RIGHT MISS",
-			"looped": false,
-			"name": "singLEFTmiss"
+			"name": "singLEFTmiss",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -83,8 +83,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE LEFT MISS",
-			"looped": false,
-			"name": "singRIGTmiss"
+			"name": "singRIGTmiss",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -93,8 +93,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF NOTE DOWN MISS",
-			"name": "singDOWNmiss",
-			"looped": false
+			"looped": false,
+			"name": "singDOWNmiss"
 		},
 		{
 			"offsets": [
@@ -103,8 +103,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF HEY",
-			"looped": false,
-			"name": "hey"
+			"name": "hey",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -113,8 +113,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF dies",
-			"looped": false,
-			"name": "firstDeath"
+			"name": "firstDeath",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -123,8 +123,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF Dead Loop",
-			"looped": true,
-			"name": "deathLoop"
+			"name": "deathLoop",
+			"looped": true
 		},
 		{
 			"offsets": [
@@ -133,8 +133,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF Dead confirm",
-			"looped": false,
-			"name": "deathConfirm"
+			"name": "deathConfirm",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -143,8 +143,8 @@
 			],
 			"fps": 24,
 			"prefix": "BF idle shaking",
-			"looped": true,
-			"name": "scared"
+			"name": "scared",
+			"looped": true
 		},
 		{
 			"offsets": [
@@ -153,14 +153,14 @@
 			],
 			"fps": 24,
 			"prefix": "BF HEY",
-			"looped": false,
-			"name": "singUP-alt"
+			"name": "singUP-alt",
+			"looped": false
 		}
 	],
 	"flipX": true,
 	"antialiasing": true,
 	"iconName": "bf-ch3",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF31B0D1"
+	"healthColor": "0xFF31B0D1",
+	"format": "andromeda"
 }
