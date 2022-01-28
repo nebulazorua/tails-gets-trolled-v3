@@ -195,12 +195,12 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
   }
 
-  public function new(stage:String,currentOptions:Options){
+  public function new(stage:String,currentOptions:Options, distractions:Bool=true){
     super();
     if(stage=='halloween')stage='spooky'; // for kade engine shenanigans
     curStage=stage;
     this.currentOptions=currentOptions;
-
+    doDistractions = distractions;
     overlay.scrollFactor.set(0,0); // so the "overlay" layer stays static
 
     switch (stage){
@@ -324,40 +324,42 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         grass.active = false;
         add(grass);
 
-        tails = new FlxSprite();
-        tails.frames = Paths.getSparrowAtlas('tails_bg','chapter3');
-        tails.animation.addByPrefix("tails","tails bg scared",6,false);
-        tails.animation.play("tails",true);
-        tails.x = 651;
-        tails.y = 70;
-        add(tails);
+        if(doDistractions){
+          tails = new FlxSprite();
+          tails.frames = Paths.getSparrowAtlas('tails_bg','chapter3');
+          tails.animation.addByPrefix("tails","tails bg scared",6,false);
+          tails.animation.play("tails",true);
+          tails.x = 651;
+          tails.y = 70;
+          add(tails);
 
-        knuckles = new FlxSprite();
-        knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
-        knuckles.animation.addByPrefix("knuckles","knuckles bg scared",12,false);
-        knuckles.animation.play("knuckles",true);
-        knuckles.x = 323;
-        knuckles.y = 94;
-        add(knuckles);
+          knuckles = new FlxSprite();
+          knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
+          knuckles.animation.addByPrefix("knuckles","knuckles bg scared",12,false);
+          knuckles.animation.play("knuckles",true);
+          knuckles.x = 323;
+          knuckles.y = 94;
+          add(knuckles);
 
-        tailsShocked = new FlxSprite();
-        tailsShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
-        tailsShocked.animation.addByPrefix("shock","scared mark",6,false);
-        tailsShocked.animation.play("shock",true);
-        tailsShocked.x = 773;
-        tailsShocked.y = 5;
-        add(tailsShocked);
+          tailsShocked = new FlxSprite();
+          tailsShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+          tailsShocked.animation.addByPrefix("shock","scared mark",6,false);
+          tailsShocked.animation.play("shock",true);
+          tailsShocked.x = 773;
+          tailsShocked.y = 5;
+          add(tailsShocked);
 
-        knuxShocked = new FlxSprite();
-        knuxShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
-        knuxShocked.animation.addByPrefix("shock","scared mark",6,false);
-        knuxShocked.animation.play("shock",true);
-        knuxShocked.x = 300;
-        knuxShocked.y = -35;
-        add(knuxShocked);
+          knuxShocked = new FlxSprite();
+          knuxShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
+          knuxShocked.animation.addByPrefix("shock","scared mark",6,false);
+          knuxShocked.animation.play("shock",true);
+          knuxShocked.x = 300;
+          knuxShocked.y = -35;
+          add(knuxShocked);
 
-        boppers.push([knuckles,"knuckles",2]);
-        boppers.push([tails,"tails",2]);
+          boppers.push([knuckles,"knuckles",2]);
+          boppers.push([tails,"tails",2]);
+        }
 
       case 'highzoneShadow':
         gfVersion = 'gfbest';

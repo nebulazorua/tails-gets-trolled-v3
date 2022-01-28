@@ -106,7 +106,7 @@ class TitleState extends MusicBeatState
 		persistentUpdate = true;
 
 
-		bg = new Stage(Random.fromArray(Stage.stageNames),EngineData.options);// new FlxSprite(FlxG.width, FlxG.height).loadGraphic(Paths.image('titleBG'));
+		bg = new Stage(Random.fromArray(Stage.stageNames),EngineData.options,false);// new FlxSprite(FlxG.width, FlxG.height).loadGraphic(Paths.image('titleBG'));
 		add(bg);
 
 		if(bg.curStage=='highzoneShadow'){
@@ -294,7 +294,8 @@ class TitleState extends MusicBeatState
 				skipIntro();
 			}
 		}
-
+		if(bg!=null)
+			bg.update(elapsed);
 		super.update(elapsed);
 	}
 
@@ -331,6 +332,8 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
+		if(bg!=null)
+			bg.beatHit(curBeat);
 
 		logoBl.animation.play('bump');
 

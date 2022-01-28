@@ -14,6 +14,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.FlxState;
 import flixel.util.FlxColor;
 import io.newgrounds.NG;
 import lime.app.Application;
@@ -22,6 +23,7 @@ using StringTools;
 import flixel.util.FlxTimer;
 import Options;
 import flixel.input.mouse.FlxMouseEventManager;
+import flash.events.MouseEvent;
 import ui.*;
 import flixel.math.FlxAngle;
 import flixel.math.FlxPoint;
@@ -35,9 +37,11 @@ class MainMenuState extends MusicBeatState
 	public var currentOptions:Options;
 
 	var menuItems:FlxTypedGroup<FNFSprite>;
+	var sideMenuItems:FlxTypedGroup<FNFSprite>;
 	var artBoxes:FlxTypedGroup<FNFSprite>;
 	var layering:FlxTypedGroup<FNFSprite>;
 	var optionShit:Array<String> = ['story mode', 'freeplay', 'options', 'promo'];
+	var sideOptions:Array<String> = ['credits','jukebox','gf'];
 	var backdrops:FlxBackdrop;
 
 	var magenta:FlxSprite;
@@ -70,6 +74,10 @@ class MainMenuState extends MusicBeatState
 
 	function onMouseOut(object:FlxObject){
 
+	}
+
+	function scroll(event:MouseEvent){
+		changeItem(-event.delta);
 	}
 
 	function accept(){
@@ -170,9 +178,16 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = true;
 		add(bg);*/
 
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('mainmenu/background'));
+		bg.scrollFactor.set();
+		bg.setGraphicSize(Std.int(bg.width * 1.1));
+		bg.updateHitbox();
+		bg.screenCenter();
+		bg.antialiasing = true;
+		add(bg);
 		backdrops = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
 		backdrops.color = 0xFF467aeb;
-		backdrops.alpha = 0.3;
+		backdrops.alpha = 0.25;
 		backdrops.x -= 35;
 		add(backdrops);
 
@@ -181,34 +196,39 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
 		magenta.visible = false;
-		magenta.color = 0xFFe84a5d;
+		magenta.color = 0xFFFF0000;
+		magenta.alpha = 0.25;
 		magenta.x -= 35;
 		add(magenta);
 
+
 		menuItems = new FlxTypedGroup<FNFSprite>();
+		sideMenuItems = new FlxTypedGroup<FNFSprite>();
 		artBoxes = new FlxTypedGroup<FNFSprite>();
+
+		var sideMenuBG = new FlxSprite(0,0);
+		sideMenuBG.loadGraphic(Paths.image('mainmenu/sidebg'));
+		sideMenuBG.x = FlxG.width - sideMenuBG.width;
+		sideMenuBG.scrollFactor.set();
+		sideMenuBG.antialiasing=true;
+		add(sideMenuBG);
 
 		layering = new FlxTypedGroup<FNFSprite>();
 		add(layering);
 
 
-		/*var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
-
-		for (i in 0...optionShit.length)
-		{
-			var menuItem:FlxSprite = new FlxSprite(0, 60 + (i * 160));
-			menuItem.frames = tex;
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
-			menuItem.animation.play('idle');
-			menuItem.ID = i;
-			menuItem.screenCenter(X);
-			menuItems.add(menuItem);
+		for (i in 0...sideOptions.length){
+			var menuItem = new FNFSprite(0, 10 + (i * 90));
+			menuItem.loadGraphic(Paths.image('mainmenu/${sideOptions[i]}'));
+			menuItem.x = sideMenuBG.x + menuItem.width/2;
 			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
+			menuItem.antialiasing=true;
+			menuItem.ID = i;
 
-			//FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
-		}*/
+			sideMenuItems.add(menuItem);
+
+			layering.add(menuItem);
+		}
 
 		for (i in 0...optionShit.length)
 		{
@@ -234,12 +254,9 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, Main.adjustFPS(0.06));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 1, 0, "v" + Application.current.meta.get('version') + " - Andromeda Engine RC1", 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-
 		changeItem();
+
+		FlxG.stage.addEventListener(MouseEvent.MOUSE_WHEEL,scroll);
 
 	}
 
@@ -322,13 +339,11 @@ class MainMenuState extends MusicBeatState
 		{
 			if (controls.LEFT_P)
 			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
 
 			if (controls.RIGHT_P)
 			{
-				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
 			}
 
@@ -348,6 +363,7 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(huh:Int = 0,force:Bool=false)
 	{
+		FlxG.sound.play(Paths.sound('scrollMenu'));
 		if(force){
 			curSelected=huh;
 		}else{
@@ -368,5 +384,12 @@ class MainMenuState extends MusicBeatState
 
 			//spr.updateHitbox();
 		});
+	}
+
+	override function switchTo(next:FlxState){
+		// Do all cleanup of stuff here! This makes it so you dont need to copy+paste shit to every switchState
+		FlxG.stage.removeEventListener(MouseEvent.MOUSE_WHEEL,scroll);
+
+		return super.switchTo(next);
 	}
 }
