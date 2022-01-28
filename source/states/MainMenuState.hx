@@ -324,8 +324,8 @@ class MainMenuState extends MusicBeatState
 
 		magenta = new FlxBackdrop(Paths.image('mainmenu/grid'), 0.2, 0.2, true, true);
 		magenta.visible = false;
-		magenta.color = 0xFFFF0000;
-		magenta.alpha = 0.25;
+		magenta.color = 0xFFFF0078;
+		magenta.alpha = .75;
 		magenta.x -= 35;
 		add(magenta);
 
