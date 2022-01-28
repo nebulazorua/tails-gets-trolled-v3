@@ -772,7 +772,7 @@ class PlayState extends MusicBeatState
 		FlxG.mouse.visible = false;
 
 
-		var gfVersion:String = stage.gfVersion;
+		var gfVersion:String = currentOptions.gfSkin; //stage.gfVersion;
 
 		if(!currentOptions.allowNoteModifiers){
 			noteModifier='base';

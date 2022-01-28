@@ -46,7 +46,6 @@ define("spotlightAlpha",0)
 define("justHowHighAreYou",0)
 
 
-setOption("ruinMod",false)
 if(not getOption"ruinMod")then
     modMgr:queueEase(1536,1536+16,"spotlightAlpha",100,"quartOut")
     modMgr:queueEase(1536,1536+16,"gameCamZoom",defaultZoom*1.4,"quartOut")

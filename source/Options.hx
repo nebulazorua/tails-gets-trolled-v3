@@ -85,6 +85,9 @@ class Options
 	public var dummy:Bool = false;
 	public var dummyInt:Int = 0;
 
+	// custom
+	public var gfSkin:String = 'gfbest';
+
 	// gameplay
 	public var controls:Array<FlxKey> = [FlxKey.A,FlxKey.S,FlxKey.K,FlxKey.L,FlxKey.R,FlxKey.ENTER,FlxKey.SPACE];
 	public var ghosttapping:Bool = false;

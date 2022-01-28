@@ -13,6 +13,7 @@ import sys.FileSystem;
 import flixel.util.FlxDestroyUtil;
 import openfl.media.Sound;
 import flixel.FlxBasic;
+import openfl.system.System;
 
 class Cache {
   public static var offsetData = new Map<String,String>();
@@ -51,11 +52,11 @@ class Cache {
   }
 
   public static function clearImages(){
+    // CREDIT TO HAYA AND SHUBS
+    // TRY OUT FOREVER ENGINE!
+    // NO, LIKE, SERIOUSLY.
+    // https://github.com/Yoshubs/Forever-Engine-Legacy
     if(!EngineData.options.cacheUsedImages){
-      // CREDIT TO HAYA AND SHUBS
-      // TRY OUT FOREVER ENGINE!
-      // NO, LIKE, SERIOUSLY.
-      // https://github.com/Yoshubs/Forever-Engine-Legacy
       var l:Int = 0;
       @:privateAccess
       for (key in FlxG.bitmap._cache.keys())
@@ -67,10 +68,12 @@ class Cache {
           FlxG.bitmap._cache.remove(key);
           obj.destroy();
           l++;
+        }else{
+          trace(obj);
         }
       }
-      GPUFunctions.disposeAllTextures();
       trace('destroyed ${l}');
+      System.gc();
     }
   }
 

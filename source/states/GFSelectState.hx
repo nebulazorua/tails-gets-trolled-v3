@@ -35,16 +35,25 @@ class GFSelectState extends MusicBeatState
 {
   var backdrops:FlxBackdrop;
 
+  var tweens:Map<FlxObject,FlxTween> = [];
+  var left:FlxSprite;
+  var right:FlxSprite;
   var whore:Character;
-  var whores = ["gf","gfbest"];
-  var selectedChar = 0;
+  var whores = ["gf","gfbetter", "gfbest", "gfbminus", "gfeminus"];
+  var selectedChar:Int = 0;
   var characters:FlxTypedGroup<Character>;
-  var topbars:Array<FlxSprite>=[];
+  var topbars:FlxTypedGroup<FlxSprite>;
 
   override function create()
   {
     super.create();
 
+    selectedChar = whores.indexOf(OptionUtils.options.gfSkin);
+    if(selectedChar==-1){
+      OptionUtils.options.gfSkin = whores[0];
+      OptionUtils.saveOptions(OptionUtils.options);
+      selectedChar=0;
+    }
     var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('humantrafficking/bg'));
     bg.scrollFactor.set();
     bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -74,22 +83,73 @@ class GFSelectState extends MusicBeatState
     esc.antialiasing = true;
     add(esc);
 
+    left = new FlxSprite(-80).loadGraphic(Paths.image('humantrafficking/left arrow'));
+    left.scrollFactor.set();
+    left.setGraphicSize(Std.int(left.width * 1));
+    left.updateHitbox();
+    left.screenCenter();
+    left.x -= 300;
+    left.antialiasing = true;
+    add(left);
+
+    right = new FlxSprite(-80).loadGraphic(Paths.image('humantrafficking/right arrow'));
+    right.scrollFactor.set();
+    right.setGraphicSize(Std.int(right.width * 1));
+    right.updateHitbox();
+    right.screenCenter();
+    right.x += 300;
+    right.antialiasing = true;
+    add(right);
+
     characters = new FlxTypedGroup<Character>();
     add(characters);
+
+    topbars = new FlxTypedGroup<FlxSprite>();
+    add(topbars);
 
     for(name in whores){
       var char = new Character(0,0,name);
       char.screenCenter(XY);
       char.visible=false;
       characters.add(char);
+
+      var bar = new FlxSprite(-80).loadGraphic(Paths.image('humantrafficking/bar/${name}'));
+      bar.scrollFactor.set();
+      bar.setGraphicSize(Std.int(bar.width * 1));
+      bar.updateHitbox();
+      bar.visible = false;
+      bar.x = FlxG.width - bar.width;
+      bar.antialiasing = true;
+      topbars.add(bar);
     }
-    characters.members[0].visible=true;
-    whore = characters.members[0];
+    characters.members[selectedChar].visible=true;
+    topbars.members[selectedChar].visible=true;
+    whore = characters.members[selectedChar];
   }
 
   override function beatHit(){
-    //whore.dance();
+    for(c in characters){
+      c.dance();
+    }
     super.beatHit();
+  }
+
+  override function switchTo(next:FlxState){
+    for(c in characters){
+      c.destroy();
+    }
+		return super.switchTo(next);
+	}
+
+  function change(delta:Int){
+    topbars.members[selectedChar].visible=false;
+    selectedChar += delta;
+    if(selectedChar<0)selectedChar = characters.length-1;
+    if(selectedChar>characters.length-1)selectedChar = 0;
+    whore.visible=false;
+    whore = characters.members[selectedChar];
+    whore.visible=true;
+    topbars.members[selectedChar].visible=true;
   }
 
   override function update(elapsed:Float){
@@ -100,7 +160,37 @@ class GFSelectState extends MusicBeatState
 
     if (controls.BACK)
     {
+      OptionUtils.options.gfSkin = whores[selectedChar];
+      OptionUtils.saveOptions(OptionUtils.options);
       FlxG.switchState(new MainMenuState());
+    }
+
+    if(controls.LEFT_P){
+      left.x = FlxG.width/2 - left.width/2 - 325;
+      if(tweens[left]!=null)tweens[left].cancel();
+      tweens[left] = FlxTween.tween(left, {x: FlxG.width/2 - left.width/2 - 300}, .2, {
+        ease: FlxEase.quadOut,
+        onComplete:function(twn:FlxTween){
+          twn.cancel();
+          tweens[left]=null;
+          twn.destroy();
+        }
+      });
+      change(-1);
+    }
+
+    if(controls.RIGHT_P){
+      right.x = FlxG.width/2 - right.width/2 + 325;
+      if(tweens[right]!=null)tweens[right].cancel();
+      tweens[right] = FlxTween.tween(right, {x: FlxG.width/2 - right.width/2 + 300}, .2, {
+        ease: FlxEase.quadOut,
+        onComplete:function(twn:FlxTween){
+          twn.cancel();
+          tweens[right]=null;
+          twn.destroy();
+        }
+      });
+      change(1);
     }
 
   }

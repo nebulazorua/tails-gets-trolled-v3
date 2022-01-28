@@ -312,14 +312,6 @@ class Paths
 		return getPath('images/$key.png', IMAGE, library);
 	}
 
-	/*inline static public function image(key:String, ?library:String):Dynamic
-		{
-			var imagePath:String = getPath('images/$key.png', IMAGE, library);
-
-			var daBitmap = GPUFunctions.bitmapToGPU(imagePath);
-			return daBitmap;
-		}*/
-
 	inline static public function font(key:String)
 	{
 		return 'assets/fonts/$key';

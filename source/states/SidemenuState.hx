@@ -82,7 +82,7 @@ class SidemenuState extends MusicBeatState
 		"tails" => "bf",
 		"sonic" => "bf-better",
 		"shadow" => "bf-betterer",
-		"knux" => "bf-betterer"
+		"knux" => "high-shadow"
 	];
 
 
@@ -122,6 +122,8 @@ class SidemenuState extends MusicBeatState
 		bf.screenCenter();
 		bf.x += 465 + bf.posOffset.x;
 		bf.y += 100 + bf.posOffset.y;
+		if(bf.curCharacter=='high-shadow')
+			bf.y += 100;
 		bf.shader = white.shader;
 		bf.antialiasing = true;
 		white.setFlash(1);
