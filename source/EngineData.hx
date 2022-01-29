@@ -24,7 +24,7 @@ class EngineData {
     new SongData("Talentless Fox",'tails',0,'talentless-fox'),
     new SongData("No Villains",'sonic',1,'no-villains'),
     new SongData("Die Batsards",'shadow',2,'die-batsards'),
-    new SongData("High Shovel",'shadow',0,'high-shovel'),
+    new SongData("High Shovel",'knuckles',0,'high-shovel'),
     new SongData("TFB",'sonic-dark',0,'taste-for-blood'),
   ];
   public static var freeplayremix:Array<SongData> = [

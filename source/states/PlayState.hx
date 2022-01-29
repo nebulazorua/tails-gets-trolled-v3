@@ -1862,6 +1862,8 @@ class PlayState extends MusicBeatState
 				startTimer.active = true;
 			paused = false;
 
+			updateReceptors();
+
 			#if desktop
 			if (startTimer.finished)
 			{
@@ -3256,17 +3258,18 @@ class PlayState extends MusicBeatState
 	}
 
 	private function keyRelease(event:KeyboardEvent){
-		if(paused)return;
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
 		if(pressedKeys[direction]){
 			// if this gets too long, swap this to a switch/case
 			if(direction!=-1 && pressedKeys[direction]){
 				pressedKeys[direction]=false;
-				if(direction==4){
+				if(!paused){
+					if(direction==4){
 
-				}else{
-					updateReceptors();
+					}else{
+						updateReceptors();
+					}
 				}
 			}
 		}
