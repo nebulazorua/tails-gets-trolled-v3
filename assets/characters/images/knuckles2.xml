@@ -64,10 +64,10 @@
 	<SubTexture name="idle anim0011" x="2769" y="885" width="875" height="825" frameX="0" frameY="0" frameWidth="889" frameHeight="825"/>
 	<SubTexture name="idle anim0012" x="2769" y="885" width="875" height="825" frameX="0" frameY="0" frameWidth="889" frameHeight="825"/>
 	<SubTexture name="idle anim0013" x="2769" y="885" width="875" height="825" frameX="0" frameY="0" frameWidth="889" frameHeight="825"/>
-	<SubTexture name="left anim0000" x="3690" y="885" width="999" height="1024" frameX="0" frameY="-46" frameWidth="999" frameHeight="1070"/>
-	<SubTexture name="left anim0001" x="4735" y="885" width="999" height="1024" frameX="0" frameY="-46" frameWidth="999" frameHeight="1070"/>
-	<SubTexture name="left anim0002" x="5780" y="885" width="973" height="1068" frameX="-7" frameY="-2" frameWidth="999" frameHeight="1070"/>
-	<SubTexture name="left anim0003" x="6799" y="885" width="935" height="1070" frameX="-8" frameY="0" frameWidth="999" frameHeight="1070"/>
+	<SubTexture name="left anim0000" x="3690" y="885" width="1030" height="1024" frameX="0" frameY="-46" frameWidth="999" frameHeight="1070"/>
+	<SubTexture name="left anim0001" x="4735" y="885" width="1030" height="1024" frameX="0" frameY="-46" frameWidth="999" frameHeight="1070"/>
+	<SubTexture name="left anim0002" x="5780" y="885" width="973" height="1070" frameX="-7" frameY="-2" frameWidth="999" frameHeight="1070"/>
+	<SubTexture name="left anim0003" x="6799" y="885" width="935" height="1080" frameX="-8" frameY="0" frameWidth="999" frameHeight="1070"/>
 	<SubTexture name="left anim0004" x="6799" y="885" width="935" height="1070" frameX="-8" frameY="0" frameWidth="999" frameHeight="1070"/>
 	<SubTexture name="left anim0005" x="6799" y="885" width="935" height="1070" frameX="-8" frameY="0" frameWidth="999" frameHeight="1070"/>
 	<SubTexture name="left anim0006" x="6799" y="885" width="935" height="1070" frameX="-8" frameY="0" frameWidth="999" frameHeight="1070"/>

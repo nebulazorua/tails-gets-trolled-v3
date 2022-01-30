@@ -11,8 +11,8 @@
 			],
 			"fps": 24,
 			"prefix": "idle anim",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -21,8 +21,8 @@
 			],
 			"fps": 24,
 			"prefix": "up anim",
-			"name": "singUP",
-			"looped": false
+			"looped": false,
+			"name": "singUP"
 		},
 		{
 			"offsets": [
@@ -31,8 +31,8 @@
 			],
 			"fps": 24,
 			"prefix": "left anim0",
-			"name": "singLEFT",
-			"looped": false
+			"looped": false,
+			"name": "singLEFT"
 		},
 		{
 			"offsets": [
@@ -41,8 +41,8 @@
 			],
 			"fps": 24,
 			"prefix": "right anim0",
-			"name": "singRIGHT",
-			"looped": false
+			"looped": false,
+			"name": "singRIGHT"
 		},
 		{
 			"offsets": [
@@ -51,8 +51,8 @@
 			],
 			"fps": 24,
 			"prefix": "down anim0",
-			"name": "singDOWN",
-			"looped": false
+			"looped": false,
+			"name": "singDOWN"
 		},
 		{
 			"offsets": [
@@ -65,12 +65,12 @@
 			"looped": false
 		},
 		{
+			"prefix": "cough anim0",
 			"offsets": [
 				67,
 				-16
 			],
 			"fps": 24,
-			"prefix": "cough anim0",
 			"name": "singDOWN-alt",
 			"looped": false
 		},
@@ -81,8 +81,8 @@
 			],
 			"fps": 24,
 			"prefix": "cough anim0",
-			"name": "singLEFT-alt",
-			"looped": false
+			"looped": false,
+			"name": "singLEFT-alt"
 		},
 		{
 			"offsets": [
@@ -91,61 +91,61 @@
 			],
 			"fps": 24,
 			"prefix": "cough anim0",
-			"name": "singRIGHT-alt",
-			"looped": false
+			"looped": false,
+			"name": "singRIGHT-alt"
 		},
 		{
+			"prefix": "right miss anim0",
 			"offsets": [
 				27,
 				-11
 			],
 			"fps": 24,
-			"prefix": "right miss anim0",
-			"looped": false,
-			"name": "singRIGHTmiss"
+			"name": "singRIGHTmiss",
+			"looped": false
 		},
 		{
+			"prefix": "left miss anim0",
 			"offsets": [
-				224,
-				339
+				14,
+				-9
 			],
 			"fps": 24,
-			"prefix": "left miss anim0",
-			"looped": false,
-			"name": "singLEFTmiss"
+			"name": "singLEFTmiss",
+			"looped": false
 		},
 		{
+			"prefix": "up miss anim0",
 			"offsets": [
 				-121,
 				-12
 			],
 			"fps": 24,
-			"prefix": "up miss anim0",
-			"looped": false,
-			"name": "singUPmiss"
+			"name": "singUPmiss",
+			"looped": false
 		},
 		{
+			"prefix": "down miss anim0",
 			"offsets": [
 				468,
 				524
 			],
 			"fps": 24,
-			"prefix": "down miss anim0",
-			"looped": false,
-			"name": "singDOWNmiss"
+			"name": "singDOWNmiss",
+			"looped": false
 		}
 	],
-	"spritesheet": "shadow wielder",
+	"scale": 0.7,
 	"camOffset": [
 		125,
 		200
 	],
-	"scale": 0.7,
+	"spritesheet": "shadow wielder",
 	"singDur": 6.1,
 	"flipX": false,
-	"iconName": "shadowhigh",
 	"antialiasing": true,
+	"iconName": "shadowhigh",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF2D2D2D"
+	"healthColor": "0xFF2D2D2D",
+	"format": "andromeda"
 }

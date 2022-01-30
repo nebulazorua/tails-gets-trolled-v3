@@ -263,11 +263,9 @@ class SidemenuState extends MusicBeatState
 
 	override function beatHit()
 		{
-			if (curBeat % 2 == 0)
-				{
-					p2.dance();
-					bf.dance();
-				}
+			p2.dance();
+			bf.dance();
+
 			super.beatHit();
 		}
 

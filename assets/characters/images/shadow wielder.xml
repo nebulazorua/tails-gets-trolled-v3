@@ -2,33 +2,33 @@
 <TextureAtlas imagePath="shadow wielder.png">
 	<!-- Created with Adobe Animate version 21.0.4.39603 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="cough anim0000" x="18" y="18" width="937" height="907" frameX="-18" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0001" x="18" y="18" width="937" height="907" frameX="-18" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0002" x="1016" y="18" width="936" height="907" frameX="-8" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0003" x="1016" y="18" width="936" height="907" frameX="-8" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0004" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0005" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0006" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0007" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0008" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0009" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0010" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0011" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0012" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0013" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0014" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0015" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0016" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0017" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0018" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0019" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0020" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0021" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0022" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="cough anim0023" x="2013" y="18" width="936" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
-	<SubTexture name="down anim0000" x="3010" y="18" width="883" height="911" frameX="0" frameY="-2" frameWidth="883" frameHeight="914"/>
-	<SubTexture name="down anim0001" x="3954" y="18" width="883" height="911" frameX="0" frameY="0" frameWidth="883" frameHeight="914"/>
-	<SubTexture name="down anim0002" x="3954" y="18" width="883" height="911" frameX="0" frameY="0" frameWidth="883" frameHeight="914"/>
+	<SubTexture name="cough anim0000" x="18" y="18" width="961" height="907" frameX="-18" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0001" x="18" y="18" width="961" height="907" frameX="-18" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0003" x="1016" y="18" width="965" height="907" frameX="-8" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0002" x="1016" y="18" width="965" height="907" frameX="-8" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0004" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0005" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0006" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0007" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0008" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0009" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0010" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0011" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0012" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0013" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0014" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0015" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0016" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0017" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0018" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0019" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0020" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0021" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0022" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="cough anim0023" x="2013" y="18" width="965" height="907" frameX="-4" frameY="0" frameWidth="955" frameHeight="907"/>
+	<SubTexture name="down anim0000" x="3010" y="18" width="890" height="940" frameX="0" frameY="-2" frameWidth="883" frameHeight="914"/>
+	<SubTexture name="down anim0001" x="3954" y="18" width="890" height="940" frameX="0" frameY="0" frameWidth="883" frameHeight="914"/>
+	<SubTexture name="down anim0002" x="3954" y="18" width="890" height="940" frameX="0" frameY="0" frameWidth="883" frameHeight="914"/>
 	<SubTexture name="down anim0003" x="4898" y="18" width="882" height="914" frameX="-1" frameY="0" frameWidth="883" frameHeight="914"/>
 	<SubTexture name="down anim0004" x="4898" y="18" width="882" height="914" frameX="-1" frameY="0" frameWidth="883" frameHeight="914"/>
 	<SubTexture name="down anim0005" x="4898" y="18" width="882" height="914" frameX="-1" frameY="0" frameWidth="883" frameHeight="914"/>
@@ -88,8 +88,8 @@
 	<SubTexture name="idle anim0011" x="1930" y="3089" width="895" height="919" frameX="-1" frameY="-1" frameWidth="896" frameHeight="920"/>
 	<SubTexture name="idle anim0012" x="1930" y="3089" width="895" height="919" frameX="-1" frameY="-1" frameWidth="896" frameHeight="920"/>
 	<SubTexture name="idle anim0013" x="1930" y="3089" width="895" height="919" frameX="-1" frameY="-1" frameWidth="896" frameHeight="920"/>
-	<SubTexture name="left anim0000" x="2886" y="3089" width="939" height="946" frameX="0" frameY="0" frameWidth="939" frameHeight="984"/>
-	<SubTexture name="left anim0001" x="3886" y="3089" width="933" height="984" frameX="-4" frameY="0" frameWidth="939" frameHeight="984"/>
+	<SubTexture name="left anim0000" x="2886" y="3089" width="939" height="964" frameX="0" frameY="0" frameWidth="939" frameHeight="984"/>
+	<SubTexture name="left anim0001" x="3886" y="3089" width="933" height="990" frameX="-4" frameY="0" frameWidth="939" frameHeight="984"/>
 	<SubTexture name="left anim0002" x="3886" y="3089" width="933" height="984" frameX="-4" frameY="0" frameWidth="939" frameHeight="984"/>
 	<SubTexture name="left anim0003" x="4880" y="3089" width="931" height="984" frameX="-6" frameY="0" frameWidth="939" frameHeight="984"/>
 	<SubTexture name="left anim0004" x="4880" y="3089" width="931" height="984" frameX="-6" frameY="0" frameWidth="939" frameHeight="984"/>
