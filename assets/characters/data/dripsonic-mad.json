@@ -3,6 +3,8 @@
 		0,
 		0
 	],
+	"singDur": 6.1,
+	"spritesheet": "dripsonic_angry",
 	"anims": [
 		{
 			"offsets": [
@@ -11,13 +13,13 @@
 			],
 			"fps": 24,
 			"prefix": "idle",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
 			"prefix": "up",
 			"offsets": [
-				-34,
+				-33,
 				8
 			],
 			"fps": 24,
@@ -37,7 +39,7 @@
 		{
 			"prefix": "right",
 			"offsets": [
-				-44,
+				-45,
 				1
 			],
 			"fps": 24,
@@ -60,12 +62,10 @@
 		150,
 		50
 	],
-	"spritesheet": "scourge_angry",
-	"singDur": 6.1,
 	"flipX": false,
+	"iconName": "dripsonic-mad",
 	"antialiasing": true,
-	"iconName": "scourge-mad",
 	"beatDancer": false,
-	"healthColor": "0xFF8CFF32",
-	"format": "andromeda"
+	"format": "andromeda",
+	"healthColor": "0xFFFECB00"
 }

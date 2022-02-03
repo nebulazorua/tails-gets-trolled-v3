@@ -3,6 +3,8 @@
 		0,
 		0
 	],
+	"singDur": 6.1,
+	"spritesheet": "dripsonic_forced",
 	"anims": [
 		{
 			"offsets": [
@@ -11,34 +13,34 @@
 			],
 			"fps": 24,
 			"prefix": "idle",
-			"looped": false,
-			"name": "idle"
+			"name": "idle",
+			"looped": false
 		},
 		{
+			"offsets": [
+				-42,
+				50
+			],
+			"fps": 24,
 			"prefix": "up",
-			"offsets": [
-				-34,
-				8
-			],
-			"fps": 24,
-			"name": "singUP",
-			"looped": false
+			"looped": false,
+			"name": "singUP"
 		},
 		{
-			"prefix": "left",
 			"offsets": [
-				8,
-				0
+				2,
+				13
 			],
 			"fps": 24,
-			"name": "singLEFT",
-			"looped": false
+			"prefix": "left",
+			"looped": false,
+			"name": "singLEFT"
 		},
 		{
 			"prefix": "right",
 			"offsets": [
-				-44,
-				1
+				-69,
+				-3
 			],
 			"fps": 24,
 			"name": "singRIGHT",
@@ -47,8 +49,8 @@
 		{
 			"prefix": "down",
 			"offsets": [
-				-13,
-				-12
+				-50,
+				-15
 			],
 			"fps": 24,
 			"name": "singDOWN",
@@ -60,12 +62,10 @@
 		150,
 		50
 	],
-	"spritesheet": "scourge_angry",
-	"singDur": 6.1,
 	"flipX": false,
+	"iconName": "dripsonic-forced",
 	"antialiasing": true,
-	"iconName": "scourge-mad",
 	"beatDancer": false,
-	"healthColor": "0xFF8CFF32",
-	"format": "andromeda"
+	"format": "andromeda",
+	"healthColor": "0xFFFECB00"
 }

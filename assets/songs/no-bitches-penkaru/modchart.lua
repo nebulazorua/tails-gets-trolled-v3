@@ -14,19 +14,19 @@ function numLerp(a,b,c)
     return a+(b-a)*c
 end
 
-dad:changeCharacter("sonic-forced") -- cache sonic-forced
-dad:changeCharacter("sonic-mad") -- cache sonic-mad
-dad:changeCharacter('sonic')
+dad:changeCharacter("dripdripsonic-forced") -- cache dripsonic-forced
+dad:changeCharacter("dripdripsonic-mad") -- cache dripsonic-mad
+dad:changeCharacter('dripdripsonic')
 
 local camshit = {zoom = getVar("defaultCamZoom")} -- work around for tweening camera zoom
 local defaultZoom = getVar("defaultCamZoom");
 
 local charSteps = {
-    {step=844,char='sonic-mad'},
-    {step=880,char='sonic'},
-    {step=1152,char='sonic-mad'},
-    {step=1408,char='sonic-forced'},
-    {step=1664,char='sonic-mad'},
+    {step=844,char='dripsonic-mad'},
+    {step=880,char='dripsonic'},
+    {step=1152,char='dripsonic-mad'},
+    {step=1408,char='dripsonic-forced'},
+    {step=1664,char='dripsonic-mad'},
 }
 local zoomed=false;
 
