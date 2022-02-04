@@ -3300,7 +3300,7 @@ class PlayState extends MusicBeatState
 					FlxG.sound.play(Paths.sound('Ghost_Hit'),currentOptions.hitsoundVol/100);
 
 				if(currentOptions.ghosttapping==false)
-					badNoteCheck();
+					showMiss(direction);
 			}
 
 		}

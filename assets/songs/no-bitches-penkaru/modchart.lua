@@ -14,9 +14,9 @@ function numLerp(a,b,c)
     return a+(b-a)*c
 end
 
-dad:changeCharacter("dripdripsonic-forced") -- cache dripsonic-forced
-dad:changeCharacter("dripdripsonic-mad") -- cache dripsonic-mad
-dad:changeCharacter('dripdripsonic')
+dad:changeCharacter("dripsonic-forced") -- cache dripsonic-forced
+dad:changeCharacter("dripsonic-mad") -- cache dripsonic-mad
+dad:changeCharacter('dripsonic')
 
 local camshit = {zoom = getVar("defaultCamZoom")} -- work around for tweening camera zoom
 local defaultZoom = getVar("defaultCamZoom");
