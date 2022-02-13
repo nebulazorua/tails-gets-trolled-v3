@@ -56,6 +56,13 @@ class JukeboxState extends MusicBeatState {
     {displayName: "Talentless Fox", inst: Paths.inst("talentless-fox"), path: Paths.music("talentlessFoxJukebox"), bpm: 140},
     {displayName: "No Villains", inst: Paths.inst("no-villains"), path: Paths.music("noVillainsJukebox"), bpm: 200},
     {displayName: "Die Batsards", inst: Paths.inst("die-batsards"), path: Paths.music("dieBatsardsJukebox"), bpm: 180},
+    {displayName: "High Shovel", inst: Paths.inst("high-shovel"), path: Paths.music("highShovelJukebox"), bpm: 152},
+    {displayName: "Taste For Blood", inst: Paths.inst("taste-for-blood"), path: Paths.music("tfbJukebox"), bpm: 200},
+    {displayName: "Tsuraran Fox", inst: Paths.inst("tsuraran-fox"), path: Paths.music("tsufoxJukebox"), bpm: 140},
+    {displayName: "No Heroes", inst: Paths.inst("no-heroes"), path: Paths.music("noHeroesJukebox"), bpm: 200},
+    {displayName: "No Bitches P", inst: Paths.inst("no-bitches-penkaru"), path: Paths.music("penkaruJukebox"), bpm: 200},
+    {displayName: "No Bitches M", inst: Paths.inst("no-bitches-matasaki"), path: Paths.music("matasakiJukebox"), bpm: 200},
+    {displayName: "Groovy Fox", inst: Paths.inst("groovy-fox"), path: Paths.music("groovyfoxJukebox"), bpm: 125},
   ];
 
   function onMouseDown(object:FlxObject){
