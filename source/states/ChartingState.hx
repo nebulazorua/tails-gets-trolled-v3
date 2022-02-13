@@ -96,7 +96,7 @@ class ChartingState extends MusicBeatState
 	var curSelectedMarker:VelocityChange;
 
 
-	var tempBpm:Int = 0;
+	var tempBpm:Float = 0;
 
 	var vocals:FlxSound;
 
@@ -216,7 +216,7 @@ class ChartingState extends MusicBeatState
 		vocals.time = startPos;
 		FlxG.sound.music.time = startPos;
 		Conductor.songPosition = startPos;
-		var oldStep:Int = curStep;
+		var oldStep:Float = curStep;
 
 		updateCurStep();
 		updateBeat();
@@ -627,7 +627,7 @@ class ChartingState extends MusicBeatState
 	{
 		if(section==null)section=curSection;
 
-		var daBPM:Int = _song.bpm;
+		var daBPM:Float = _song.bpm;
 		var daPos:Float = 0;
 		for (i in 0...section)
 		{
@@ -1151,7 +1151,7 @@ class ChartingState extends MusicBeatState
 		else
 		{
 			// get last bpm
-			var daBPM:Int = _song.bpm;
+			var daBPM:Float = _song.bpm;
 			for (i in 0...curSection)
 				if (_song.notes[i].changeBPM)
 					daBPM = _song.notes[i].bpm;

@@ -102,7 +102,7 @@ class TitleState extends MusicBeatState
 			// music.play();
 		}
 
-		Conductor.changeBPM(180);
+		Conductor.changeBPM(90);
 		persistentUpdate = true;
 
 
@@ -174,11 +174,15 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 
-		FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		FlxG.sound.music.pause();
-		shit = FlxG.sound.play(Paths.music('freakyIntro'));
-
-		shit.fadeIn(4, 0, 0.7);
+		//CoolUtil.playMenuMusic();
+		//FlxG.sound.music.pause();
+		//shit = FlxG.sound.play(Paths.music('freakyIntro'));
+		FlxG.sound.cache(Paths.music('freakyMenu'));
+		FlxG.sound.playMusic(Paths.music('freakyIntro'));
+		FlxG.sound.music.onComplete= function(){
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		}
+		//shit.fadeIn(4, 0, 0.7);
 		startedIntro=true;
 
 		if (initialized)
@@ -284,7 +288,23 @@ class TitleState extends MusicBeatState
 					{
 						FlxG.switchState(new MainMenuState());
 					}*/
-					FlxG.switchState(new MainMenuState());
+					var selection = OptionUtils.options.jukeboxSong;
+					if(selection!=1){
+						FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
+							Conductor.changeBPM(JukeboxState.songData[selection].bpm);
+							var path = JukeboxState.songData[selection].path;
+							if(OptionUtils.options.isInst)
+								path = JukeboxState.songData[selection].inst;
+
+							FlxG.switchState(new MainMenuState());
+							FlxG.sound.playMusic(CoolUtil.getSound(path));
+							FlxG.sound.music.fadeIn(.5,0,1, function(twn:FlxTween){
+								FlxG.sound.music.fadeTween=null;
+							});
+						});
+					}else{
+						FlxG.switchState(new MainMenuState());
+					}
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
@@ -335,7 +355,7 @@ class TitleState extends MusicBeatState
 		if(bg!=null)
 			bg.beatHit(curBeat);
 
-		logoBl.animation.play('bump');
+		logoBl.animation.play('bump',true);
 
 		FlxG.log.add(curBeat);
 
@@ -382,8 +402,10 @@ class TitleState extends MusicBeatState
 			remove(ngSpr);
 
 			FlxG.camera.flash(FlxColor.WHITE, 2);
-			shit.fadeOut(.2,0);
-			FlxG.sound.music.play();
+			//shit.fadeOut(.2,0);
+			//FlxG.sound.music.play();
+			Conductor.changeBPM(180);
+
 			remove(credGroup);
 			skippedIntro = true;
 		}

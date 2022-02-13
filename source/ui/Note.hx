@@ -17,6 +17,7 @@ import haxe.macro.Type;
 import lime.utils.Assets;
 import states.*;
 import Shaders;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;
@@ -47,7 +48,6 @@ class Note extends NoteGraphic
 {
 	public static var skinManifest:Map<String,SkinManifest>=[];
 
-	public var speed:Float = 1;
 	public var causesMiss:Bool=true;
 	public var opponentMisses:Bool=false;
 	public var canHold:Bool = true;
@@ -55,6 +55,7 @@ class Note extends NoteGraphic
 	public var manualXOffset:Float = 0;
 	public var manualYOffset:Float = 0;
 	public var mustPress:Bool = false;
+	public var shitId:Float = 0;
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var isSustainNote:Bool = false;
@@ -63,6 +64,7 @@ class Note extends NoteGraphic
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
+	public var nextNote:Note;
 	public var hit:Bool = false;
 	public var rating:String = "sick";
 	public var lastSustainPiece = false;
@@ -74,6 +76,7 @@ class Note extends NoteGraphic
 	public var beingCharted:Bool=false;
 	public var initialPos:Float = 0;
 	public var desiredZIndex:Float = 0;
+
 	public var hitbox:Float = 166;
 
 	public var beat:Float = 0;
@@ -81,6 +84,17 @@ class Note extends NoteGraphic
 	public static var behaviours:Map<String,NoteBehaviour>=[];
 	public static var swagWidth:Float = 160 * 0.7;
 	public var effect:NoteEffect;
+
+	// holds v2
+	public var parent:Note;
+	public var tail:Array<Note> = [];
+	public var unhitTail:Array<Note> = [];
+	public var tripTimer:Float = 1;
+	public var holdingTime:Float = 0;
+	public var segment:Float = 0;
+
+	public var causedMiss:Bool = false;
+	public var beingHeld:Bool = false;
 
 	public static var quants:Array<Int> = [
 		4, // quarter note
@@ -115,12 +129,11 @@ class Note extends NoteGraphic
 
 	public function new(strumTime:Float, noteData:Int, skin:String='default', modifier:String='base', type:String='default', ?prevNote:Note, ?sustainNote:Bool = false, ?initialPos:Float=0, ?beingCharted=false)
 	{
-		var graphicType:String = type;
 		this.noteType=type;
 		hitbox = Conductor.safeZoneOffset;
 		switch(noteType){
 			case 'alt':
-				//trace("alt note");
+				trace("alt note");
 				graphicType='default'; // makes it look like a normal note
 			case 'mine':
 				causesMiss=false;
@@ -128,11 +141,13 @@ class Note extends NoteGraphic
 				canHold=false;
 				hitbox = Conductor.safeZoneOffset*0.38; // should probably not scale but idk man
 		}
-		var behaviour = graphicType=='default'?Note.noteBehaviour:Note.behaviours.get(graphicType);
+		var graphicType:String = type;
+		var behaviour = type=='default'?Note.noteBehaviour:Note.behaviours.get(type);
 		if(behaviour==null){
-			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,graphicType));
-			Note.behaviours.set(graphicType,behaviour);
+			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,type));
+			Note.behaviours.set(type,behaviour);
 		}
+
 		super(strumTime,modifier,skin,graphicType,behaviour);
 
 
@@ -158,10 +173,6 @@ class Note extends NoteGraphic
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
 		this.strumTime = strumTime;
-
-		if(!beingCharted)
-			speed = PlayState.getSVFromTime(strumTime) * (1/.45);
-
 
 		this.noteData = noteData;
 
@@ -219,8 +230,8 @@ class Note extends NoteGraphic
 				//prevNote.noteGraphic.animation.play('${colors[noteData]}hold');
 				prevNote.setDir(noteData,true,false);
 				if(!beingCharted){
-					//trace(speed);
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * speed;
+					prevNote.scale.y *= (Conductor.stepCrochet / 100 * 1.5);
+					prevNote.scale.y *= PlayState.getFNFSpeed(strumTime);
 				}
 
 
@@ -229,11 +240,16 @@ class Note extends NoteGraphic
 			}
 			scaleDefault.set(scale.x,scale.y);
 		}
+
+		if(prevNote!=null){
+			prevNote.nextNote = this;
+		}
 	}
 
 	override function update(elapsed:Float)
 	{
 		alpha = CoolUtil.scale(desiredAlpha,0,1,0,baseAlpha);
+		if(tooLate && !beingCharted)alpha*=.3;
 		super.update(elapsed);
 
 		if(isSustainNote){
@@ -247,11 +263,6 @@ class Note extends NoteGraphic
 		}
 
 		zIndex+=desiredZIndex;
-
-		/*if(holdShader!=null){
-			holdShader.update(y);
-			//holdShader.setHeight(height);
-		}*/
 
 		if (mustPress)
 		{
@@ -273,13 +284,31 @@ class Note extends NoteGraphic
 
 
 
-			if (diff<-hitbox && !wasGoodHit)
+			if (diff<-Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
 		}
 		else
 		{
-			if (strumTime <= Conductor.songPosition && !opponentMisses)
-				canBeHit = true;
+			var diff = strumTime-Conductor.songPosition;
+			if (diff<-Conductor.safeZoneOffset && !wasGoodHit)
+				tooLate=true;
+
+			if(!opponentMisses){
+
+				if(isSustainNote){
+					if (diff <= 0)
+						canBeHit = true;
+					else
+						canBeHit = false;
+				}else{
+					if (diff<=0)
+						canBeHit = true;
+					else
+						canBeHit = false;
+				}
+			}else{
+				canBeHit=false;
+			}
 		}
 
 	}

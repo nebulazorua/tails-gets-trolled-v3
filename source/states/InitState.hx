@@ -111,6 +111,19 @@ class InitState extends FlxUIState {
       currentOptions.fps = 120;
     }
 
+    var gf = GFSelectState.whores.indexOf(OptionUtils.options.gfSkin);
+    if(gf==-1){
+      OptionUtils.options.gfSkin = GFSelectState.whores[0];
+      OptionUtils.saveOptions(OptionUtils.options);
+    }
+
+    var song = JukeboxState.songData[OptionUtils.options.jukeboxSong];
+    if(song==null){
+      OptionUtils.options.jukeboxSong = 0;
+      OptionUtils.saveOptions(OptionUtils.options);
+    }
+
+
     Main.setFPSCap(currentOptions.fps);
     super.create();
 

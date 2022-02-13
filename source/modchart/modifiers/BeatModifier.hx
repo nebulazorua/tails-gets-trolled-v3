@@ -3,9 +3,10 @@ import ui.*;
 import modchart.*;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
+import math.*;
 
 class BeatModifier extends Modifier {
-  override function getPos(pos:FlxPoint, data:Int, player:Int, obj:FNFSprite){
+  override function getPath(visualDiff:Float, pos:Vector3, data:Int, player:Int, timeDiff:Float){
     if(getPercent(player)==0)return pos;
     var accelTime:Float = 0.3;
     var totalTime:Float = 0.7;
@@ -29,7 +30,7 @@ class BeatModifier extends Modifier {
     }
     if(evenBeat)amount*=-1;
 
-    var shift = 40*amount*FlxMath.fastSin((pos.y / 30) + Math.PI/2);
+    var shift = 40*amount*FlxMath.fastSin((visualDiff / 30) + Math.PI/2);
     pos.x += getPercent(player)*shift;
     return pos;
   }

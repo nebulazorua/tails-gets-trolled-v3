@@ -100,13 +100,14 @@ class StoryMenuState extends MusicBeatState
 	function startShit(icon:StoryIcon){
 		PlayState.setStoryWeek(icon.weekData,1);
 		if(icon.cutscene!=''){
-			var video:MP4Handler = new MP4Handler();
-			if (!isCutscene) // Checks if the current week is Tutorial.
+			var video = new MP4Handler();
+			video.finishCallback = function()
 			{
-				video.playMP4(Paths.video(icon.cutscene));
-				video.stateCallback = new PlayState();
-				isCutscene = true;
+				LoadingState.loadAndSwitchState(new PlayState());
 			}
+			isCutscene=true;
+			video.playVideo(Paths.video(icon.cutscene));
+
 		}else{
 			LoadingState.loadAndSwitchState(new PlayState());
 		}
@@ -167,7 +168,7 @@ class StoryMenuState extends MusicBeatState
 			var isChap = isChapter(object);
 			if(isChap){
 				if(tweens[object]!=null)tweens[object].cancel();
-				tweens[object] = FlxTween.tween(object, {"scale.x": 1.05,"scale.y": 1.05}, .25, {
+				tweens[object] = FlxTween.tween(object, {"scale.x": 1.035,"scale.y": 1.035}, .25, {
 					ease: FlxEase.quadInOut
 				});
 			}
@@ -195,7 +196,7 @@ class StoryMenuState extends MusicBeatState
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				CoolUtil.playMenuMusic();
 		}
 
 		persistentUpdate = persistentDraw = true;

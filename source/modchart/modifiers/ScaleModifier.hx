@@ -3,14 +3,15 @@ import ui.*;
 import modchart.*;
 import flixel.math.FlxPoint;
 import flixel.math.FlxMath;
+import math.*;
 
 class ScaleModifier extends Modifier {
   inline function lerp(a:Float,b:Float,c:Float){
     return a+(b-a)*c;
   }
   function getScale(sprite:Dynamic, scale:FlxPoint, data:Int, player:Int){
-    var miniX = getPercent(player)+getSubmodPercent("miniX",player)+getSubmodPercent('mini${data}X',player)*100;
-    var miniY = getPercent(player)+getSubmodPercent("miniY",player)+getSubmodPercent('mini${data}Y',player)*100;
+    var miniX = getPercent(player)+getSubmodPercent("miniX",player)+getSubmodPercent('mini${data}X',player);
+    var miniY = getPercent(player)+getSubmodPercent("miniY",player)+getSubmodPercent('mini${data}Y',player);
 
     scale.x*=1-miniX;
     scale.y*=1-miniY;
@@ -19,7 +20,7 @@ class ScaleModifier extends Modifier {
     var stretch = getSubmodPercent("stretch",player);
     var squish = getSubmodPercent("squish",player);
 
-    var stretchX =lerp(1,0.5,stretch); // use scale maybe? idfk man this works fine enough
+    var stretchX =lerp(1,0.5,stretch);
     var stretchY =lerp(1,2,stretch);
 
     var squishX =lerp(1,2,squish);

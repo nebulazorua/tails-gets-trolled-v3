@@ -13,6 +13,7 @@ import ui.*;
 import flixel.math.FlxPoint;
 import math.Vector3;
 using StringTools;
+import Options;
 
 class CoolUtil
 {
@@ -90,6 +91,16 @@ class CoolUtil
 		return domColour;
 	}
 
+	public static function playMenuMusic(){
+		var selection = OptionUtils.options.jukeboxSong;
+
+		Conductor.changeBPM(JukeboxState.songData[selection].bpm);
+		var path = JukeboxState.songData[selection].path;
+		if(OptionUtils.options.isInst)
+			path = JukeboxState.songData[selection].inst;
+		FlxG.sound.playMusic(CoolUtil.getSound(path));
+
+	}
 	public static function truncateFloat( number : Float, precision : Int): Float {
 		var num = number;
 		num = num * Math.pow(10, precision);

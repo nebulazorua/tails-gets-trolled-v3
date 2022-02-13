@@ -105,7 +105,7 @@ class FreeplayState extends MusicBeatState
 			if (FlxG.sound.music != null)
 			{
 				if (!FlxG.sound.music.playing)
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					CoolUtil.playMenuMusic();
 			}
 
 
@@ -494,9 +494,9 @@ class FreeplayState extends MusicBeatState
 		#if sys
 			createThread=true;
 		#end
-		if(OptionUtils.options.freeplayPreview){
+		/*if(OptionUtils.options.freeplayPreview){
 			FlxG.sound.playMusic(CoolUtil.getSound('${Paths.inst(songs[curSelected].chartName)}'), 0);
-		}
+		}*/
 
 		var bullShit:Int = 0;
 

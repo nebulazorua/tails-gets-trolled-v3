@@ -11,6 +11,9 @@ import flixel.math.FlxPoint;
 import flixel.FlxCamera;
 import haxe.Exception;
 import states.*;
+import math.*;
+import flixel.math.FlxMath;
+import flixel.FlxG;
 import ui.*;
 // TODO: modifier priority system
 class ModManager {
@@ -43,7 +46,6 @@ class ModManager {
 
     defineMod("reverse",new ReverseModifier(this)); // also cross, split, alternate, centered
     defineMod("stealth",new AlphaModifier(this));
-    defineMod("transformX",new TransformModifier(this));
     defineMod("opponentSwap",new OpponentModifier(this));
     defineMod("scrollAngle",new AngleModifier(this));
     defineMod("mini",new ScaleModifier(this)); // also squish and stretch
@@ -53,6 +55,34 @@ class ModManager {
     defineMod("drunk",new DrunkModifier(this));
     defineMod("confusion",new ConfusionModifier(this));
     defineMod("beat",new BeatModifier(this));
+    defineMod("rotateX",new RotateModifier(this));
+    defineMod("centerrotateX",new RotateModifier(this,'center',new Vector3(FlxG.width/2 - Note.swagWidth / 2,FlxG.height/2 - Note.swagWidth / 2)));
+    defineMod("localrotateX",new LocalRotateModifier(this));
+    defineMod("boost",new AccelModifier(this));
+
+    defineMod("transformX",new TransformModifier(this));
+    var infPath:Array<Array<Vector3>>=[[],[],[],[] ];
+
+    var r = 0;
+    while(r<360){
+      for(data in 0...infPath.length){
+        var rad = r*Math.PI / 180;
+        infPath[data].push(new Vector3(
+          FlxG.width/2 + (FlxMath.fastSin(rad))*600,
+          FlxG.height/2 + (FlxMath.fastSin(rad)*FlxMath.fastCos(rad))*600,
+          0
+        ));
+      }
+      r+=30;
+    }
+    defineMod("infinite",new PathModifier(this,infPath,2250));
+
+    defineMod("receptorScroll",new ReceptorScrollModifier(this));
+    // an example of PathModifier using a figure 8 pattern
+    // when creating a PathModifier, the 2nd argument is an array of arrays of Vector3
+    // Array<Array<Vector3>> where the 1st (path[0]) element is the left's path and the 4th (path[3]) element is the right's path, and everything inbetween
+    // the 3rd argument is the ms it takes to go from the start of the path to the end. Higher numbers = slower speeds.
+
     var gameCams:Array<FlxCamera> = [state.camGame];
     var hudCams:Array<FlxCamera> = [state.camHUD];
     if(state.currentOptions.ratingInHUD){
@@ -180,13 +210,23 @@ class ModManager {
     }
   }
 
-  public function getNotePos(note:Note):FlxPoint{
-    var pos = FlxPoint.get(state.getXPosition(note),state.getYPosition(note,1));
-    note.z = 0;
+  public function getPath(diff:Float, vDiff:Float, column:Int, player:Int):Vector3{
+    var pos = new Vector3(state.getXPosition(diff, column, player), vDiff, 0);
     for(mod in mods){
-      pos = mod.getPos(pos, note.noteData, note.mustPress==true?0:1, note);
-      pos = mod.getNotePos(note, pos, note.noteData, note.mustPress==true?0:1);
+      pos = mod.getPath(vDiff, pos, column, player, diff);
     }
+
+    return pos;
+  }
+
+
+  public function getNotePos(note:Note):Vector3{
+    var diff =  Conductor.songPosition - note.strumTime;
+    var vDiff = (note.initialPos-Conductor.currentTrackPos);
+    var pos = getPath(diff, vDiff, note.noteData, note.mustPress==true?0:1); //FlxPoint.get(state.getXPosition(diff, note.noteData, note.mustPress==true?0:1),vDiff);
+
+    pos.x += note.manualXOffset;
+    pos.y -= note.manualYOffset;
 
     return pos;
   }
@@ -200,20 +240,15 @@ class ModManager {
     return scale;
   }
 
-  public function updateNote(note:Note, scale:FlxPoint, pos:FlxPoint){
+  public function updateNote(note:Note, player:Int, scale:FlxPoint, pos:Vector3){
     for(mod in mods){
-      mod.updateNote(pos, scale, note);
+      mod.updateNote(note, player, pos, scale);
     }
   }
 
 
-  public function getReceptorPos(rec:Receptor, player:Int=0):FlxPoint{
-    var pos = FlxPoint.get(0,0);
-    rec.z = 0;
-    for(mod in mods){
-      pos = mod.getPos(pos, rec.direction, player, rec);
-      pos = mod.getReceptorPos(rec, pos, rec.direction, player);
-    }
+  public function getReceptorPos(rec:Receptor, player:Int=0):Vector3{
+    var pos = getPath(0, 0, rec.direction, player);
 
     return pos;
   }
@@ -227,60 +262,65 @@ class ModManager {
     return scale;
   }
 
-  public function updateReceptor(rec:Receptor, scale:FlxPoint, pos:FlxPoint){
+  public function updateReceptor(rec:Receptor, player:Int, scale:FlxPoint, pos:Vector3){
     for(mod in mods){
-      mod.updateReceptor(pos, scale, rec);
+      mod.updateReceptor(rec, player, pos, scale);
     }
   }
 
-  public function queueEase(step:Float, endStep:Float, modName:String, percent:Float, style:String, player:Int=-1, ?startVal:Float){
+  public function queueEase(step:Float, endStep:Float, modName:String, percent:Float, style:String='linear', player:Int=-1, ?startVal:Float){
     if(player==-1){
       queueEase(step, endStep, modName, percent, style, 0);
       queueEase(step, endStep, modName, percent, style, 1);
     }else{
-      if(state.curDecStep<step){
-        var easeFunc = Reflect.getProperty(FlxEase, style);
-        if(easeFunc==null)easeFunc=FlxEase.linear;
-
-        schedule[modName].push(
-          new EaseEvent(
-            step,
-            endStep,
-            modName,
-            percent,
-            easeFunc,
-            player,
-            this,
-            startVal
-          )
-        );
+      var easeFunc = FlxEase.linear;
+      try{
+        var newEase = Reflect.getProperty(FlxEase, style);
+        if(newEase!=null)easeFunc=newEase;
       }
+
+
+      schedule[modName].push(
+        new EaseEvent(
+          step,
+          endStep,
+          modName,
+          percent,
+          easeFunc,
+          player,
+          this,
+          startVal
+        )
+      );
+
     }
   }
 
   public function queueEaseL(step:Float, length:Float, modName:String, percent:Float, style:String, player:Int=-1, ?startVal:Float){
+    if(schedule[modName]==null){
+      trace('$modName is not a valid mod!');
+      return;
+    }
     if(player==-1){
       queueEaseL(step, length, modName, percent, style, 0);
       queueEaseL(step, length, modName, percent, style, 1);
     }else{
-      if(state.curDecStep<step){
-        var easeFunc = Reflect.getProperty(FlxEase, style);
-        if(easeFunc==null)easeFunc=FlxEase.linear;
-        var stepSex = Conductor.stepToSeconds(step);
+      var easeFunc = Reflect.getProperty(FlxEase, style);
+      if(easeFunc==null)easeFunc=FlxEase.linear;
+      var stepSex = Conductor.stepToSeconds(step);
 
-        schedule[modName].push(
-          new EaseEvent(
-            step,
-            Conductor.getStep(stepSex+(length*1000)),
-            modName,
-            percent,
-            easeFunc,
-            player,
-            this,
-            startVal
-          )
-        );
-      }
+      schedule[modName].push(
+        new EaseEvent(
+          step,
+          Conductor.getStep(stepSex+(length*1000)),
+          modName,
+          percent,
+          easeFunc,
+          player,
+          this,
+          startVal
+        )
+      );
     }
   }
 
@@ -289,17 +329,15 @@ class ModManager {
       queueSet(step, modName, percent, 0);
       queueSet(step, modName, percent, 1);
     }else{
-      if(state.curDecStep<step){
-        schedule[modName].push(
-          new SetEvent(
-            step,
-            modName,
-            percent,
-            player,
-            this
-          )
-        );
-      }
+      schedule[modName].push(
+        new SetEvent(
+          step,
+          modName,
+          percent,
+          player,
+          this
+        )
+      );
     }
   }
 

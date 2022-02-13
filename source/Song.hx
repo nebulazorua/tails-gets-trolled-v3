@@ -18,7 +18,7 @@ typedef SwagSong =
 {
 	var song:String;
 	var notes:Array<SwagSection>;
-	var bpm:Int;
+	var bpm:Float;
 	var needsVoices:Bool;
 	var speed:Float;
 
@@ -35,7 +35,7 @@ class Song
 {
 	public var song:String;
 	public var notes:Array<SwagSection>;
-	public var bpm:Int;
+	public var bpm:Float;
 	public var needsVoices:Bool = true;
 	public var stage:String;
 	public var noteModifier:String;
@@ -85,7 +85,7 @@ class Song
 			];
 		}
 		swagShit.validScore = true;
-		
+
 		return swagShit;
 	}
 }

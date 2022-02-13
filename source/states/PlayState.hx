@@ -1014,8 +1014,8 @@ class PlayState extends MusicBeatState
 
 		center = FlxPoint.get(centerP.x,centerP.y);
 
-		upscrollOffset = -center.y+50;
-		downscrollOffset = center.y-150;
+		upscrollOffset = 50;
+		downscrollOffset = FlxG.height-165;
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1072,43 +1072,20 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case "winter-horrorland":
-					var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
-					add(blackScreen);
-					blackScreen.scrollFactor.set();
-					camHUD.visible = false;
-
-					new FlxTimer().start(0.1, function(tmr:FlxTimer)
-					{
-						remove(blackScreen);
-						FlxG.sound.play(Paths.sound('Lights_Turn_On'));
-						camFollow.y = -2050;
-						camFollow.x += 200;
-						FlxG.camera.focusOn(camFollow.getPosition());
-						FlxG.camera.zoom = 1.5;
-
-						new FlxTimer().start(0.8, function(tmr:FlxTimer)
-						{
-							camHUD.visible = true;
-							remove(blackScreen);
-							FlxTween.tween(FlxG.camera, {zoom: defaultCamZoom}, 2.5, {
-								ease: FlxEase.quadInOut,
-								onComplete: function(twn:FlxTween)
-								{
-									startCountdown();
-								}
-							});
-						});
-					});
-				case 'senpai':
-					schoolIntro(doof);
-				case 'roses':
-					FlxG.sound.play(Paths.sound('ANGRY'));
-					schoolIntro(doof);
-				case 'thorns':
-					schoolIntro(doof);
 				default:
-					startCountdown();
+					trace(EngineData.cutscenes.get(curSong).toLowerCase());
+					trace(curSong.toLowerCase());
+					if(EngineData.cutscenes.get(curSong.toLowerCase())!=null){
+						var video = new MP4Handler();
+						video.finishCallback = function()
+						{
+							startCountdown();
+						}
+						inCutscene=true;
+						video.playVideo(Paths.video(EngineData.cutscenes.get(curSong.toLowerCase())));
+					}else
+						startCountdown();
+
 			}
 		}
 		else
@@ -1731,7 +1708,7 @@ class PlayState extends MusicBeatState
 			var dirs = ["left","down","up","right"];
 			var clrs = ["purple","blue","green","red"];
 
-			var babyArrow:Receptor = new Receptor(0, center.y, i, currentOptions.noteSkin, noteModifier, Note.noteBehaviour);
+			var babyArrow:Receptor = new Receptor(0, 100, i, currentOptions.noteSkin, noteModifier, Note.noteBehaviour);
 			babyArrow.playerNum = pN;
 			if(player==1)
 				noteSplashes.add(babyArrow.noteSplash);
@@ -1767,18 +1744,7 @@ class PlayState extends MusicBeatState
 			}
 
 			babyArrow.playAnim('static');
-			babyArrow.screenCenter(X);
-			babyArrow.x -= Note.swagWidth;
-			babyArrow.x -= 54;
-			babyArrow.x += Note.swagWidth*i;
-			if(!currentOptions.middleScroll){
-				switch(player){
-					case 0:
-						babyArrow.x -= FlxG.width/2 - Note.swagWidth*2 - 100;
-					case 1:
-						babyArrow.x += FlxG.width/2 - Note.swagWidth*2 - 100;
-					}
-			}
+			babyArrow.x = getXPosition(0, i, pN);
 
 			newStrumLine.x = babyArrow.x;
 
@@ -1787,19 +1753,19 @@ class PlayState extends MusicBeatState
 
 			babyArrow.desiredX = babyArrow.x;
 			babyArrow.desiredY = babyArrow.y;
-			babyArrow.point = FlxPoint.get(0,0);
+			//babyArrow.point = FlxPoint.get(0,0);
 
 			if (!isStoryMode)
 			{
-				babyArrow.desiredY -= 10;
-				babyArrow.y = babyArrow.desiredY;
+				babyArrow.yOffset -= 10;
 				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow,{desiredY: babyArrow.desiredY + 10, alpha:1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
+				FlxTween.tween(babyArrow,{yOffset: babyArrow.yOffset + 10, alpha:1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 
 			strumLineNotes.add(babyArrow);
 		}
 	}
+
 
 	function tweenCamIn():Void
 	{
@@ -1998,31 +1964,20 @@ class PlayState extends MusicBeatState
 		Conductor.currentTrackPos = getPosFromTime(Conductor.currentVisPos);
 	}
 
-	public function getXPosition(note:Note, ?followReceptor=true):Float{
-		var hitPos = playerStrums.members[note.noteData];
+	public function getXPosition(diff:Float, direction:Int, player:Int):Float{
 
-		if(!note.mustPress){
-			hitPos = dadStrums.members[note.noteData];
+		var x:Float = (FlxG.width/2) - Note.swagWidth - 54 + Note.swagWidth*direction;
+		if(!currentOptions.middleScroll){
+			switch(player){
+				case 0:
+					x += FlxG.width/2 - Note.swagWidth*2 - 100;
+				case 1:
+					x -= FlxG.width/2 - Note.swagWidth*2 - 100;
+			}
 		}
-		var offset = note.manualXOffset;
-		var desiredX = hitPos.desiredX;
-		if(followReceptor)desiredX+=hitPos.point.x;
+		x -= 56;
 
-		return desiredX + offset;
-	}
-
-	public function getYPosition(note:Note, ?mult, ?followReceptor=true):Float{
-		var hitPos = playerStrums.members[note.noteData];
-		if(mult==null)mult=scrollSpeed;
-
-		if(!note.mustPress){
-			hitPos = dadStrums.members[note.noteData];
-		}
-
-		var desiredY = hitPos.desiredY;
-		if(followReceptor)desiredY+=hitPos.point.y;
-
-		return desiredY + ((note.initialPos-Conductor.currentTrackPos) * mult) - note.manualYOffset;
+		return x;
 	}
 
 	// ADAPTED FROM QUAVER!!!
@@ -2086,7 +2041,9 @@ class PlayState extends MusicBeatState
 		if(highShader!=null){
 			highShader.update(elapsed);
 		}
-		modManager.update(elapsed);
+		if(modManager!=null)
+			modManager.update(elapsed);
+
 		opponent = opponents.length>0?opponents[opponentIdx]:dad;
 
 		modchart.update(elapsed);
@@ -2345,28 +2302,28 @@ class PlayState extends MusicBeatState
 		{
 			var pos = modManager.getReceptorPos(spr,0);
 			var scale = modManager.getReceptorScale(spr,0);
-			modManager.updateReceptor(spr, scale, pos);
+			modManager.updateReceptor(spr, 0, scale, pos);
 
-			spr.point.x = pos.x;
-			spr.point.y = pos.y;
+			spr.desiredX = pos.x;
+			spr.desiredY = pos.y;
+			spr.desiredZ = pos.z;
 			spr.scale.set(scale.x,scale.y);
 
 			scale.put();
-			pos.put();
 		});
 
 		dadStrums.forEach( function(spr:Receptor)
 		{
 			var pos = modManager.getReceptorPos(spr,1);
 			var scale = modManager.getReceptorScale(spr,1);
-			modManager.updateReceptor(spr, scale, pos);
+			modManager.updateReceptor(spr, 1, scale, pos);
 
-			spr.point.x = pos.x;
-			spr.point.y = pos.y;
+			spr.desiredX = pos.x;
+			spr.desiredY = pos.y;
+			spr.desiredZ = pos.z;
 			spr.scale.set(scale.x,scale.y);
 
 			scale.put();
-			pos.put();
 
 		});
 
@@ -2542,17 +2499,43 @@ class PlayState extends MusicBeatState
 					if(!daNote.mustPress){
 						strumLine = dadStrums.members[daNote.noteData];
 					}
+					var diff =  Conductor.songPosition - daNote.strumTime;
+			    var vDiff = (daNote.initialPos-Conductor.currentTrackPos);
+					var notePos = modManager.getPath(diff, vDiff, daNote.noteData, daNote.mustPress==true?0:1);
 
-					var notePos = modManager.getNotePos(daNote);
+					notePos.x += daNote.manualXOffset;
+					notePos.y -= daNote.manualYOffset;
+
 					var scale = modManager.getNoteScale(daNote);
-					modManager.updateNote(daNote, scale, notePos);
+					modManager.updateNote(daNote, daNote.mustPress?0:1, scale, notePos);
 
 					daNote.x = notePos.x;
 					daNote.y = notePos.y;
+
+					daNote.z = notePos.z;
 					daNote.scale.copyFrom(scale);
 					daNote.updateHitbox();
-					scale.put();
-					notePos.put();
+
+					if(daNote.isSustainNote){
+							//var prevPos = modManager.getNotePos(daNote.prevNote);
+							//getPath(diff:Float, vDiff:Float, column:Int, player:Int, sprite:FNFSprite)
+							var futureSongPos = Conductor.songPosition + 75;
+							var futureVisualPos = getPosFromTime(futureSongPos);
+
+							var diff =  futureSongPos - daNote.strumTime;
+					    var vDiff = (daNote.initialPos - futureVisualPos);
+							//  var pos = getPath(diff, vDiff, note.noteData, note.mustPress==true?0:1, note);
+
+							var nextPos = modManager.getPath(diff, vDiff, daNote.noteData, daNote.mustPress==true?0:1);
+							nextPos.x += daNote.manualXOffset;
+					    nextPos.y -= daNote.manualYOffset;
+
+							var diffX = (nextPos.x - notePos.x);
+							var diffY = (nextPos.y - notePos.y);
+							var rad = Math.atan2(diffY,diffX);
+							var deg = rad * (180 / Math.PI);
+							daNote.modAngle = deg + 90; // gets the angle in degrees instead of radians
+					}
 
 					var shitGotHit = (daNote.wasGoodHit || daNote.prevNote.wasGoodHit && !daNote.canBeHit);
 					var shit = strumLine.y + Note.swagWidth/2;
@@ -2822,7 +2805,7 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					CoolUtil.playMenuMusic();
 
 					transIn = FlxTransitionableState.defaultTransIn;
 					transOut = FlxTransitionableState.defaultTransOut;

@@ -39,7 +39,7 @@ class GFSelectState extends MusicBeatState
   var left:FlxSprite;
   var right:FlxSprite;
   var whore:Character;
-  var whores = ["gf","gfbetter", "gfbest", "gfbminus", "gfeminus"];
+  public static var whores = ["gf","gfbetter", "gfbest", "gfbminus", "gfeminus"];
   var selectedChar:Int = 0;
   var characters:FlxTypedGroup<Character>;
   var topbars:FlxTypedGroup<FlxSprite>;
@@ -106,6 +106,11 @@ class GFSelectState extends MusicBeatState
 
     topbars = new FlxTypedGroup<FlxSprite>();
     add(topbars);
+
+    #if desktop
+    // Updating Discord Rich Presence
+    DiscordClient.changePresence("Selecting a new GF", null);
+    #end
 
     for(name in whores){
       var char = new Character(0,0,name);

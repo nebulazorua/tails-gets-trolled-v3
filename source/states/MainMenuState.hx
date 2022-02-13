@@ -191,7 +191,7 @@ class MainMenuState extends MusicBeatState
 			case 0:
 				FlxG.switchState(new MainMenuState()); // credits
 			case 1:
-				FlxG.switchState(new MainMenuState()); // jukebox
+				FlxG.switchState(new JukeboxState()); // jukebox
 			case 2:
 				FlxG.switchState(new GFSelectState()); // gf
 		}
@@ -292,7 +292,7 @@ class MainMenuState extends MusicBeatState
 
 
 		if (FlxG.sound.music==null || !FlxG.sound.music.playing)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			CoolUtil.playMenuMusic();
 
 
 		persistentUpdate = persistentDraw = true;

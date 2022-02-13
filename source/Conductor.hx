@@ -11,7 +11,7 @@ typedef BPMChangeEvent =
 {
 	var stepTime:Int;
 	var songTime:Float;
-	var bpm:Int;
+	var bpm:Float;
 	@:optional var stepCrochet:Float;
 }
 
@@ -21,7 +21,7 @@ class Conductor
 	// its 48 in ITG but idk because FNF doesnt work w/ note rows
 	public static var ROWS_PER_MEASURE:Int = ROWS_PER_BEAT*4;
 
-	public static var bpm:Int = 100;
+	public static var bpm:Float = 100;
 	public static var crochet:Float = ((60 / bpm) * 1000); // beats in milliseconds
 	public static var stepCrochet:Float = crochet / 4; // steps in milliseconds
 	public static var rawSongPos:Float;
@@ -53,7 +53,7 @@ class Conductor
 	public static function getBeatInMeasure(time:Float):Float{
 		// vv doesnt work w/ bpm changes lmao
 		//return time / getCrotchetAtTime(time);
-		
+
 		// vv THIS does though
 		var lastBPMChange = getBPMFromSeconds(time);
 		return (time-lastBPMChange.songTime) / (lastBPMChange.stepCrochet*4);
@@ -141,7 +141,7 @@ class Conductor
 	{
 		bpmChangeMap = [];
 
-		var curBPM:Int = song.bpm;
+		var curBPM:Float = song.bpm;
 		var totalSteps:Int = 0;
 		var totalPos:Float = 0;
 		for (i in 0...song.notes.length)
@@ -165,7 +165,7 @@ class Conductor
 		trace("new BPM map BUDDY " + bpmChangeMap);
 	}
 
-	public static function changeBPM(newBpm:Int)
+	public static function changeBPM(newBpm:Float)
 	{
 		bpm = newBpm;
 

@@ -20,6 +20,13 @@ class EngineData {
   public static var options:Options;
   public static var weeksUnlocked:Array<Bool>=[true,true,true,true,true,true];
   public static var mustUnlockWeeks:Bool=false; // TODO: make this work
+  public static var cutscenes:Map<String, String> = [
+    "talentless-fox"=>"tailsGetsTrolled",
+    "no-villains"=>"sonicGetsTrolled",
+    "die-batsards"=>"dumbassLearnt",
+    "high-shovel"=>"shadowAndKnucklesGetHigh",
+    "taste-for-blood"=>"tastyBlood",
+  ];
   public static var freeplaymain:Array<SongData> = [
     new SongData("Talentless Fox",'tails',0,'talentless-fox'),
     new SongData("No Villains",'sonic',1,'no-villains'),
@@ -40,20 +47,17 @@ class EngineData {
     new WeekData("Tails Gets Trolled",
       1,
       "tails",
-      ["Talentless Fox"],
-      "tailsGetsTrolled"
+      ["Talentless Fox"]
     ),
     new WeekData("Dumbass Learns",
       2,
       "sonic",
-      ["No Villains"],
-      "sonicGetsTrolled"
+      ["No Villains"]
     ),
     new WeekData("Shadow Showdown",
       3,
       "shadow",
-      ["Die Batsards","High Shovel","Taste For Blood"],
-      "dumbassLearnt"
+      ["Die Batsards","High Shovel","Taste For Blood"]
     )
   ];
 }

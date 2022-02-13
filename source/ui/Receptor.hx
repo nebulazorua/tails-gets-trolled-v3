@@ -31,12 +31,19 @@ class Receptor extends FNFSprite {
   public var defaultY:Float = 0;
   public var incomingNoteAlpha:Float = 1;
   public var direction:Int= 0 ;
-  public var point:Null<FlxPoint>;
+  public var xOffset:Float = 0;
+  public var yOffset:Float = 0;
+  public var zOffset:Float = 0;
+
+  public var desiredZIndex:Float = 0;
+
   public var scaleDefault:Null<FlxPoint>;
   public var noteSplash:NoteSplash;
 
   public var desiredX:Float = 0;
   public var desiredY:Float = 0;
+  public var desiredZ:Float = 0;
+
 
   public function new(x:Float,y:Float,noteData:Int,skin:String='default',modifier:String='base',behaviour:NoteBehaviour,daScale:Float=.7){
     super(x,y);
@@ -106,8 +113,6 @@ class Receptor extends FNFSprite {
   }
 
   override function destroy(){
-    if(point!=null)
-      point.put();
     super.destroy();
   }
 
@@ -120,9 +125,15 @@ class Receptor extends FNFSprite {
   override function update(elapsed:Float){
     angle = baseAngle+desiredAngle;
 
-    x = desiredX + point.x;
-    y = desiredY + point.y;
+    var animZOffset:Float = 0;
+    if(animation.curAnim!=null && animation.curAnim.name=='confirm')animZOffset+=1;
+    x = desiredX + xOffset;
+    y = desiredY + yOffset;
+    z = desiredZ + zOffset;
 
+    zIndex=z + desiredZIndex + animZOffset ;
     super.update(elapsed);
+    zIndex = animZOffset;
+
   }
 }

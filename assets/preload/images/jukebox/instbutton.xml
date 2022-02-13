@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="instbutton.png">
+	<!-- Created with Adobe Animate version 21.0.5.40714 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="off0000" x="2" y="2" width="301" height="144"/>
+	<SubTexture name="on0000" x="2" y="148" width="301" height="144"/>
+</TextureAtlas>
