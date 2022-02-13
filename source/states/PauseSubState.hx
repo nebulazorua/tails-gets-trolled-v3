@@ -141,8 +141,6 @@ class PauseSubState extends MusicBeatSubstate
 					else
 						FlxG.switchState(new FreeplayState());
 
-
-					Cache.clear();
 			}
 		}
 

@@ -1535,9 +1535,9 @@ class PlayState extends MusicBeatState
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 		scrollSpeed = 1;//(currentOptions.downScroll?-1:1);
 
-		var setupSplashes:Array<String>=[];
-		var loadingSplash = new NoteSplash(0,0);
-		loadingSplash.visible=false;
+	//	var setupSplashes:Array<String>=[];
+	//	var loadingSplash = new NoteSplash(0,0);
+	//	loadingSplash.visible=false;
 
 		var lastBFNotes:Array<Note> = [null,null,null,null];
 		var lastDadNotes:Array<Note> = [null,null,null,null];
@@ -1567,10 +1567,10 @@ class PlayState extends MusicBeatState
 				swagNote.sustainLength = songNotes[2];
 				swagNote.scrollFactor.set(0, 0);
 				swagNote.cameras = [camNotes];
-				if(!setupSplashes.contains(swagNote.graphicType) && gottaHitNote){
-					loadingSplash.setup(swagNote);
-					setupSplashes.push(swagNote.graphicType);
-				}
+				//if(!setupSplashes.contains(swagNote.graphicType) && gottaHitNote){
+				//	loadingSplash.setup(swagNote);
+				//	setupSplashes.push(swagNote.graphicType);
+				//}
 
 				if(gottaHitNote){
 					var lastBFNote = lastBFNotes[swagNote.noteData];
