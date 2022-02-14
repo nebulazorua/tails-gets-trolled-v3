@@ -48,7 +48,6 @@ local function queueFunc2(sStep, eStep, callback)
     table.insert(callbacks,{sStep,eStep,callback})
 end
 
-
 local function queueFuncB(sBeat, eBeat, callback)
     table.insert(callbacks,{sBeat*4,eBeat*4,callback})
 end
@@ -102,7 +101,7 @@ function update(elapsed)
     receptorCam.zoom = modMgr:get("noteCamZoom",0)*100
     holdCam.zoom = modMgr:get("noteCamZoom",0)*100
     HUDCam.zoom = modMgr:get("hudCamZoom",0)*100
-
+    setVar("defaultCamZoom",gameZoom)
 
     if(#callbacks>0)then
 		for i=#callbacks,1,-1 do
@@ -117,7 +116,7 @@ function update(elapsed)
 	end
 
 
-    setVar("defaultCamZoom",gameZoom)
+    
 end
 
 function everyBeat(sStep,eStep,callback)
@@ -263,17 +262,44 @@ modMgr:queueEase(528,534,'flip',-125,'quadOut', 1)
 modMgr:queueEase(528,534,'invert',125,'quadOut', 1)
 
 -- duet kinda?
+modMgr:queueEase(592,596,'flip',0,'quadOut', 1)
+modMgr:queueEase(592,596,'invert',0,'quadOut', 1)
 
-modMgr:queueEase(618,624,'flip',0,'quadOut', 1)
+
+--[[modMgr:queueEase(618,624,'flip',0,'quadOut', 1)
 modMgr:queueEase(618,624,'invert',0,'quadOut', 1)
 
+]]
+local noteSize = 160 * 0.7;
+
+modMgr:queueEase(592,596,"transform0X",-noteSize * 2,'quadOut', 1)
+modMgr:queueEase(592,596,"transform0X",-noteSize,'quadOut', 0)
+modMgr:queueEase(592,596,"transform1X",-noteSize ,'quadOut', 1)
+modMgr:queueEase(592,596,"transform1X",0 ,'quadOut', 0)
+modMgr:queueEase(592,596,"transform2X",0 ,'quadOut', 1)
+modMgr:queueEase(592,596,"transform2X",noteSize ,'quadOut', 0)
+modMgr:queueEase(592,596,"transform3X",noteSize ,'quadOut', 1)
+modMgr:queueEase(592,596,"transform3X",noteSize*2 ,'quadOut', 0)
+
+modMgr:queueEase(592,596,'alpha',0,'quadOut', 1)
+
+-- cool part with the bursts
+
 modMgr:queueEase(656,660,'opponentSwap',0,'quadOut')
-modMgr:queueEase(656,660,'alpha',0,'quadOut', 1)
 
 modMgr:queueEase(656,660,'flip',0,'quadOut', 1)
 modMgr:queueEase(656,660,'invert',0,'quadOut', 1)
 
--- cool part with the bursts
+modMgr:queueEase(656,660,"transform0X",0,'quadOut', 1)
+modMgr:queueEase(656,660,"transform0X",0,'quadOut', 0)
+modMgr:queueEase(656,660,"transform1X",0 ,'quadOut', 1)
+modMgr:queueEase(656,660,"transform1X",0 ,'quadOut', 0)
+modMgr:queueEase(656,660,"transform2X",0 ,'quadOut', 1)
+modMgr:queueEase(656,660,"transform2X",0 ,'quadOut', 0)
+modMgr:queueEase(656,660,"transform3X",0 ,'quadOut', 1)
+modMgr:queueEase(656,660,"transform3X",0 ,'quadOut', 0)
+
+
 local shit1 = 1;
 everySecondBeat(656,912,function(step,beat)
     shit1 = shit1 * -1;
@@ -289,7 +315,7 @@ everySecondBeat(656,912,function(step,beat)
     modMgr:queueEase(step,step+2,'confusion',0,'quartInOut')
 end)
 
--- wavveee :D
+-- kade wave :D
 
 queueFunc2(912,1168,function(step)
     local beat = step/4;
@@ -298,8 +324,6 @@ queueFunc2(912,1168,function(step)
         local mu = 1--col%2==0 and -1 or 1;
         modMgr:set("transform" .. col .. "X",32 * math.sin((beat + col*0.25) * 0.25 * math.pi));
         modMgr:set("transform" .. col .. "Y",32 * mu * math.cos((beat + col*.25) * 0.25 * math.pi));
-
-
     end
 end)
 
@@ -308,6 +332,11 @@ for i = 0, 3 do
     modMgr:queueEase(1168, 1170, 'transform' .. i .. 'Y', 0, 'quadOut')
     modMgr:queueEase(1168, 1170, 'transform' .. i .. 'Z', 0, 'quadOut')
 end
+
+modMgr:queueEase(1172, 1175, 'flip', 100, 'quadOut')
+modMgr:queueEase(1180, 1183, 'flip', 0, 'quadOut')
+modMgr:queueEase(1180, 1183, 'invert', 100, 'quadOut')
+modMgr:queueEase(1188, 1191, 'invert', 0, 'quadOut')
 
 -- second intro part
 introPart(1200)
@@ -345,6 +374,18 @@ modMgr:queueEase(2016,2020,'opponentSwap',0,'quadOut')
 modMgr:queueEase(2016,2020,'alpha',0,'quadOut', 1)
 
 modMgr:queueEase(2016,2020,'tipsy',0,'quadOut')
+
+-- idk
+local alt = 0;
+for step = 1970, 1980, 2 do
+    alt = alt + 1
+    modMgr:queueEase(step,step+2,"confusion0",(alt%2) *  -90,'quartOut')
+    modMgr:queueEase(step,step+2,"confusion1",(alt%2) *  90,'quartOut')
+    modMgr:queueEase(step,step+2,"confusion2",(alt%2) *  -90,'quartOut')
+    modMgr:queueEase(step,step+2,"confusion3",(alt%2) *  90,'quartOut')
+    modMgr:queueEase(step,step+2,"invert",(alt%2) * 100,'quartOut')
+end
+
 
 -- 2nd cool part w/ the bursts
 local spinBursts = {
