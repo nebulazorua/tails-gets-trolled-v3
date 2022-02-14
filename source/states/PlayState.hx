@@ -479,6 +479,10 @@ class PlayState extends MusicBeatState
 				i.Register(lua.state);
 
 
+			lua.errorHandler = function(error:String){
+				FlxG.log.advanced(error, EngineData.LUAERROR, true);
+			}
+
 			// this catches compile errors
 			try {
 				lua.runFile(Paths.modchart(songData.chartName.toLowerCase()));
