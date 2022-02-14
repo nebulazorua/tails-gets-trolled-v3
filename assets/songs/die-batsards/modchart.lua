@@ -25,7 +25,7 @@ local charSteps = {
 }
 local zoomed=false;
 
-local oldFocus = 'bf';
+local oldFocus = getVar"focus";
 
 local oStep = curStep;
 function stepHit(step)
@@ -46,9 +46,12 @@ function stepHit(step)
         end
         
         if(step==1719 and dad.curCharacter == 'shadow-crazy')then
-            oldFocus = getVar"focus";
             setVar("focus","dad")
             dad:playAnim("die")
+        end
+
+        if(step==1728)then
+            setVar("focus", oldFocus)
         end
 
         if(step==2730)then
@@ -56,11 +59,11 @@ function stepHit(step)
         end
     end
 
-    if(step>=1719 and step<1984 and not zoomed)then
+    if(step>=1719 and step<1984 and not zoomed and oldFocus ~= 'center')then
         zoomed=true;
         tween(camshit,{zoom=1.6},1.5,"inOutQuad")
     end
-    if(step>=1984 and zoomed)then
+    if(step>=1984 and zoomed and oldFocus ~= 'center')then
         zoomed=false;
         tween(camshit,{zoom=defaultZoom*.85},1.5,"inOutQuad")
     end

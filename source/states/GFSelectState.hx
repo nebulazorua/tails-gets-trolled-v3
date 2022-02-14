@@ -40,6 +40,9 @@ class GFSelectState extends MusicBeatState
   var right:FlxSprite;
   var whore:Character;
   public static var whores = ["gf","gfbetter", "gfbest", "gfbminus", "gfeminus"];
+
+  var afterChapter3:Array<String> = ["gfbminus","gfeminus"];
+  var selectableWhores:Array<String>=[];
   var selectedChar:Int = 0;
   var characters:FlxTypedGroup<Character>;
   var topbars:FlxTypedGroup<FlxSprite>;
@@ -47,6 +50,12 @@ class GFSelectState extends MusicBeatState
   override function create()
   {
     super.create();
+
+    for(gf in whores){
+      if(!afterChapter3.contains(gf) || FlxG.save.data.finishedCh3){
+        selectableWhores.push(gf);
+      }
+    }
 
     selectedChar = whores.indexOf(OptionUtils.options.gfSkin);
     if(selectedChar==-1){
@@ -112,7 +121,7 @@ class GFSelectState extends MusicBeatState
     DiscordClient.changePresence("Selecting a new GF", null);
     #end
 
-    for(name in whores){
+    for(name in selectableWhores){
       var char = new Character(0,0,name);
       char.screenCenter(XY);
       char.visible=false;
@@ -165,7 +174,7 @@ class GFSelectState extends MusicBeatState
 
     if (controls.BACK)
     {
-      OptionUtils.options.gfSkin = whores[selectedChar];
+      OptionUtils.options.gfSkin = selectableWhores[selectedChar];
       OptionUtils.saveOptions(OptionUtils.options);
       FlxG.switchState(new MainMenuState());
     }

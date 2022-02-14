@@ -86,7 +86,7 @@ class PlayState extends MusicBeatState
 	public static var currentPState:PlayState;
 	public static var weekData:WeekData;
 	public static var inCharter:Bool=false;
-
+	public static var playCutscene:Bool = true;
 	public static var curStage:String = '';
 	public static var SONG:SwagSong;
 	public static var isStoryMode:Bool = false;
@@ -1068,8 +1068,9 @@ class PlayState extends MusicBeatState
 			overlay.scrollFactor.set();
 			add(overlay);
 		}
-		if (isStoryMode)
+		if (isStoryMode && playCutscene)
 		{
+			playCutscene=false;
 			switch (curSong.toLowerCase())
 			{
 				default:
@@ -1125,7 +1126,6 @@ class PlayState extends MusicBeatState
 				boyfriend = new Boyfriend(spriteX,spriteY,newCharacter,boyfriend.hasSprite);
 				newSprite = boyfriend;
 				bfLua.sprite = boyfriend;
-				//iconP1.changeCharacter(newCharacter);
 			}else if(spriteName=="dad"){
 				var index = opponents.indexOf(dad);
 				if(index>=0)opponents.remove(dad);
@@ -1133,8 +1133,6 @@ class PlayState extends MusicBeatState
 				newSprite = dad;
 				dadLua.sprite = dad;
 				if(index>=0)opponents.insert(index,dad);
-
-				//iconP2.changeCharacter(newCharacter);
 			}else if(spriteName=="gf"){
 				gf = new Character(spriteX,spriteY,newCharacter, gf.isPlayer ,gf.hasSprite);
 				newSprite = gf;
@@ -1147,6 +1145,8 @@ class PlayState extends MusicBeatState
 			healthBar.setIcons(boyfriend.iconName,dad.iconName);
 			if(currentOptions.healthBarColors)
 				healthBar.setColors(dad.iconColor,boyfriend.iconColor);
+
+			trace(dad.iconColor);
 
 			luaSprites[spriteName]=newSprite;
 			add(newSprite);
@@ -2127,15 +2127,17 @@ class PlayState extends MusicBeatState
 		// TODO: modManager.queueFunction() maybe?
 		if(loadedShotAnims[0]!=null && loadedShotAnims[0]<=curDecStep){
 			dad.playAnim("shoot",true);
-			if(stage.tailsShocked!=null)
-				stage.tailsShocked.animation.play("shock",true);
-
-			if(stage.knuxShocked!=null)
-				stage.knuxShocked.animation.play("shock",true);
+			if(stage.tails!=null)
+				stage.tails.animation.play("shoot",true);
 
 			loadedShotAnims.shift();
 		}
 		if(loadedKillShots[0]!=null && loadedKillShots[0]<=curDecStep){
+			if(stage.tails.animation.curAnim.name!='shootKill')
+				stage.tails.animation.play("shootKill",true);
+			if(stage.knuckles.animation.curAnim.name!='shootKill')
+				stage.knuckles.animation.play("shootKill",true);
+
 			dad.playAnim("shoot",true);
 			health -= 1.8 * (1/killShotCount);
 			loadedKillShots.shift();
@@ -2262,43 +2264,6 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
 
-		if (curSong == 'Fresh')
-		{
-			switch (curBeat)
-			{
-				case 16:
-					camZooming = true;
-					gfSpeed = 2;
-				case 48:
-					gfSpeed = 1;
-				case 80:
-					gfSpeed = 2;
-				case 112:
-					gfSpeed = 1;
-				case 163:
-					// inst.stop();
-					// FlxG.switchState(new TitleState());
-			}
-		}
-
-		if(curSong == 'Spookeez'){
-			switch (curStep){
-				case 444,445:
-					gf.playAnim("cheer",true);
-					boyfriend.playAnim("hey",true);
-			}
-		}
-
-		if (curSong == 'Bopeebo')
-		{
-			switch (curBeat)
-			{
-				case 128, 129, 130:
-					vocals.volume = 0;
-					// inst.stop();
-					// FlxG.switchState(new PlayState());
-			}
-		}
 		playerStrums.forEach( function(spr:Receptor)
 		{
 			var pos = modManager.getReceptorPos(spr,0);
@@ -2366,7 +2331,12 @@ class PlayState extends MusicBeatState
 						modchart.removeCamEffect(highShader);
 					}
 
-					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y));
+					var deadBF:String = 'bf';
+					/*switch(boyfriend.curCharacter){
+						case 'bf-betterer':
+							deadBF = 'bf-betterer';
+					}*/
+					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y, deadBF));
 
 					// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
@@ -2478,6 +2448,8 @@ class PlayState extends MusicBeatState
 								}else if(crosshair.damage>0){
 									boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
 									boyfriend.playAnim("hit",true);
+									if(stage.knuckles!=null)
+										stage.knuckles.animation.play("shoot",true);
 								}
 
 							}
@@ -2801,6 +2773,9 @@ class PlayState extends MusicBeatState
 				if(!died && canScore)
 					campaignScore += songScore;
 
+				PlayState.playCutscene=true;
+				if(SONG.song.toLowerCase()=='die-batsards')
+					FlxG.save.data.finishedCh3=true;
 				gotoNextStory();
 
 				if (storyPlaylist.length <= 0)
@@ -3784,6 +3759,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public static function setStoryWeek(data:WeekData,difficulty:Int){
+		PlayState.playCutscene=true;
 		PlayState.inCharter=false;
 		PlayState.startPos = 0;
 		PlayState.charterPos = 0;
@@ -3801,6 +3777,7 @@ class PlayState extends MusicBeatState
 	}
 
 	public function gotoNextStory(){
+		PlayState.playCutscene=true;
 		PlayState.inCharter=false;
 		PlayState.startPos = 0;
 		PlayState.charterPos = 0;

@@ -3,6 +3,11 @@
 		-15,
 		80
 	],
+	"camOffset": [
+		-65,
+		-40
+	],
+	"scale": 0.8,
 	"singDur": 6.1,
 	"spritesheet": "shadow crazy",
 	"anims": [
@@ -13,8 +18,8 @@
 			],
 			"fps": 24,
 			"prefix": "idle crazy",
-			"name": "idle",
-			"looped": false
+			"looped": false,
+			"name": "idle"
 		},
 		{
 			"offsets": [
@@ -23,8 +28,8 @@
 			],
 			"fps": 24,
 			"prefix": "up crazy",
-			"looped": false,
-			"name": "singUP"
+			"name": "singUP",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -33,8 +38,8 @@
 			],
 			"fps": 24,
 			"prefix": "left crazy",
-			"looped": false,
-			"name": "singLEFT"
+			"name": "singLEFT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -43,8 +48,8 @@
 			],
 			"fps": 24,
 			"prefix": "right crazy",
-			"looped": false,
-			"name": "singRIGHT"
+			"name": "singRIGHT",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -53,8 +58,8 @@
 			],
 			"fps": 24,
 			"prefix": "down crazy",
-			"looped": false,
-			"name": "singDOWN"
+			"name": "singDOWN",
+			"looped": false
 		},
 		{
 			"offsets": [
@@ -63,29 +68,24 @@
 			],
 			"fps": 24,
 			"prefix": "shoot crazy",
-			"looped": false,
-			"name": "shoot"
+			"name": "shoot",
+			"looped": false
 		},
 		{
-			"prefix": "die",
 			"offsets": [
 				40,
 				0
 			],
 			"fps": 24,
-			"name": "die",
-			"looped": false
+			"prefix": "die",
+			"looped": false,
+			"name": "die"
 		}
 	],
-	"scale": 0.8,
-	"camOffset": [
-		-65,
-		-40
-	],
 	"flipX": false,
-	"iconName": "shadow-crazy",
 	"antialiasing": true,
+	"iconName": "shadow-crazy",
 	"beatDancer": false,
-	"format": "andromeda",
-	"healthColor": "0xFF7D2323"
+	"healthColor": "0xFF411923",
+	"format": "andromeda"
 }

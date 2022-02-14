@@ -24,6 +24,7 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = [
 		'Resume',
 		'Restart Song',
+		'Restart with cutscene',
 		#if ALLOW_SET_STARTPOS
 		"Set Start Position",
 		#end
@@ -126,6 +127,9 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart Song":
+					FlxG.resetState();
+				case "Restart with cutscene":
+					PlayState.playCutscene=true;
 					FlxG.resetState();
 				case "Restart from beginning":
 					PlayState.startPos=0;

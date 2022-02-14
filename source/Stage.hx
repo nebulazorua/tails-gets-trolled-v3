@@ -41,37 +41,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
   public var doDistractions:Bool = true;
 
-  // spooky bg
-  public var halloweenBG:FlxSprite;
-  var lightningStrikeBeat:Int = 0;
-	var lightningOffset:Int = 8;
-
-
   // shadow bg
-  var knuckles:FlxSprite;
-  var tails:FlxSprite;
-
-  public var knuxShocked:FlxSprite;
-  public var tailsShocked:FlxSprite;
-
-  // philly bg
-  public var lightFadeShader:BuildingEffect;
-  public var phillyCityLights:FlxTypedGroup<FlxSprite>;
-  public var phillyTrain:FlxSprite;
-  public var trainSound:FlxSound;
-  public var curLight:Int = 0;
-
-  public var trainMoving:Bool = false;
-	public var trainFrameTiming:Float = 0;
-
-	public var trainCars:Int = 8;
-	public var trainFinishing:Bool = false;
-	public var trainCooldown:Int = 0;
-
-  // limo bg
-  public var fastCar:FlxSprite;
-  public var limo:FlxSprite;
-  var fastCarCanDrive:Bool=true;
+  public var knuckles:FlxSprite;
+  public var tails:FlxSprite;
 
   // misc, general bg stuff
 
@@ -113,38 +85,6 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
     super.destroy();
   }
-
-  function lightningStrikeShit():Void
-  {
-    FlxG.sound.play(Paths.soundRandom('thunder_', 1, 2));
-    halloweenBG.animation.play('lightning');
-
-    lightningOffset = FlxG.random.int(8, 24);
-
-    boyfriend.playAnim('scared', true);
-    gf.playAnim('scared', true);
-  }
-
-  function resetFastCar():Void
-  {
-    fastCar.x = -12600;
-    fastCar.y = FlxG.random.int(140, 250);
-    fastCar.velocity.x = 0;
-    fastCarCanDrive = true;
-  }
-
-  function fastCarDrive()
-  {
-    FlxG.sound.play(Paths.soundRandom('carPass', 0, 1), 0.7);
-
-    fastCar.velocity.x = (FlxG.random.int(170, 220) / FlxG.elapsed) * 3;
-    fastCarCanDrive = false;
-    new FlxTimer().start(2, function(tmr:FlxTimer)
-    {
-      resetFastCar();
-    });
-  }
-
 
 
   public function setPlayerPositions(?p1:Character,?p2:Character,?gf:Character){
@@ -326,22 +266,28 @@ class Stage extends FlxTypedGroup<FlxBasic> {
 
         if(doDistractions){
           tails = new FlxSprite();
-          tails.frames = Paths.getSparrowAtlas('tails_bg','chapter3');
-          tails.animation.addByPrefix("tails","tails bg scared",6,false);
-          tails.animation.play("tails",true);
-          tails.x = 651;
-          tails.y = 70;
+          tails.frames = Paths.getSparrowAtlas('tails','chapter3');
+          tails.animation.addByPrefix("idle","IDLET",24,false);
+          tails.animation.addByPrefix("shoot","SHOOTT",24,false);
+          tails.animation.addByPrefix("shootKill","SHOOTSCARET",24,false);
+          tails.animation.play("idle",true);
+          tails.antialiasing=true;
+          tails.x = 200;
+          tails.y = 60;
           add(tails);
 
           knuckles = new FlxSprite();
-          knuckles.frames = Paths.getSparrowAtlas('knuckles_bg','chapter3');
-          knuckles.animation.addByPrefix("knuckles","knuckles bg scared",12,false);
-          knuckles.animation.play("knuckles",true);
-          knuckles.x = 323;
-          knuckles.y = 94;
-          add(knuckles);
+          knuckles.frames = Paths.getSparrowAtlas('knuckles','chapter3');
+          knuckles.animation.addByPrefix("idle","IDLEK",24,false);
+          knuckles.animation.addByPrefix("shoot","SHOOTK",24,false);
+          knuckles.animation.addByPrefix("shootKill","SHOOTSCAREK",24,false);
+          knuckles.animation.play("idle",true);
+          knuckles.antialiasing=true;
+          knuckles.x = 770;
+          knuckles.y = 80;
+          layers.get("gf").add(knuckles);
 
-          tailsShocked = new FlxSprite();
+          /*tailsShocked = new FlxSprite();
           tailsShocked.frames = Paths.getSparrowAtlas('scared','chapter3');
           tailsShocked.animation.addByPrefix("shock","scared mark",6,false);
           tailsShocked.animation.play("shock",true);
@@ -355,10 +301,8 @@ class Stage extends FlxTypedGroup<FlxBasic> {
           knuxShocked.animation.play("shock",true);
           knuxShocked.x = 300;
           knuxShocked.y = -35;
-          add(knuxShocked);
+          add(knuxShocked);*/
 
-          boppers.push([knuckles,"knuckles",2]);
-          boppers.push([tails,"tails",2]);
         }
 
       case 'highzoneShadow':
@@ -452,6 +396,22 @@ class Stage extends FlxTypedGroup<FlxBasic> {
       d.dance();
     }
 
+    switch(curStage){
+      case 'hillzoneShadow':
+      if(doDistractions){
+        if(beat%2==0){
+          if(knuckles.animation.curAnim.name!='shootKill')
+            if(knuckles.animation.curAnim.name=='idle' || knuckles.animation.curAnim.finished)
+              knuckles.animation.play('idle',true);
+
+          if(tails.animation.curAnim.name!='shootKill')
+            if(tails.animation.curAnim.name=='idle' || tails.animation.curAnim.finished)
+              tails.animation.play('idle',true);
+
+        }
+      }
+    }
+
   }
 
   override function update(elapsed:Float){
@@ -460,50 +420,5 @@ class Stage extends FlxTypedGroup<FlxBasic> {
     super.update(elapsed);
   }
 
-  function trainStart():Void
-  {
-    trainMoving = true;
-    trainSound.play(true,0);
-  }
-
-  var startedMoving:Bool = false;
-
-  function updateTrainPos():Void
-  {
-    if (trainSound.time >= 4700)
-    {
-      startedMoving = true;
-      gf.playAnim('hairBlow');
-    }
-
-    if (startedMoving)
-    {
-      phillyTrain.x -= 400;
-
-      if (phillyTrain.x < -2000 && !trainFinishing)
-      {
-        phillyTrain.x = -1150;
-        trainCars -= 1;
-
-        if (trainCars <= 0)
-          trainFinishing = true;
-      }
-
-      if (phillyTrain.x < -4000 && trainFinishing)
-        trainReset();
-    }
-  }
-
-  function trainReset():Void
-  {
-    gf.playAnim('hairFall');
-    phillyTrain.x = FlxG.width + 200;
-    trainMoving = false;
-    // trainSound.stop();
-    // trainSound.time = 0;
-    trainCars = 8;
-    trainFinishing = false;
-    startedMoving = false;
-  }
 
 }

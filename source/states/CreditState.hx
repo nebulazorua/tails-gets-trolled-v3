@@ -76,11 +76,15 @@ class CreditState extends MusicBeatState  {
     {textName: "philiplol", displayName: "Philiplol", iconName: "philiplol", roles: "Musician, Voice Actor", note: "Created High Shovel. Voice acted Knuckles.\nHigh shovel, bro." },
     {textName: "penkaru", displayName: "Penkaru", iconName: "penkaru", roles: "Musician", note: "Created No Bitches P.\nWas supposed to help with Taste for Blood but scores didn't get used." },
     {textName: "matasaki", displayName: "Matasaki", iconName: "matasaki", roles: "Musician", note: "Created No Bitches M.\nBiggest fan. Thanks for stickin' by us!" },
-    {textName: "jippy", displayName: "Jippy", iconName: "jippy", roles: "Musician", note: "Created Groovy Fox..\nI think?" },
-    {textName: "ayybeff", displayName: "Ayybeff", iconName: "ayybeff", roles: "Musician", note: "Created No Heroes." },
+    {textName: "hugenate", displayName: "HugeNate", iconName: "hugenate", roles: "Musician", note: "Created Groovy Fox.\nNathaniel of the large variety." },
+    {textName: "ayybeff", displayName: "Ayybeff", iconName: "ayybeff", roles: "Musician", note: "Created No Heroes.\nGot their good cover in the game." },
+    // because i know people are gonna go "WAA YOU'RE SAYING THEY'RE THE ONLY GOOD COVER!!" and go off at hooda
+    // it was me, neb, lmao
+    // flame me not hooda
+
     // VAs
     {textName: "Mike", displayName: "mc83ch5", iconName: "mikechrysler", roles: "Voice Actor", note: "Voice acted Tails.\nNo talent whatsoever." },
-    {textName: "Distorcore", displayName: "Distorcore", iconName: "distorcore", roles: "Voice Actor", note: "Voice acted Sonic.\nStill the best Sonic voice in FNF." },
+    {textName: "jippy", displayName: "Jippy", iconName: "jippy", roles: "Voice Actor", note: "Voice acted Sonic.\nStill the best Sonic voice in FNF." },
     {textName: "sticky", displayName: "Sticky", iconName: "sticky", roles: "Voice Actor", note: "Voice acted Shadow.\nDanish Shadow lmao." },
 
   ];
