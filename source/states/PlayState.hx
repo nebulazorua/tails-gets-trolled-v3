@@ -79,6 +79,18 @@ using flixel.util.FlxSpriteUtil;
 
 class PlayState extends MusicBeatState
 {
+
+	var deadbitch:Map<String,String> = [
+		"bf" => "bf",
+		"bf-better" => "bf",
+		"bf-betterer" => "bf",
+		"bf-player" => "bf",
+		"bf-better-player" => "bf",
+		"bf-betterer-player" => "bf",
+		"high-shadow" => "deadshadow",
+		"high-shadow-player" => "deadshadow",
+	  ];
+	  
 	public static var noteCounter:Map<String,Int> = [];
 	public static var inst:FlxSound;
 
@@ -2331,12 +2343,7 @@ class PlayState extends MusicBeatState
 						modchart.removeCamEffect(highShader);
 					}
 
-					var deadBF:String = 'bf';
-					/*switch(boyfriend.curCharacter){
-						case 'bf-betterer':
-							deadBF = 'bf-betterer';
-					}*/
-					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y, deadBF));
+					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y, deadbitch.get(SONG.player1)));
 
 					// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
