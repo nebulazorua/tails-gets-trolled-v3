@@ -92,9 +92,8 @@ You'll also need to install a couple things that involve Gits. To do this, you n
 1. Download [git-scm](https://git-scm.com/downloads). Works for Windows, Mac, and Linux, just select your build.
 2. Follow instructions to install the application properly.
 
-Then for each of these type `haxelib git [libraryname] [library]` so `haxelib git polymod https://github.com/larsiusprime/polymod.git`
+Then for each of these type `haxelib git [libraryname] [library]` so `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc`
 ```
-polymod https://github.com/larsiusprime/polymod.git
 discord_rpc https://github.com/Aidan63/linc_discord-rpc
 hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
 linc_luajit https://github.com/nebulazorua/linc_luajit

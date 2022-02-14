@@ -6,9 +6,6 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.graphics.frames.FlxFrame;
 import flash.display.BitmapData;
-#if polymod
-import polymod.format.ParseRules.TargetSignatureElement;
-#end
 import flixel.graphics.frames.FlxFramesCollection;
 import haxe.Json;
 import haxe.format.JsonParser;

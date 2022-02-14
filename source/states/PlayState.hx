@@ -1479,6 +1479,7 @@ class PlayState extends MusicBeatState
 		// DUMB FUCKING AMERICANS CANT JUST ADD A 'U' >:(
 
 		Note.noteBehaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',currentOptions.noteSkin,noteModifier));
+		Note.defaultModifier = noteModifier;
 
 		var dynamicColouring:Null<Bool> = Note.noteBehaviour.receptorAutoColor;
 		if(dynamicColouring==null)dynamicColouring=false;

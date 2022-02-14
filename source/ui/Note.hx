@@ -19,10 +19,6 @@ import states.*;
 import Shaders;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-#if polymod
-import polymod.format.ParseRules.TargetSignatureElement;
-#end
-
 using StringTools;
 
 typedef SkinManifest = {
@@ -80,8 +76,9 @@ class Note extends NoteGraphic
 	public var hitbox:Float = 166;
 
 	public var beat:Float = 0;
+	public static var defaultModifier:String = 'default';
 	public static var noteBehaviour:NoteBehaviour;
-	public static var behaviours:Map<String,NoteBehaviour>=[];
+	public static var behaviours:Map<String,Map<String,NoteBehaviour>>=[];
 	public static var swagWidth:Float = 160 * 0.7;
 	public var effect:NoteEffect;
 
@@ -142,10 +139,13 @@ class Note extends NoteGraphic
 				hitbox = Conductor.safeZoneOffset*0.38; // should probably not scale but idk man
 		}
 		var graphicType:String = type;
-		var behaviour = type=='default'?Note.noteBehaviour:Note.behaviours.get(type);
+		var modBehaviours = Note.behaviours.get(type);
+		if(modBehaviours==null)modBehaviours = new Map<String,NoteBehaviour>();
+		var behaviour = (modifier==Note.defaultModifier && type=='default')?Note.noteBehaviour:modBehaviours.get(type);
 		if(behaviour==null){
 			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,type));
-			Note.behaviours.set(type,behaviour);
+			modBehaviours.set(type,behaviour);
+			Note.behaviours.set(modifier,modBehaviours);
 		}
 
 		super(strumTime,modifier,skin,graphicType,behaviour);

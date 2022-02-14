@@ -11,7 +11,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
-    
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -38,21 +38,20 @@ jobs:
           haxelib install hscript
           haxelib install flixel-addons
           haxelib git faxe https://github.com/uhrobots/faxe
-          haxelib git polymod https://github.com/MasterEric/polymod.git
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib git extension-webm https://github.com/KadeDev/extension-webm
           haxelib run lime rebuild extension-webm windows
           haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit.git
           haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
           haxelib git crashdumper http://github.com/larsiusprime/crashdumper
-          haxelib install actuate 
-          haxelib install newgrounds 
+          haxelib install actuate
+          haxelib install newgrounds
           haxelib list
-          
+
       - name: build logs
         run: |
           haxelib run lime build windows
-          
+
       - uses: actions/upload-artifact@v2
         with:
           name: Windows Build

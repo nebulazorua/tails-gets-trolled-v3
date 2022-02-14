@@ -66,29 +66,40 @@ class JukeboxState extends MusicBeatState {
   ];
 
   function onMouseDown(object:FlxObject){
-    instOn = !instOn;
-    if(instOn)
-      instButton.animation.play('on');
-    else
-      instButton.animation.play('off');
-
-      Conductor.changeBPM(songData[playing].bpm);
-      var path = songData[playing].path;
-      var time = FlxG.sound.music.time;
-      OptionUtils.options.isInst = instOn;
-      OptionUtils.saveOptions(OptionUtils.options);
+    if(object==instButton){
+      instOn = !instOn;
       if(instOn)
-        path = songData[playing].inst;
+        instButton.animation.play('on');
+      else
+        instButton.animation.play('off');
 
-      FlxG.sound.playMusic(CoolUtil.getSound(path));
-      FlxG.sound.music.time = time;
+        Conductor.changeBPM(songData[playing].bpm);
+        var path = songData[playing].path;
+        var time = FlxG.sound.music.time;
+        OptionUtils.options.isInst = instOn;
+        OptionUtils.saveOptions(OptionUtils.options);
+        if(instOn)
+          path = songData[playing].inst;
+
+        FlxG.sound.playMusic(CoolUtil.getSound(path));
+        FlxG.sound.music.time = time;
+    }else{
+        var txt:FlxText = cast object;
+        if(texts.members.contains(txt)){
+          if(!fading)
+            play(txt.ID);
+        }
+      }
 	}
 
 	function onMouseUp(object:FlxObject){
 	}
 
 	function onMouseOver(object:FlxObject){
-
+    var txt:FlxText = cast object;
+    if(texts.members.contains(txt)){
+      changeSelection(txt.ID);
+    }
 	}
 
 	function onMouseOut(object:FlxObject){
@@ -173,6 +184,7 @@ class JukeboxState extends MusicBeatState {
       var text = new FlxText(445, 126 + (36 * idx), 0, name, 24);
       text.setFormat(Paths.font("arial.ttf"), 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.TRANSPARENT);
       text.ID=idx;
+      FlxMouseEventManager.add(text,onMouseDown,onMouseUp,onMouseOver,onMouseOut,false,true,false);
       texts.add(text);
     }
 
@@ -201,6 +213,7 @@ class JukeboxState extends MusicBeatState {
   }
 
   function changeSelection(newSelect:Int){
+    if(selection==newSelect)return;
     FlxG.sound.play(Paths.sound('scrollMenu'));
     selection=newSelect;
     if(selection>songData.length-1){
@@ -210,6 +223,23 @@ class JukeboxState extends MusicBeatState {
       selection=songData.length-1;
     }
     updateSelection();
+  }
+
+  function play(play:Int){
+    playing = play;
+    fading=true;
+    FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
+      fading=false;
+      Conductor.changeBPM(songData[playing].bpm);
+      var path = songData[playing].path;
+      if(instOn)
+        path = songData[playing].inst;
+
+      FlxG.sound.playMusic(CoolUtil.getSound(path));
+      FlxG.sound.music.fadeIn(.5,0,1);
+    });
+    OptionUtils.options.jukeboxSong = selection;
+    OptionUtils.saveOptions(OptionUtils.options);
   }
 
   override function update(elapsed:Float){
@@ -262,21 +292,9 @@ class JukeboxState extends MusicBeatState {
 
     if (controls.ACCEPT)
     {
+      playing = selection;
       if(!fading){
-        fading=true;
-        FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
-          fading=false;
-          Conductor.changeBPM(songData[selection].bpm);
-          var path = songData[selection].path;
-          if(instOn)
-            path = songData[selection].inst;
-
-          FlxG.sound.playMusic(CoolUtil.getSound(path));
-          FlxG.sound.music.fadeIn(.5,0,1);
-        });
-        playing = selection;
-        OptionUtils.options.jukeboxSong = selection;
-        OptionUtils.saveOptions(OptionUtils.options);
+        play(playing);
       }
     }
 

@@ -155,7 +155,7 @@ class TitleState extends MusicBeatState
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
 
-		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
+		credTextShit = new Alphabet(0, 0, "Nebula the Zorua\nBepixel\nHooda the Antagonist\nEcholocated\nWilde", true);
 		credTextShit.screenCenter();
 
 		// credTextShit.alignment = CENTER;
@@ -289,7 +289,7 @@ class TitleState extends MusicBeatState
 						FlxG.switchState(new MainMenuState());
 					}*/
 					var selection = OptionUtils.options.jukeboxSong;
-					if(selection!=1){
+					if(selection!=0){
 						FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
 							Conductor.changeBPM(JukeboxState.songData[selection].bpm);
 							var path = JukeboxState.songData[selection].path;
@@ -362,7 +362,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+				createCoolText(['Nebula the Zorua', 'Bepixel', 'Hooda the Antagonist', 'Wilde', 'Echolocated']);
 			case 3:
 				addMoreText('present');
 			case 4:
@@ -370,7 +370,7 @@ class TitleState extends MusicBeatState
 			case 5:
 				createCoolText(['In association', 'with']);
 			case 7:
-				addMoreText('newgrounds');
+				addMoreText('tailsgetstrolled dot org');
 				ngSpr.visible = true;
 			case 8:
 				deleteCoolText();
@@ -382,11 +382,11 @@ class TitleState extends MusicBeatState
 			case 12:
 				deleteCoolText();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('Tails');
 			case 14:
-				addMoreText('Night');
+				addMoreText('Gets');
 			case 15:
-				addMoreText('Funkin');
+				addMoreText('Trolled');
 
 			case 16:
 				skipIntro();

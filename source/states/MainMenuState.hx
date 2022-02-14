@@ -189,7 +189,7 @@ class MainMenuState extends MusicBeatState
 	function sideAction(which:Int){
 		switch(which){
 			case 0:
-				FlxG.switchState(new MainMenuState()); // credits
+				FlxG.switchState(new CreditState()); // credits
 			case 1:
 				FlxG.switchState(new JukeboxState()); // jukebox
 			case 2:
