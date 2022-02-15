@@ -28,8 +28,10 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		camFollow = new FlxObject(bf.getMidpoint().x - 100 + bf.camOffset.x, bf.getMidpoint().y - 100 + bf.camOffset.y, 1, 1);
 		add(camFollow);
-		var deathSound = 'fnf_loss_sfx' + stageSuffix;
+		var deathSound = 'zombieDeath';//'fnf_loss_sfx' + stageSuffix;
 		switch (daBf){
+			case 'bf' | 'bf-better':
+				deathSound = 'fnf_loss_sfx' + stageSuffix;
 			case 'bf-GETS-SHOT':
 				deathSound = 'GunDeath';
 			case 'deadshadow':
