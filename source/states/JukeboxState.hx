@@ -230,18 +230,12 @@ class JukeboxState extends MusicBeatState {
   function play(play:Int){
     playing = play;
     fading=true;
-    FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
-      fading=false;
-      Conductor.changeBPM(songData[playing].bpm);
-      var path = songData[playing].path;
-      if(instOn)
-        path = songData[playing].inst;
-
-      FlxG.sound.playMusic(CoolUtil.getSound(path));
-      FlxG.sound.music.fadeIn(.5,0,1);
-    });
     OptionUtils.options.jukeboxSong = selection;
     OptionUtils.saveOptions(OptionUtils.options);
+    FlxG.sound.music.fadeOut(.5, 0, function(twn:FlxTween){
+      fading=false;
+      CoolUtil.playMenuMusic();
+    });
   }
 
   override function update(elapsed:Float){
