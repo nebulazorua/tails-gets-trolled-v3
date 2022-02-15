@@ -85,9 +85,6 @@ class OptionsState extends MusicBeatState
 				new NoteskinOption("noteSkin","NoteSkin","The noteskin to use"),
 				new OptionCategory("Effects",[
 					new ToggleOption("ruinMod","Ruin the mod","Ruins the mod.")
-				//	new ToggleOption("picoCamshake","Train camera shake","Whether the train in week 3's background shakes the camera"),
-					//new ToggleOption("senpaiShaders","Week 6 shaders","Is the CRT effect active in week 6"),
-				//	new ScrollOption("senpaiShaderStrength","Week 6 shaders","How strong the week 6 shaders are",0,2,["Off","CRT","All"])
 				]),
 			]),
 			new OptionCategory("Preferences",[
@@ -113,7 +110,8 @@ class OptionsState extends MusicBeatState
 			]),
 			new OptionCategory("Tails Gets Trolled",[
 				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not."),
-				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel")
+				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel"),
+				new ToggleOption("modcharts","Modchart","Toggles the modcharts.\nSkill issue.")
 			]),
 			new OptionCategory("Performance",[
 				new StepOption("fps","FPS Cap",30,30,360,"","","The FPS the game tries to run at",true,function(value:Float,step:Float){

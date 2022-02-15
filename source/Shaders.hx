@@ -37,7 +37,7 @@ class HighShader extends FlxShader{
     void main()
     {
 
-      vec2 fragCoord = gl_FragCoord;
+      vec2 fragCoord = gl_FragCoord.xy;
       vec2 iResolution = openfl_TextureSize;
 
       float focusPower = (20.0 + sin(iTime*4.)*3.) * effectiveness;

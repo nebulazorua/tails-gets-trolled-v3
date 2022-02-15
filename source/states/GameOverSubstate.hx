@@ -30,7 +30,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		switch (daBf){
 			case 'bf-GETS-SHOT':
 				deathSound = 'GunDeath';
-			case 'high-shadow':
+			case 'deadshadow':
 				deathSound = 'ShadowDies';
 		}
 		FlxG.sound.play(Paths.sound(deathSound));

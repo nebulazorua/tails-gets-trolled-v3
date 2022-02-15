@@ -194,6 +194,7 @@ local introBFNotes = {
     1408
 }
 
+if(getOption"modcharts")then
 for i = 1,#introBFNotes do
     local step = introBFNotes[i]
     --local shit = i >= 6 and i <= 10 and 1 or -1;
@@ -496,6 +497,7 @@ queueFunc2(2272,2364,function(step)
         modMgr:set("transform" .. col .. "Z",radiusZ * math.cos(input) * speed,1)
     end
 end)
+end
 function stepHit(step)
     for i = #funcQueue,1,-1 do
         local v = funcQueue[i]

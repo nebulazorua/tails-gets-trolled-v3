@@ -24,6 +24,7 @@ local defaultZoom = getVar("defaultCamZoom");
 local charSteps = {
     {step=844,char='dripsonic-mad'},
     {step=880,char='dripsonic'},
+    {step=1120,char='dripsonic-forced'},
     {step=1152,char='dripsonic-mad'},
     {step=1408,char='dripsonic-forced'},
     {step=1664,char='dripsonic-mad'},

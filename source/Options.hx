@@ -122,10 +122,13 @@ class Options
 	public var smJudges:Bool = false;
 	public var judgeX:Float = 0;
 	public var judgeY:Float = 0;
-	public var shotsGetJudged:Bool = false;
 	public var fcBasedComboColor:Bool = false;
-	public var getHigh:Bool = true;
 	public var ruinMod:Bool = false;
+
+	// tgt options
+	public var getHigh:Bool = true;
+	public var shotsGetJudged:Bool = false;
+	public var modcharts:Bool = true;
 
 	// performance
 	public var fps:Int = 120;

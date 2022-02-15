@@ -54,6 +54,7 @@ import Shaders;
 import haxe.Exception;
 import openfl.utils.Assets;
 import ModChart;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flash.events.KeyboardEvent;
 import Controls;
 import Controls.Control;
@@ -95,7 +96,6 @@ class PlayState extends MusicBeatState
 
 	public static var noteCounter:Map<String,Int> = [];
 	public static var inst:FlxSound;
-
 	public static var songData:SongData;
 	public static var currentPState:PlayState;
 	public static var weekData:WeekData;
@@ -121,6 +121,8 @@ class PlayState extends MusicBeatState
 	public var opponent:Character;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
+
+	public var dbTutorial:FlxSpriteGroup;
 
 	public var cancerColors:Array<FlxColor> = [
 		0xff31a2fd,
@@ -678,7 +680,7 @@ class PlayState extends MusicBeatState
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
 		{
-			detailsText = "Story Mode: Week " + storyWeek+ " ";
+			detailsText = "Story Mode: Chapter " + storyWeek+ " ";
 		}
 		else
 		{
@@ -712,6 +714,7 @@ class PlayState extends MusicBeatState
 
 		if(currentOptions.noStage)
 			curStage='blank';
+
 
 		cancer = new FlxSprite(FlxG.width/2,FlxG.height/2);
 		cancer.makeGraphic(Std.int(FlxG.width*4),Std.int(FlxG.height*4),FlxColor.BLACK);
@@ -778,6 +781,28 @@ class PlayState extends MusicBeatState
 		modchart.addNoteEffect(noteCam3D);*/
 
 
+		dbTutorial = new FlxSpriteGroup();
+		dbTutorial.cameras = [camHUD];
+
+		var bind = OptionUtils.getKey(Control.DODGE).toString();
+		var tutorialImg = new FlxSprite().loadGraphic(Paths.image("db_tutorial"));
+		tutorialImg.screenCenter();
+		dbTutorial.add(tutorialImg);
+
+		var tutorialHitThis = new FlxText(930, 140, 0, "when you see", 20);
+		tutorialHitThis.setFormat(Paths.font("arial.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tutorialHitThis.scrollFactor.set();
+		dbTutorial.add(tutorialHitThis);
+
+		var tutorialBind = new FlxText(942, 430, 0, 'press $bind to dodge', 20);
+		tutorialBind.setFormat(Paths.font("arial.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tutorialBind.scrollFactor.set();
+		dbTutorial.add(tutorialBind);
+
+
+		dbTutorial.alpha = 0;
+		add(dbTutorial);
+
 		if(SONG.noteModifier!=null)
 			noteModifier=SONG.noteModifier;
 
@@ -788,9 +813,9 @@ class PlayState extends MusicBeatState
 
 		var gfVersion:String = currentOptions.gfSkin; //stage.gfVersion;
 
-		if(!currentOptions.allowNoteModifiers){
+		if(!currentOptions.allowNoteModifiers)
 			noteModifier='base';
-		}
+
 		if(SONG.player1=='bf-neb')
 			gfVersion = 'lizzy';
 
@@ -3650,6 +3675,7 @@ class PlayState extends MusicBeatState
 
 	var fastCarCanDrive:Bool = true;
 
+	var lastHitStep:Int = 0;
 	override function stepHit()
 	{
 		super.stepHit();
@@ -3666,6 +3692,17 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
+
+		for(step in lastHitStep...curStep){
+			if(step==8){
+				FlxTween.tween(dbTutorial, {alpha: 1}, .5, {ease: FlxEase.quadInOut});
+			}else if(step==32){
+				FlxTween.tween(dbTutorial, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+			}
+		}
+
+
+		lastHitStep = curStep;
 	}
 
 	override function beatHit()
