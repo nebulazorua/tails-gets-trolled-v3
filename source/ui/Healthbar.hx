@@ -57,7 +57,9 @@ class Healthbar extends FlxSpriteGroup {
 
   public function setColors(baseColor:FlxColor,secondaryColor:FlxColor){
     bar.createFilledBar(baseColor,secondaryColor);
+    bar.updateBar();
   }
+
   public function setIconSize(iconP1Size:Int,iconP2Size:Int){
     iconP1.setGraphicSize(Std.int(iconP1Size));
     iconP2.setGraphicSize(Std.int(iconP2Size));
@@ -65,6 +67,7 @@ class Healthbar extends FlxSpriteGroup {
     iconP1.updateHitbox();
     iconP2.updateHitbox();
   }
+
   public function beatHit(curBeat:Float){
     setIconSize(Std.int(iconP1.daSize+30),Std.int(iconP2.daSize+30));
   }

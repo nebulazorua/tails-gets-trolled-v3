@@ -80,7 +80,7 @@ using flixel.util.FlxSpriteUtil;
 class PlayState extends MusicBeatState
 {
 
-	var deadbitch:Map<String,String> = [
+	/*var deadbitch:Map<String,String> = [
 		"bf" => "bf",
 		"bf-better" => "bf",
 		"bf-betterer" => "bf",
@@ -89,8 +89,10 @@ class PlayState extends MusicBeatState
 		"bf-betterer-player" => "bf",
 		"high-shadow" => "deadshadow",
 		"high-shadow-player" => "deadshadow",
-	  ];
-	  
+	  ];*/
+
+	// no, because Die Batsards BF needs a diff death animation to CH3 BF ^
+
 	public static var noteCounter:Map<String,Int> = [];
 	public static var inst:FlxSound;
 
@@ -1155,10 +1157,6 @@ class PlayState extends MusicBeatState
 			newSprite.theyHaveCancer = isBLAMMEDLIGHTS;
 			newSprite.color = blammedLIGHT;
 			healthBar.setIcons(boyfriend.iconName,dad.iconName);
-			if(currentOptions.healthBarColors)
-				healthBar.setColors(dad.iconColor,boyfriend.iconColor);
-
-			trace(dad.iconColor);
 
 			luaSprites[spriteName]=newSprite;
 			add(newSprite);
@@ -1167,6 +1165,9 @@ class PlayState extends MusicBeatState
 			}else if(currAnim=='idle' || currAnim.startsWith("dance")){
 				newSprite.dance();
 			}
+
+			if(currentOptions.healthBarColors)
+				healthBar.setColors(dad.iconColor,boyfriend.iconColor);
 
 
 		}
@@ -1299,6 +1300,7 @@ class PlayState extends MusicBeatState
 		if(currentOptions.loadModcharts)
 			setupLuaSystem();
 		#end
+
 
 		var swagCounter:Int = 0;
 
@@ -2343,7 +2345,21 @@ class PlayState extends MusicBeatState
 						modchart.removeCamEffect(highShader);
 					}
 
-					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y, deadbitch.get(SONG.player1)));
+					var deadFag:String = 'bf'; // I CAN SAY FAG I AM GAY I DATE A BOY -neb
+					switch(boyfriend.curCharacter){
+						case 'bf-betterer':
+							switch(dad.curCharacter){
+								case 'shadow' | 'shadow-crazy':
+									deadFag = 'bf-GETS-SHOT';
+								default:
+									deadFag = 'bf-DEAD-CUNT';
+							}
+						case 'high-shadow':
+							deadFag = 'deadshadow';
+						default:
+							deadFag = 'bf';
+					}
+					openSubState(new GameOverSubstate(boyfriend.x, boyfriend.y, deadFag));
 
 					// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 

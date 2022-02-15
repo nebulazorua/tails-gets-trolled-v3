@@ -14,8 +14,6 @@ function numLerp(a,b,c)
     return a+(b-a)*c
 end
 
-dad:changeCharacter("shadow-crazy") -- cache shadow-crazy
-dad:changeCharacter('shadow')
 
 local camshit = {zoom = getVar("defaultCamZoom")} -- work around for tweening camera zoom
 local defaultZoom = getVar("defaultCamZoom");
@@ -28,6 +26,9 @@ local zoomed=false;
 local oldFocus = getVar"focus";
 
 local oStep = curStep;
+dad:changeCharacter("shadow-crazy") -- cache shadow-crazy
+dad:changeCharacter('shadow')
+
 function stepHit(step)
     if(not getOption"noChars")then
         local setChar='';

@@ -24,10 +24,17 @@ class GameOverSubstate extends MusicBeatSubstate
 		bf = new Boyfriend(x, y, daBf);
 		add(bf);
 
-		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
+		camFollow = new FlxObject(bf.getMidpoint().x - 100 + bf.camOffset.x, bf.getMidpoint().y - 100 + bf.camOffset.y, 1, 1);
 		add(camFollow);
+		var deathSound = 'fnf_loss_sfx' + stageSuffix;
+		switch (daBf){
+			case 'bf-GETS-SHOT':
+				deathSound = 'GunDeath';
+			case 'high-shadow':
+				deathSound = 'ShadowDies';
+		}
+		FlxG.sound.play(Paths.sound(deathSound));
 
-		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
 		Conductor.changeBPM(100);
 
 		// FlxG.camera.followLerp = 1;

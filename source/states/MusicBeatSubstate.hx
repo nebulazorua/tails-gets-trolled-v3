@@ -4,6 +4,7 @@ import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
 import Options;
+import flixel.input.keyboard.FlxKey;
 import ui.*;
 class MusicBeatSubstate extends FlxSubState
 {
@@ -12,6 +13,9 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 	}
 
+	public var canChangeVolume:Bool=true;
+	public var volumeDownKeys:Array<FlxKey> = [MINUS, NUMPADMINUS];
+	public var volumeUpKeys:Array<FlxKey> = [PLUS, NUMPADPLUS];
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -24,6 +28,15 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
+		#if FLX_KEYBOARD
+		if(canChangeVolume){
+			if (FlxG.keys.anyJustReleased(volumeUpKeys))
+				FlxG.sound.changeVolume(0.1);
+			else if (FlxG.keys.anyJustReleased(volumeDownKeys))
+				FlxG.sound.changeVolume(-0.1);
+		}
+		#end
+
 		//everyStep();
 		var oldStep:Int = curStep;
 

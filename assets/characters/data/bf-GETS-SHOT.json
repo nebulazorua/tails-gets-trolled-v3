@@ -1,0 +1,60 @@
+{
+	"charOffset": [
+		0,
+		300
+	],
+	"singDur": 4,
+	"spritesheet": "GUNSHOTDEATH",
+	"anims": [
+		{
+			"prefix": "BF dies",
+			"offsets": [
+				235,
+				5
+			],
+			"fps": 24,
+			"name": "idle",
+			"looped": false
+		},
+		{
+			"prefix": "BF dies",
+			"offsets": [
+				237,
+				4
+			],
+			"fps": 24,
+			"name": "firstDeath",
+			"looped": false
+		},
+		{
+			"offsets": [
+				-2,
+				5
+			],
+			"fps": 24,
+			"prefix": "BF Dead Loop",
+			"name": "deathLoop",
+			"looped": false
+		},
+		{
+			"prefix": "BF Dead confirm",
+			"offsets": [
+				-3,
+				67
+			],
+			"fps": 24,
+			"name": "deathConfirm",
+			"looped": false
+		}
+	],
+	"camOffset": [
+		0,
+		0
+	],
+	"flipX": true,
+	"antialiasing": true,
+	"iconName": "bf-ch3",
+	"beatDancer": false,
+	"format": "andromeda",
+	"healthColor": "0xFF31B0D1"
+}
