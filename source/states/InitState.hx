@@ -75,6 +75,8 @@ class InitState extends FlxUIState {
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 		Highscore.load();
 
+    FlxG.save.data.volume = FlxG.save.data.volume==null?1:FlxG.save.data.volume;
+    
     FlxG.sound.muteKeys=null;
     FlxG.sound.volumeUpKeys=null;
     FlxG.sound.volumeDownKeys=null;
