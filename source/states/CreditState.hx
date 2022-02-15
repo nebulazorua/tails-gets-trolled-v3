@@ -243,4 +243,11 @@ class CreditState extends MusicBeatState  {
 
     super.update(elapsed);
   }
+
+  override function switchTo(next:FlxState){
+    // Do all cleanup of stuff here! This makes it so you dont need to copy+paste shit to every switchState
+    FlxG.stage.removeEventListener(MouseEvent.MOUSE_WHEEL,scroll);
+
+    return super.switchTo(next);
+  }
 }

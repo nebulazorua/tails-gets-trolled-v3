@@ -269,11 +269,6 @@ class SidemenuState extends MusicBeatState
 			super.beatHit();
 		}
 
-	override function switchTo(next:FlxState){
-		FlxG.stage.removeEventListener(MouseEvent.MOUSE_WHEEL,scroll);
-
-		return super.switchTo(next);
-	}
 }
 
 class Box extends FlxSprite
