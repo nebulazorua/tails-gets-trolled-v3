@@ -592,7 +592,7 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		speed = SONG.speed;
-		if(isStoryMode)currentOptions.modcharts = false;
+		if(!isStoryMode)currentOptions.modcharts = false;
 
 		if(!isStoryMode){
 			var mMod = currentOptions.mMod<.1?speed:currentOptions.mMod;

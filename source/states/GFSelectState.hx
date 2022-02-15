@@ -51,6 +51,7 @@ class GFSelectState extends MusicBeatState
   {
     super.create();
     FlxG.save.data.clearedCh3Notif=true;
+    FlxG.save.flush();
     for(gf in whores){
       if(!afterChapter3.contains(gf) || FlxG.save.data.finishedCh3){
         selectableWhores.push(gf);

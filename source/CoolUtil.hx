@@ -20,7 +20,6 @@ class CoolUtil
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
 
 	public static function cacheSound(key:String,sound:Sound){
-		trace(key);
 		if(!Cache.soundCache.exists(key)){
 			Cache.soundCache.set(key,sound);
 		}
@@ -98,7 +97,16 @@ class CoolUtil
 		var path = JukeboxState.songData[selection].path;
 		if(OptionUtils.options.isInst)
 			path = JukeboxState.songData[selection].inst;
-		FlxG.sound.playMusic(CoolUtil.getSound(path));
+		if(path==Paths.music("freakyMenu")){
+			FlxG.sound.cache(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music('freakyIntro'));
+			FlxG.sound.music.onComplete= function(){
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			}
+		}else{
+			FlxG.sound.playMusic(CoolUtil.getSound(path));
+		}
+
 
 	}
 	public static function truncateFloat( number : Float, precision : Int): Float {
