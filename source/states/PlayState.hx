@@ -519,7 +519,6 @@ class PlayState extends MusicBeatState
 			currentOptions.noFail=false;
 		#end
 
-
 		ScoreUtils.ghostTapping = currentOptions.ghosttapping;
 		ScoreUtils.botPlay = currentOptions.botPlay;
 		#if FORCED_JUDGE
@@ -593,6 +592,8 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		speed = SONG.speed;
+		if(isStoryMode)currentOptions.modcharts = false;
+
 		if(!isStoryMode){
 			var mMod = currentOptions.mMod<.1?speed:currentOptions.mMod;
 			speed = currentOptions.cMod<.1?speed:currentOptions.cMod;
@@ -1316,6 +1317,7 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition=Conductor.rawSongPos;
 		updateCurStep();
 		updateBeat();
+		canScore = currentOptions.modcharts;
 
 		if(startPos>0)canScore=false;
 
@@ -2556,7 +2558,10 @@ class PlayState extends MusicBeatState
 							var diffY = (nextPos.y - notePos.y);
 							var rad = Math.atan2(diffY,diffX);
 							var deg = rad * (180 / Math.PI);
-							daNote.modAngle = deg + 90; // gets the angle in degrees instead of radians
+							if(deg!=0)
+								daNote.modAngle = deg + 90; // gets the angle in degrees instead of radians
+							else
+								daNote.modAngle = 0;
 					}
 
 					var shitGotHit = (daNote.wasGoodHit || daNote.prevNote.wasGoodHit && !daNote.canBeHit);
@@ -3693,11 +3698,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		for(step in lastHitStep...curStep){
-			if(step==8){
-				FlxTween.tween(dbTutorial, {alpha: 1}, .5, {ease: FlxEase.quadInOut});
-			}else if(step==32){
-				FlxTween.tween(dbTutorial, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+		if(loadedShotAnims.length>0){
+			for(step in lastHitStep...curStep){
+				if(step==8){
+					FlxTween.tween(dbTutorial, {alpha: 1}, .5, {ease: FlxEase.quadInOut});
+				}else if(step==32){
+					FlxTween.tween(dbTutorial, {alpha: 0}, 1, {ease: FlxEase.quadInOut});
+				}
 			}
 		}
 

@@ -90,10 +90,13 @@ modMgr:set("suddenOffset",100)
 local swagWidth = 160 * .7
 modMgr:set("justHowHighAreYou",25)
 
-modMgr:queueEase(1152,1220,"sudden",100,"quadOut")
-modMgr:queueEase(1152,1220,"suddenOffset",25,"quadOut")
-modMgr:queueEase(1152,1156,"tipsyC",25,"quadOut")
-modMgr:queueEase(1152,1156,"drunkC",25,"quadOut")
+if(getOption'modchart')then
+    modMgr:queueEase(1152,1220,"sudden",100,"quadOut")
+    modMgr:queueEase(1152,1220,"suddenOffset",25,"quadOut")
+    modMgr:queueEase(1152,1156,"tipsyC",25,"quadOut")
+    modMgr:queueEase(1152,1156,"drunkC",25,"quadOut")
+end
+
 if(getOption"getHigh")then
     modMgr:queueEase(1152,1220,"justHowHighAreYou",100,"quadOut")
 end

@@ -55,7 +55,7 @@ class CreditState extends MusicBeatState  {
   var credits:Array<CreditInfo> = [
     {textName: "Echo", displayName: "Echolocated", iconName: "echo", roles: "Main Director, Artist, Musician", note: "Made a single High Shovel cutscene frame.\n(Oh and all the icons I guess..)\n((EDIT: Allegedly also Swag Sonic and Scourge))\n(((Sometimes made No Villains)))" },
     {textName: "Bepixel", displayName: "Bepixel", iconName: "jellie", roles: "Art Director, Artist", note: "Made the Tails and Sonic sprites and backgrounds. Animated Shadow's shot animation. Helped with Chapter 3 Boyfriend Anims. Made Talentless Fox, No Villains, Die Batsards, Taste For Blood and partly High Shovel\n\ncutscenes."},
-    {textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "Music Director, Musician", note: "Made No Villains and, according to the fanbase, literally nothing else..\nMost of the time." },
+    {textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "Music Director, Musician", note: "Made No Villains and, according to the fanbase, literally nothing else...\nMost of the time." },
     {textName: "Nebula", displayName: "Nebula The Zorua", iconName: "neb", roles: "Code Director, Programmer", note: "BLAMMED LIGHTS<r>‼️<r>" },
     {textName: "Wilde", displayName: "Wilde", iconName: "wilde", roles: "Chart Director, Charter", note: "Charted No Villains, Die Batsards, Taste For Blood and No Heroes. Recharted Talentless Fox. Touched on most charts.\nAnd looked damn good while doing it <3" },
     // TODO: create seperators for roles
@@ -88,6 +88,33 @@ class CreditState extends MusicBeatState  {
     {textName: "sticky", displayName: "Sticky", iconName: "sticky", roles: "Voice Actor", note: "Voice acted Shadow.\nDanish Shadow lmao." },
 
   ];
+
+  function onMouseDown(object:FlxObject){
+    for(idx in 0...texts.members.length){
+      var obj = texts.members[idx];
+      if(obj==object){
+        if(idx!=selected)
+          changeSelection(idx);
+
+      }
+    }
+  }
+
+  function onMouseUp(object:FlxObject){
+
+  }
+
+  function onMouseOver(object:FlxObject){
+
+  }
+
+  function onMouseOut(object:FlxObject){
+
+  }
+
+  function scroll(event:MouseEvent){
+    changeSelection(selected-event.delta);
+  }
 
   override function create()
   {
@@ -156,9 +183,12 @@ class CreditState extends MusicBeatState  {
       icon.visible=false;
       icon.ID = i;
 
+      FlxMouseEventManager.add(text,onMouseDown,onMouseUp,onMouseOver,onMouseOut);
       texts.add(text);
       icons.add(icon);
     }
+
+    FlxG.stage.addEventListener(MouseEvent.MOUSE_WHEEL,scroll);
 
     updateSelection();
   }

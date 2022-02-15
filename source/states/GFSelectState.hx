@@ -50,7 +50,7 @@ class GFSelectState extends MusicBeatState
   override function create()
   {
     super.create();
-
+    FlxG.save.data.clearedCh3Notif=true;
     for(gf in whores){
       if(!afterChapter3.contains(gf) || FlxG.save.data.finishedCh3){
         selectableWhores.push(gf);

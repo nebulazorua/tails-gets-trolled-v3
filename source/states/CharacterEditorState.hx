@@ -143,7 +143,6 @@ class CharacterEditorState extends MusicBeatState {
       boyfriend = new Boyfriend(100,100,char);
       curCharacter=boyfriend;
     }
-
     if(resetVars){
       idleCheckbox.changeState(curCharacter.beatDancer,false);
   		flipCheckbox.changeState(curCharacter.charData.flipX,false);
@@ -190,7 +189,7 @@ class CharacterEditorState extends MusicBeatState {
       ghost.kill();
     }
 
-    ghost = new Character(100,100,'high-shadow',playerCheckbox.state);
+    ghost = new Character(100,100,char,playerCheckbox.state);
     ghost.alpha = 0.5;
     ghost.debugMode=true;
     curCharacter.debugMode=true;
@@ -206,12 +205,13 @@ class CharacterEditorState extends MusicBeatState {
 
 		add(stage.overlay);
 
-    stage.setPlayerPositions(ghost,dad);
     stage.setPlayerPositions(boyfriend,dad);
+    ghost.x = curCharacter.x;
+    ghost.y = curCharacter.y;
   }
 
   function updateGhost(){
-    /*if(ghost!=null){
+    if(ghost!=null){
       for(prop in Reflect.fields(curCharacter.charData)){
         var val = Reflect.field(curCharacter.charData,prop);
         Reflect.setProperty(ghost.charData,prop,val);
@@ -219,7 +219,7 @@ class CharacterEditorState extends MusicBeatState {
       ghost.setCharData();
       ghost.x = curCharacter.x;
       ghost.y = curCharacter.y;
-    }*/
+    }
   }
 
   public function new(defaultChar:String='bf',?state:FlxUIState){
@@ -258,8 +258,9 @@ class CharacterEditorState extends MusicBeatState {
     FlxCamera.defaultCameras = [camGame];
     Conductor.changeBPM(160);
     FlxG.sound.playMusic(Paths.music('breakfast','shared'));
-    stage = new Stage('stage',EngineData.options, false);
+    stage = new Stage('stage',EngineData.options);
     add(stage);
+    stage.doDistractions=false;
 
     healthBar = new Healthbar(0,FlxG.height*.9,'bf','bf');
     healthBar.value = 2;
@@ -460,12 +461,12 @@ class CharacterEditorState extends MusicBeatState {
     }
     animDropdown.setData(FlxUIDropDownMenu.makeStrIdLabelArray(animNames,true));
     ghostDropdown.setData(FlxUIDropDownMenu.makeStrIdLabelArray(ghostAnims,true));
-    if(animNames.indexOf(aLabel)!=-1)
+    if(animNames.indexOf(aLabel)!=-1){
       animDropdown.selectedLabel=aLabel;
-
-    if(ghostAnims.indexOf(gLabel)!=-1)
+    }
+    if(ghostAnims.indexOf(gLabel)!=-1){
       ghostDropdown.selectedLabel=gLabel;
-
+    }
   }
 
   function refreshHP(){
@@ -524,9 +525,9 @@ class CharacterEditorState extends MusicBeatState {
     nameBox.x = 25;
     nameBox.alignment = CENTER;
     nameBox.callback = function(text:String,action:String){
-      if(action=='enter')
+      if(action=='enter'){
         nameBox.hasFocus=false;
-
+      }
     }
 
     ui.add(nameLabel);
@@ -540,9 +541,9 @@ class CharacterEditorState extends MusicBeatState {
     prefixBox.x = 250;
     prefixBox.alignment = LEFT;
     prefixBox.callback = function(text:String,action:String){
-      if(action=='enter')
+      if(action=='enter'){
         prefixBox.hasFocus=false;
-
+      }
     }
 
     ui.add(prefixLabel);
@@ -557,15 +558,15 @@ class CharacterEditorState extends MusicBeatState {
     fpsBox.filterMode = FlxInputText.ONLY_NUMERIC;
     fpsBox.alignment = LEFT;
     fpsBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(fpsBox.text)))
+      if(Math.isNaN(Std.parseFloat(fpsBox.text))){
         fpsBox.text = '24';
-
+      }
     }
     fpsBox.callback = function(text:String,action:String){
       if(action=='enter'){
-        if(Math.isNaN(Std.parseFloat(fpsBox.text)))
+        if(Math.isNaN(Std.parseFloat(fpsBox.text))){
           fpsBox.text = '24';
-
+        }
         fpsBox.hasFocus=false;
       }
     }
@@ -596,9 +597,9 @@ class CharacterEditorState extends MusicBeatState {
     offsetXBox.alignment = CENTER;
     offsetXBox.filterMode = FlxInputText.ONLY_NUMERIC;
     offsetXBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(offsetXBox.text)))
+      if(Math.isNaN(Std.parseFloat(offsetXBox.text))){
         offsetXBox.text = '0';
-
+      }
     }
     offsetXBox.callback = function(text,action){
       if(action=='enter'){
@@ -623,9 +624,9 @@ class CharacterEditorState extends MusicBeatState {
     offsetYBox.alignment = CENTER;
     offsetYBox.filterMode = FlxInputText.ONLY_NUMERIC;
     offsetYBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(offsetYBox.text)))
+      if(Math.isNaN(Std.parseFloat(offsetYBox.text))){
         offsetYBox.text = '0';
-
+      }
     }
     offsetYBox.callback = function(text,action){
       if(action=='enter'){
@@ -647,24 +648,24 @@ class CharacterEditorState extends MusicBeatState {
       var fps = Std.parseInt(fpsBox.text);
       var offsetX = Std.parseFloat(offsetXBox.text);
       var offsetY = Std.parseFloat(offsetYBox.text);
-      if(Math.isNaN(fps))
+      if(Math.isNaN(fps)){
         fps=24;
-
-      if(Math.isNaN(offsetX))
+      }
+      if(Math.isNaN(offsetX)){
         offsetX=0;
-
-      if(Math.isNaN(offsetY))
+      }
+      if(Math.isNaN(offsetY)){
         offsetY=0;
-
+      }
 
       var name = nameBox.text;
       var idx:Int=0;
       var curPlaying = curCharacter.animation.curAnim.name;
       for(anim in curCharacter.charData.anims){
         if(anim.name==name){
-          if(curCharacter.animation.getByName(anim.name)!=null)
+          if(curCharacter.animation.getByName(anim.name)!=null){
             curCharacter.animation.remove(anim.name);
-
+          }
           curCharacter.charData.anims.remove(anim);
           break;
         }
@@ -683,15 +684,15 @@ class CharacterEditorState extends MusicBeatState {
       var fps = Std.parseInt(fpsBox.text);
       var offsetX = Std.parseFloat(offsetXBox.text);
       var offsetY = Std.parseFloat(offsetYBox.text);
-      if(Math.isNaN(fps))
+      if(Math.isNaN(fps)){
         fps=24;
-
-      if(Math.isNaN(offsetX))
+      }
+      if(Math.isNaN(offsetX)){
         offsetX=0;
-
-      if(Math.isNaN(offsetY))
+      }
+      if(Math.isNaN(offsetY)){
         offsetY=0;
-
+      }
 
       var newAnim:Character.AnimShit = {
         prefix: prefixBox.text,
@@ -703,14 +704,14 @@ class CharacterEditorState extends MusicBeatState {
       var idx:Int=0;
       var curAnim = curCharacter.animation.curAnim;
       var curPlaying = '';
-      if(curAnim!=null)
+      if(curAnim!=null){
         curPlaying=curAnim.name;
-
+      }
       for(anim in curCharacter.charData.anims){
         if(anim.name==newAnim.name){
-          if(curCharacter.animation.getByName(anim.name)!=null)
+          if(curCharacter.animation.getByName(anim.name)!=null){
             curCharacter.animation.remove(anim.name);
-
+          }
           curCharacter.charData.anims.remove(anim);
           break;
         }
@@ -864,6 +865,7 @@ class CharacterEditorState extends MusicBeatState {
     idleCheckbox = new Checkbox(false);
     idleCheckbox.callback = function(state:Bool){
       curCharacter.beatDancer=state;
+      curCharacter.charData.beatDancer=state;
     }
     idleCheckbox.tracker = idleLabel;
     ui.add(idleLabel);
@@ -918,11 +920,10 @@ class CharacterEditorState extends MusicBeatState {
     scaleBox.alignment = LEFT;
     scaleBox.filterMode = FlxInputText.ONLY_NUMERIC;
     scaleBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(scaleBox.text)))
+      if(Math.isNaN(Std.parseFloat(scaleBox.text))){
         scaleBox.text = '1';
-
+      }
     }
-
     scaleBox.callback = function(text,action){
       if(action=='enter'){
         var scale = Std.parseFloat(text);
@@ -934,8 +935,8 @@ class CharacterEditorState extends MusicBeatState {
         curCharacter.charData.scale = scale;
         curCharacter.setGraphicSize(Std.int(curCharacter.frameWidth*scale));
         curCharacter.updateHitbox();
-        // ghost.setGraphicSize(Std.int(curCharacter.width),Std.int(curCharacter.height));
-        // ghost.updateHitbox();
+        ghost.setGraphicSize(Std.int(curCharacter.width),Std.int(curCharacter.height));
+        ghost.updateHitbox();
         curCharacter.dance(true);
       }
     }
@@ -949,9 +950,9 @@ class CharacterEditorState extends MusicBeatState {
     singDurBox.alignment = LEFT;
     singDurBox.filterMode = FlxInputText.ONLY_NUMERIC;
     singDurBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(singDurBox.text)))
+      if(Math.isNaN(Std.parseFloat(singDurBox.text))){
         singDurBox.text = '1';
-
+      }
     }
     singDurBox.callback = function(text,action){
       if(action=='enter'){
@@ -998,9 +999,9 @@ class CharacterEditorState extends MusicBeatState {
     charXBox.filterMode = FlxInputText.ONLY_NUMERIC;
     charXBox.alignment = CENTER;
     charXBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(charXBox.text)))
+      if(Math.isNaN(Std.parseFloat(charXBox.text))){
         charXBox.text = '0';
-
+      }
     }
     charXBox.callback = function(text,action){
       if(action=='enter'){
@@ -1025,9 +1026,9 @@ class CharacterEditorState extends MusicBeatState {
     charYBox.alignment = CENTER;
     charYBox.filterMode = FlxInputText.ONLY_NUMERIC;
     charYBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(charYBox.text)))
+      if(Math.isNaN(Std.parseFloat(charYBox.text))){
         charYBox.text = '0';
-
+      }
     }
     charYBox.callback = function(text,action){
       if(action=='enter'){
@@ -1062,9 +1063,9 @@ class CharacterEditorState extends MusicBeatState {
     camXBox.alignment = CENTER;
     camXBox.filterMode = FlxInputText.ONLY_NUMERIC;
     camXBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(camXBox.text)))
+      if(Math.isNaN(Std.parseFloat(camXBox.text))){
         camXBox.text = '0';
-
+      }
     }
     camXBox.callback = function(text,action){
       if(action=='enter'){
@@ -1088,9 +1089,9 @@ class CharacterEditorState extends MusicBeatState {
     camYBox.alignment = CENTER;
     camYBox.filterMode = FlxInputText.ONLY_NUMERIC;
     camYBox.focusLost = function(){
-      if(Math.isNaN(Std.parseFloat(camYBox.text)))
+      if(Math.isNaN(Std.parseFloat(camYBox.text))){
         camYBox.text = '0';
-
+      }
     }
 
     camYBox.callback = function(text,action){

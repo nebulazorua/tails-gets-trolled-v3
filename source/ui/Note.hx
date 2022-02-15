@@ -128,6 +128,7 @@ class Note extends NoteGraphic
 	{
 		this.noteType=type;
 		hitbox = Conductor.safeZoneOffset;
+		var graphicType:String = type;
 		switch(noteType){
 			case 'alt':
 				trace("alt note");
@@ -138,8 +139,7 @@ class Note extends NoteGraphic
 				canHold=false;
 				hitbox = Conductor.safeZoneOffset*0.38; // should probably not scale but idk man
 		}
-		var graphicType:String = type;
-		var modBehaviours = Note.behaviours.get(type);
+		var modBehaviours = Note.behaviours.get(graphicType);
 		if(modBehaviours==null)modBehaviours = new Map<String,NoteBehaviour>();
 		var behaviour = (modifier==Note.defaultModifier && type=='default')?Note.noteBehaviour:modBehaviours.get(type);
 		if(behaviour==null){

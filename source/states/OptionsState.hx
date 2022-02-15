@@ -53,6 +53,7 @@ class OptionsState extends MusicBeatState
 				#if !NO_BOTPLAY new ToggleOption("botPlay","BotPlay","Let a bot play for you"), #end
 				#if !NO_FREEPLAY_MODS
 				new OptionCategory("Freeplay Modifiers",[
+					new ToggleOption("modcharts","Modcharts","Toggles the modcharts.\nSkill issue."),
 					new StepOption("cMod","Speed Constant",0.1,0,10,"","","A constant speed to override the scrollspeed. 0 for chart-dependant speed",true),
 					new StepOption("xMod","Speed Mult",0.1,0,2,"","x","A multiplier to a chart's scrollspeed",true),
 					new StepOption("mMod","Minimum Speed",0.1,0,10,"","","The minimum scrollspeed a chart can have",true),
@@ -110,8 +111,7 @@ class OptionsState extends MusicBeatState
 			]),
 			new OptionCategory("Tails Gets Trolled",[
 				new ToggleOption("shotsGetJudged","Shots get judged","The shot mechanic shows a judgement depending on if you took damage or not."),
-				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel"),
-				new ToggleOption("modcharts","Modchart","Toggles the modcharts.\nSkill issue.")
+				new ToggleOption("getHigh","High shaders","Makes you get high as a kite in High Shovel")
 			]),
 			new OptionCategory("Performance",[
 				new StepOption("fps","FPS Cap",30,30,360,"","","The FPS the game tries to run at",true,function(value:Float,step:Float){

@@ -15,6 +15,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxState;
+import flixel.FlxSubState;
 import flixel.util.FlxColor;
 import io.newgrounds.NG;
 import lime.app.Application;
@@ -35,7 +36,7 @@ class MainMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;
 	public var currentOptions:Options;
-
+	var inSubstate:Bool = false;
 	var menuItems:FlxTypedGroup<FNFSprite>;
 	var sideMenuItems:FlxTypedGroup<FNFSprite>;
 	var artBoxes:FlxTypedGroup<FNFSprite>;
@@ -44,6 +45,7 @@ class MainMenuState extends MusicBeatState
 	var sideOptions:Array<String> = ['credits','jukebox','gf'];
 	var backdrops:FlxBackdrop;
 	var tweens:Map<FlxObject,FlxTween> = [];
+	var notif:FlxSprite;
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -58,7 +60,9 @@ class MainMenuState extends MusicBeatState
   }
 
 	function onMouseDown(object:FlxObject){
+		if(inSubstate)return;
 		if(!selectedSomethin){
+			var clickedSide:Bool = false;
 			for(idx in 0...sideMenuItems.length){
 				var obj = sideMenuItems.members[idx];
 				if(object==obj){
@@ -66,12 +70,27 @@ class MainMenuState extends MusicBeatState
 					var object:FlxSprite = cast object;
 					object.scale.x = .9;
 					object.scale.y = .9;
+					clickedSide=true;
+				}
+			}
+			if(!clickedSide){
+				for(idx in 0...menuItems.members.length){
+					var obj = menuItems.members[idx];
+					var icon = artBoxes.members[idx];
+					if(obj==object || icon==object){
+						if(idx!=curSelected){
+							changeItem(idx,true);
+						}else{
+							accept();
+						}
+					}
 				}
 			}
 		}
 	}
 
 	function onMouseUp(object:FlxObject){
+		if(inSubstate)return;
 		if(!selectedSomethin){
 			for(idx in 0...sideMenuItems.length){
 				var obj = sideMenuItems.members[idx];
@@ -93,6 +112,7 @@ class MainMenuState extends MusicBeatState
 	}
 
 	function onMouseOver(object:FlxObject){
+		if(inSubstate)return;
 		if(!selectedSomethin){
 			for(idx in 0...sideMenuItems.length){
 				var obj = sideMenuItems.members[idx];
@@ -113,6 +133,7 @@ class MainMenuState extends MusicBeatState
 	}
 
 	function onMouseOut(object:FlxObject){
+		if(inSubstate)return;
 		if(!selectedSomethin){
 			for(idx in 0...sideMenuItems.length){
 				var obj = sideMenuItems.members[idx];
@@ -134,6 +155,7 @@ class MainMenuState extends MusicBeatState
 
 
 	function scroll(event:MouseEvent){
+		if(inSubstate)return;
 		changeItem(-event.delta);
 	}
 
@@ -197,14 +219,34 @@ class MainMenuState extends MusicBeatState
 		}
 	}
 
+	var heldDir:Array<Float>=[0,0];
+	var holding:Array<Float>=[0,0];
+
+	override function openSubState(SubState:FlxSubState){
+		inSubstate = true;
+		persistentUpdate = false;
+		persistentDraw = true;
+		super.openSubState(SubState);
+	}
+
+	override function closeSubState(){
+		inSubstate = false;
+		persistentUpdate = true;
+		persistentDraw = true;
+		super.closeSubState();
+	}
+
 	function accept(){
 		if (optionShit[curSelected] == 'promo')
 		{
+			/*
 			#if linux
 			Sys.command('/usr/bin/xdg-open', ["http://tailsgetstrolled.org/", "&"]);
 			#else
 			FlxG.openURL('http://tailsgetstrolled.org/');
 			#end
+			*/
+			openSubState(new DisclaimerSubstate());
 		}
 		else
 		{
@@ -359,6 +401,17 @@ class MainMenuState extends MusicBeatState
 			layering.add(menuItem);
 		}
 
+		if(FlxG.save.data.finishedCh3 && !FlxG.save.data.clearedCh3Notif){
+			var notif = new FNFSprite(0, 0);
+			notif.loadGraphic(Paths.image('mainmenu/notif'));
+			notif.sprTracker = sideMenuItems.members[2];
+			notif.attachedXOffset = -5;
+			notif.attachedYOffset = -5;
+			notif.scrollFactor.set();
+			notif.antialiasing=true;
+			add(notif);
+		}
+
 		for (i in 0...optionShit.length)
 		{
 			var menuItem = new FNFSprite(0, 60 + (i * 160));
@@ -366,6 +419,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing=true;
 			menuItem.ID = i;
+			FlxMouseEventManager.add(menuItem,onMouseDown,onMouseUp,onMouseOver,onMouseOut, false, true, false);
+
 			menuItem.setGraphicSize(Std.int(menuItem.width*.8));
 			menuItems.add(menuItem);
 
@@ -376,10 +431,12 @@ class MainMenuState extends MusicBeatState
 			artBox.ID = i;
 			artBox.setGraphicSize(Std.int(menuItem.width*.8));
 			artBoxes.add(artBox);
+			FlxMouseEventManager.add(artBox,onMouseDown,onMouseUp,onMouseOver,onMouseOut, false, true, false);
 
 			layering.add(menuItem);
 			layering.add(artBox);
 		}
+
 
 		FlxG.camera.follow(camFollow, null, Main.adjustFPS(0.06));
 
@@ -468,15 +525,38 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.LEFT_P)
+			if (controls.LEFT_P || controls.LEFT && heldDir[0]>.3 && holding[0]>=.1)
 			{
+				holding[0]=0;
 				changeItem(-1);
 			}
 
-			if (controls.RIGHT_P)
+			if (controls.RIGHT_P || controls.RIGHT && heldDir[1]>=.3 && holding[1]>=.1)
 			{
+				holding[1]=0;
 				changeItem(1);
 			}
+
+			if(controls.LEFT){
+				heldDir[0]+=elapsed;
+				holding[0]+=elapsed;
+			}else{
+				heldDir[0] = 0;
+				holding[0] = 0;
+			}
+
+			if(controls.RIGHT){
+				heldDir[1]+=elapsed;
+				holding[1]+=elapsed;
+			}else{
+				heldDir[1] = 0;
+				holding[1] = 0;
+			}
+
+
+
+
+
 
 			if (controls.ACCEPT)
 			{
