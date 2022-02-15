@@ -58,7 +58,7 @@ class NoteGraphic extends FNFSprite
 
 	// TODO: redo alot of this to have shit determined when you select the noteskin
 
-	public function new(strumTime:Float=0,?modifier:String='base',?skin:String='default',type:String='default', behaviour:NoteBehaviour)
+	public function new(strumTime:Float=0,?modifier:String='base',?skin:String='default', type:String='default', behaviour:NoteBehaviour)
 	{
 		super();
 		graphicType=type;

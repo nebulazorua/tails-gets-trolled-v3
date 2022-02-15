@@ -482,7 +482,8 @@ class ChartingState extends MusicBeatState
 
 		placingType = new FlxUIDropDownMenu(150, 125, FlxUIDropDownMenu.makeStrIdLabelArray(EngineData.noteTypes, true), function(type:String){
 			dummyArrowLayer.remove(dummyArrow);
-			var type = EngineData.noteTypes[Std.parseInt(type)];
+			var realType = EngineData.noteTypes[Std.parseInt(type)];
+			var type = realType=='alt'?'default':realType;
 			var modBehaviours = Note.behaviours.get(Note.defaultModifier);
 			if(modBehaviours==null)modBehaviours = new Map<String,Note.NoteBehaviour>();
 

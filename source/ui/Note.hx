@@ -141,16 +141,15 @@ class Note extends NoteGraphic
 		}
 		var modBehaviours = Note.behaviours.get(graphicType);
 		if(modBehaviours==null)modBehaviours = new Map<String,NoteBehaviour>();
-		var behaviour = (modifier==Note.defaultModifier && type=='default')?Note.noteBehaviour:modBehaviours.get(type);
+		var behaviour = (modifier==Note.defaultModifier && type=='default')?Note.noteBehaviour:modBehaviours.get(graphicType);
 		if(behaviour==null){
-			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,type));
+			behaviour = Json.parse(Paths.noteSkinText("behaviorData.json",'skins',skin,modifier,graphicType));
 			modBehaviours.set(type,behaviour);
 			Note.behaviours.set(modifier,modBehaviours);
 		}
+		//new(strumTime:Float=0,?modifier:String='base',?skin:String='default', type:String='default', behaviour:NoteBehaviour)
 
 		super(strumTime,modifier,skin,graphicType,behaviour);
-
-
 
 		if(!canHold && sustainNote){
 			visible=false;
