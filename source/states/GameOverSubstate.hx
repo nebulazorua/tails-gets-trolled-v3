@@ -66,6 +66,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
 		{
+			FlxTween.tween(FlxG.camera, {zoom: 1}, 1, {ease: FlxEase.quadInOut});
 			FlxG.camera.follow(camFollow, LOCKON, Main.adjustFPS(0.01));
 		}
 
