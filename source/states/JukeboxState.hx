@@ -53,8 +53,8 @@ class JukeboxState extends MusicBeatState {
   var bottomBounds:Int = 650;
   public static var songData:Array<SongInfo> = [
     {displayName: "Main Menu", path: Paths.music("freakyMenu"), inst: Paths.music("freakyMenu"), bpm: 180},
-    {displayName: "Breakfast (TGT Mix)", path: Paths.music("breakfast","shared"), inst: Paths.music("breakfast","shared"), bpm: 180},
-    {displayName: "Game Over (TGT Mix)", path: Paths.music("gameOver","shared"), inst: Paths.music("gameOver","shared"), bpm: 180},
+    {displayName: "Breakfast (TGT Mix)", path: Paths.music("breakfast","shared"), inst: Paths.music("breakfast","shared"), bpm: 165},
+    {displayName: "Game Over (TGT Mix)", path: Paths.music("gameOver","shared"), inst: Paths.music("gameOver","shared"), bpm: 155},
     {displayName: "Talentless Fox", inst: Paths.inst("talentless-fox"), path: Paths.music("talentlessFoxJukebox"), bpm: 140},
     {displayName: "No Villains", inst: Paths.inst("no-villains"), path: Paths.music("noVillainsJukebox"), bpm: 200},
     {displayName: "Die Batsards", inst: Paths.inst("die-batsards"), path: Paths.music("dieBatsardsJukebox"), bpm: 180},
