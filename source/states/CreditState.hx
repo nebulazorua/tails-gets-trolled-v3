@@ -40,6 +40,7 @@ typedef CreditInfo = {
   var roles: String;
   var note: String;
   var textName:String;
+  @:optional var link:String;
 }
 
 class CreditState extends MusicBeatState  {
@@ -53,39 +54,39 @@ class CreditState extends MusicBeatState  {
   var bangbangFormat:FlxTextFormat = new FlxTextFormat(0xFFFF0000, false, false, 0xFFFF0000);
 
   var credits:Array<CreditInfo> = [
-    {textName: "Echo", displayName: "Echolocated", iconName: "echo", roles: "Main Director, Artist, Musician", note: "Made a single High Shovel cutscene frame.\n(Oh and all the icons I guess..)\n((EDIT: Allegedly also Swag Sonic and Scourge))\n(((Sometimes made No Villains)))" },
-    {textName: "Bepixel", displayName: "Bepixel", iconName: "jellie", roles: "Art Director, Artist", note: "Made the Tails and Sonic sprites and backgrounds. Animated Shadow's shot animation. Helped with Chapter 3 Boyfriend Anims. Made Talentless Fox, No Villains, Die Batsards, Taste For Blood and partly High Shovel\n\ncutscenes."},
-    {textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "Music Director, Musician", note: "Made No Villains and, according to the fanbase, literally nothing else...\nMost of the time." },
-    {textName: "Nebula", displayName: "Nebula The Zorua", iconName: "neb", roles: "Code Director, Programmer", note: "BLAMMED LIGHTS<r>‼️<r>" },
-    {textName: "Wilde", displayName: "Wilde", iconName: "wilde", roles: "Chart Director, Charter", note: "Charted No Villains, Die Batsards, Taste For Blood and No Heroes. Recharted Talentless Fox. Touched on most charts.\nAnd looked damn good while doing it <3" },
+    {link: 'https://twitter.com/CH_echolocated', textName: "Echo", displayName: "Echolocated", iconName: "echo", roles: "Main Director, Artist, Musician", note: "Made a single High Shovel cutscene frame.\n(Oh and all the icons I guess..)\n((EDIT: Allegedly also Swag Sonic and Scourge))\n(((Sometimes made No Villains)))" },
+    {link: 'https://twitter.com/bepixel_owo', textName: "Bepixel", displayName: "Bepixel", iconName: "jellie", roles: "Art Director, Artist", note: "Made the Tails and Sonic sprites and backgrounds. Animated Shadow's shot animation. Helped with Chapter 3 Boyfriend Anims. Made Talentless Fox, No Villains, Die Batsards, Taste For Blood and partly High Shovel\n\ncutscenes."},
+    {link: 'https://twitter.com/mylimit666', textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "Music Director, Musician", note: "Made No Villains and, according to the fanbase, literally nothing else...\nMost of the time." },
+    {link: 'https://twitter.com/Nebula_Zorua', textName: "Nebula", displayName: "Nebula The Zorua", iconName: "neb", roles: "Code Director, Programmer", note: "BLAMMED LIGHTS<r>‼️<r>" },
+    {link: 'https://twitter.com/0WildeRaze', textName: "Wilde", displayName: "Wilde", iconName: "wilde", roles: "Chart Director, Charter", note: "Charted No Villains, Die Batsards, Taste For Blood and No Heroes. Recharted Talentless Fox. Touched on most charts.\nAnd looked damn good while doing it <3" },
     // TODO: create seperators for roles
     // artists
-    {textName: "Static", displayName: "Staticlysm", iconName: "sketch", roles: "Sprite Artist, Background Artist", note: "Created Swag Tails and Shadow sprites. Also created Die Batsards and Taste For Blood backgrounds.\nBullied into namechange by Hooda" },
+    {link: 'https://twitter.com/staticlysm', textName: "Static", displayName: "Staticlysm", iconName: "sketch", roles: "Sprite Artist, Background Artist", note: "Created Swag Tails and Shadow sprites. Also created Die Batsards and Taste For Blood backgrounds.\nBullied into namechange by Hooda" },
     {textName: "Wieder", displayName: "Wieder the Rabbit", iconName: "wiener", roles: "Sprite Artist, Background Artist", note: "Literally all the High Shovel art.\nWiener." },
-    {textName: "Polli", displayName: "Potopollo", iconName: "polli", roles: "Sprite Artist", note: "Chapter 3+ Boyfriend" },
-    {textName: "Xooplord", displayName: "Xooplord", iconName: "xoop", roles: "Cutscene Artist", note: "Part of High Shovel cutscene.\nGot a Twitter virus lmao" },
-    {textName: "flopdoodle", displayName: "Flopdoodle", iconName: "flop", roles: "Sprite Artist", note: "Jukebox art" },
-    {textName: "Comgaming", displayName: "Comgaming", iconName: "com", roles: "Sprite Artist", note: "Scrapped background characters for Die Batsards." },
+    {link: 'https://twitter.com/potopollo_po', textName: "Polli", displayName: "Potopollo", iconName: "polli", roles: "Sprite Artist", note: "Chapter 3+ Boyfriend" },
+    {link: 'https://twitter.com/xooplord', textName: "Xooplord", displayName: "Xooplord", iconName: "xoop", roles: "Cutscene Artist", note: "Part of High Shovel cutscene.\nGot a Twitter virus lmao" },
+    {link: 'https://twitter.com/fl0pd00dle/', textName: "flopdoodle", displayName: "Flopdoodle", iconName: "flop", roles: "Sprite Artist", note: "Jukebox art" },
+    {link: 'https://twitter.com/Comgamingnz', textName: "Comgaming", displayName: "Comgaming", iconName: "com", roles: "Sprite Artist", note: "Scrapped background characters for Die Batsards." },
     // programmers
-    {textName: "Shadowfi", displayName: "Shadowfi", iconName: "shadowfi", roles: "Programmer", note: "Side-stories menu, Die Batsards stage.\nFucking kity."},
+    {link: 'https://twitter.com/Shadowfi1385', textName: "Shadowfi", displayName: "Shadowfi", iconName: "shadowfi", roles: "Programmer", note: "Side-stories menu, Die Batsards stage.\nFucking kity."},
     // charters
-    {textName: "Cerbera", displayName: "Cerbera", iconName: "cerbera", roles: "Charter", note: "Charted High Shovel (incorrectly >:() and No Bitches M.\nThe second best femboy charter.\nUses FPS+ lmao." },
-    {textName: "gibz", displayName: "gibz", iconName: "gibz", roles: "Charter", note: "Charted Groovy Fox.\nBut charted the grace notes as jumps???" },
+    {link: 'https://twitter.com/Cerbera_fnf', textName: "Cerbera", displayName: "Cerbera", iconName: "cerbera", roles: "Charter", note: "Charted High Shovel (incorrectly >:() and No Bitches M.\nThe second best femboy charter.\nUses FPS+ lmao." },
+    {link: 'https://twitter.com/gibz679', textName: "gibz", displayName: "gibz", iconName: "gibz", roles: "Charter", note: "Charted Groovy Fox.\nBut charted the grace notes as jumps???" },
     // musicians
-    {textName: "LSE", displayName: "LongestSoloEver", iconName: "lse", roles: "Musician", note: "Created Taste For Blood, Pause, and Game Over.\nStole TFB from Hooda (wouldn't have it any other way lmao).\nHelped with menu music.\nDebatable on if it is ACTUALLY the longest." },
-    {textName: "philiplol", displayName: "Philiplol", iconName: "philiplol", roles: "Musician, Voice Actor", note: "Created High Shovel. Voice acted Knuckles.\nHigh shovel, bro." },
-    {textName: "penkaru", displayName: "Penkaru", iconName: "penkaru", roles: "Musician", note: "Created No Bitches P.\nWas supposed to help with Taste for Blood but scores didn't get used." },
-    {textName: "matasaki", displayName: "Matasaki", iconName: "matasaki", roles: "Musician", note: "Created No Bitches M.\nBiggest fan. Thanks for stickin' by us!" },
-    {textName: "hugenate", displayName: "HugeNate", iconName: "hugenate", roles: "Musician", note: "Created Groovy Fox.\nNathaniel of the large variety." },
-    {textName: "ayybeff", displayName: "Ayybeff", iconName: "ayybeff", roles: "Musician", note: "Created No Heroes.\nGot their good cover in the game." },
+    {link: 'https://twitter.com/longestsoloever', textName: "LSE", displayName: "LongestSoloEver", iconName: "lse", roles: "Musician", note: "Created Taste For Blood, Pause, and Game Over.\nStole TFB from Hooda (wouldn't have it any other way lmao).\nHelped with menu music.\nDebatable on if it is ACTUALLY the longest." },
+    {link: 'https://twitter.com/Philiplolz', textName: "philiplol", displayName: "Philiplol", iconName: "philiplol", roles: "Musician, Voice Actor", note: "Created High Shovel. Voice acted Knuckles.\nHigh shovel, bro." },
+    {link: 'https://twitter.com/pex_ton', textName: "penkaru", displayName: "Penkaru", iconName: "penkaru", roles: "Musician", note: "Created No Bitches P.\nWas supposed to help with Taste for Blood but scores didn't get used." },
+    {link: 'https://twitter.com/Matasaki_Dude', textName: "matasaki", displayName: "Matasaki", iconName: "matasaki", roles: "Musician", note: "Created No Bitches M.\nBiggest fan. Thanks for stickin' by us!" },
+    {link: 'https://twitter.com/HugeNate_', textName: "hugenate", displayName: "HugeNate", iconName: "hugenate", roles: "Musician", note: "Created Groovy Fox.\nNathaniel of the large variety." },
+    {link: 'https://twitter.com/ayybeff', textName: "ayybeff", displayName: "Ayybeff", iconName: "ayybeff", roles: "Musician", note: "Created No Heroes.\nGot their good cover in the game." },
     // because i know people are gonna go "WAA YOU'RE SAYING THEY'RE THE ONLY GOOD COVER!!" and go off at hooda
     // it was me, neb, lmao
     // flame me not hooda
 
     // VAs
-    {textName: "Mike", displayName: "mc83ch5", iconName: "mikechrysler", roles: "Voice Actor", note: "Voice acted Tails.\nNo talent whatsoever." },
-    {textName: "jippy", displayName: "Jippy", iconName: "jippy", roles: "Voice Actor", note: "Voice acted Sonic.\nStill the best Sonic voice in FNF." },
-    {textName: "sticky", displayName: "Sticky", iconName: "sticky", roles: "Voice Actor", note: "Voice acted Shadow.\nDanish Shadow lmao." },
+    {link: 'https://twitter.com/mc83ch5', textName: "Mike", displayName: "mc83ch5", iconName: "mikechrysler", roles: "Voice Actor", note: "Voice acted Tails.\nNo talent whatsoever." },
+    {link: 'https://twitter.com/phropii', textName: "distorcore", displayName: "Distorcore", iconName: "jippy", roles: "Voice Actor", note: "Voice acted Sonic.\nStill the best Sonic voice in FNF." },
+    {link: 'https://twitter.com/StickyBM', textName: "sticky", displayName: "Sticky", iconName: "sticky", roles: "Voice Actor", note: "Voice acted Shadow.\nDanish Shadow lmao." },
 
   ];
 
@@ -95,7 +96,8 @@ class CreditState extends MusicBeatState  {
       if(obj==object){
         if(idx!=selected)
           changeSelection(idx);
-
+        else
+          accept();
       }
     }
   }
@@ -114,6 +116,19 @@ class CreditState extends MusicBeatState  {
 
   function scroll(event:MouseEvent){
     changeSelection(selected-event.delta);
+  }
+
+  function accept(){
+    for (item in texts.members)
+    {
+      if(item.ID==selected && credits[selected].link!=null){
+        #if linux
+        Sys.command('/usr/bin/xdg-open', [credits[selected].link, "&"]);
+        #else
+        FlxG.openURL(credits[selected].link);
+        #end
+      }
+    }
   }
 
   override function create()
@@ -230,16 +245,17 @@ class CreditState extends MusicBeatState  {
     backdrops.y -= .5 * (elapsed/(1/120));
 
     if (controls.BACK)
-    {
       FlxG.switchState(new MainMenuState());
-    }
+
 
     if(controls.DOWN_P)
       changeSelection(selected+1);
 
-
     if(controls.UP_P)
       changeSelection(selected-1);
+
+    if(controls.ACCEPT)
+      accept();
 
     super.update(elapsed);
   }
