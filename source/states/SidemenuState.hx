@@ -192,15 +192,6 @@ class SidemenuState extends MusicBeatState
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
 
-		if (upP)
-		{
-			changeSelection(-1);
-		}
-		if (downP)
-		{
-			changeSelection(1);
-		}
-
 		if (controls.BACK)
 		{
 			FlxG.switchState(new MainMenuState());
