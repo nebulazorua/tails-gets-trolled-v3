@@ -45,12 +45,12 @@ class HighShader extends FlxShader{
 
 
       vec2 uv = fragCoord.xy / iResolution.xy;
-      vec2 focus = uv - vec2(0.5);
+      vec2 focus = uv - vec2(0.5, 0.5);
 
 
 
-      vec4 outColor;
-      outColor = vec4(0, 0, 0, 0);
+      vec4 outColor = vec4(0, 0, 0, 0);
+
 
 
       for (int i=0; i<focusDetail; i++) {

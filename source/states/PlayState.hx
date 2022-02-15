@@ -2153,7 +2153,8 @@ class PlayState extends MusicBeatState
 				stage.knuckles.animation.play("shootKill",true);
 
 			dad.playAnim("shoot",true);
-			health -= 1.8 * (1/killShotCount);
+			var newHealth = FlxMath.bound(health - 1.8 * (1/killShotCount),0.1, 2);
+			health = newHealth;
 			loadedKillShots.shift();
 			if(!boyfriend.disabledDance){
 				boyfriend.noIdleTimer = Conductor.stepCrochet * 4;
