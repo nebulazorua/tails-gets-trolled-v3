@@ -4,11 +4,11 @@ import flixel.FlxSprite;
 
 class Crosshair extends FlxSprite {
   public var strumTime:Float = 0;
-  public var hitbox:Float = 166;
+  public var hitbox:Float = 207.5;
   public var wasHit:Bool = false;
   public var canBeHit:Bool = false;
   public var tooLate:Bool = false;
-  public var goodWindow:Float = 45;
+  public var goodWindow:Float = 56.25;
   public var damage:Float = 0;
   public var initialPos:Float = 0;
   public static var swagWidth:Float = 974 * .7;

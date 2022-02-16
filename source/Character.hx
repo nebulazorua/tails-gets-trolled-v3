@@ -104,7 +104,18 @@ class Character extends FlxSprite
 
 	public static function getIcon(charName:String,player:Bool=false){
 		var json:CharJson = getJSON(charName,player);
+		if(json==null)return 'face';
 		return json.iconName;
+	}
+
+	public static function getHealth(charName:String,player:Bool=false){
+		var json:CharJson = getJSON(charName,player);
+		if(json==null)return 0xFFFFFFFF;
+		var clr:Null<FlxColor> = FlxColor.fromString(json.healthColor);
+		if(clr==null){
+			clr=0xFF66FF33;
+		}
+		return clr;
 	}
 
 	public static function getJSON(charName:String,player:Bool=false):CharJson{
@@ -302,8 +313,11 @@ class Character extends FlxSprite
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false, ?hasTexture:Bool=true)
 	{
 		super(x, y);
-		iconName=iconNames.exists(character)?iconNames.get(character):character;
-		iconColor=iconColors.exists(iconName)?iconColors.get(iconName):0xFF31B0D1;
+		iconName = getIcon(character, isPlayer);
+		iconColor = getHealth(character, isPlayer);
+
+
+
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
@@ -311,6 +325,9 @@ class Character extends FlxSprite
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
 		hasSprite=hasTexture;
+		if(!hasSprite)
+			visible=false;
+
 		if(hasTexture){
 			setChar(curCharacter);
 			if(animation.getByName("idle")!=null)
@@ -435,14 +452,16 @@ class Character extends FlxSprite
 			}
 
 			if(!debugMode){
-				switch (curCharacter)
-				{
-					case 'gf':
-						if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-							playAnim('danceRight');
-					case 'shadow' | 'shadow-crazy':
-						if (animation.curAnim.name == 'shoot' && animation.curAnim.finished)
-							playAnim('idle');
+				if(animation.curAnim!=null){
+					switch (curCharacter)
+					{
+						case 'gf':
+							if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
+								playAnim('danceRight');
+						case 'shadow' | 'shadow-crazy':
+							if (animation.curAnim.name == 'shoot' && animation.curAnim.finished)
+								playAnim('idle');
+					}
 				}
 			}
 		}

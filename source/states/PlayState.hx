@@ -592,7 +592,6 @@ class PlayState extends MusicBeatState
 			SONG = Song.loadFromJson('tutorial');
 
 		speed = SONG.speed;
-		if(!isStoryMode)currentOptions.modcharts = currentOptions.modcharts;
 
 		if(!isStoryMode){
 			var mMod = currentOptions.mMod<.1?speed:currentOptions.mMod;
@@ -726,6 +725,9 @@ class PlayState extends MusicBeatState
 
 		stage = new Stage(curStage,currentOptions);
 
+		if(currentOptions.noChars && stage.tails!=null)
+			stage.tails.visible=false;
+			
 		if(currentOptions.getHigh){
 			highShader = new HighEffect();
 
@@ -931,14 +933,16 @@ class PlayState extends MusicBeatState
 					var data = note[1];
 
 					if(data%4==0){
-						var crosshair:Crosshair = new Crosshair(time);
-						crosshair.initialPos = getPosFromTime(time);
-						crosshair.x = FlxG.width/2 - crosshair.width/2;
-						if(!currentOptions.middleScroll){
-							crosshair.x += Note.swagWidth * 2;
-							crosshair.x += 92;
+						if(currentOptions.difficultyShots>0){
+							var crosshair:Crosshair = new Crosshair(time);
+							crosshair.initialPos = getPosFromTime(time);
+							crosshair.x = FlxG.width/2 - crosshair.width/2;
+							if(!currentOptions.middleScroll){
+								crosshair.x += Note.swagWidth * 2;
+								crosshair.x += 92;
+							}
+							unspawnCrosshairs.push(crosshair);
 						}
-						unspawnCrosshairs.push(crosshair);
 						loadedShotAnims.push(Conductor.getStep(time));
 					}else if(data%4==1){
 						loadedKillShots.push(Conductor.getStep(time));
@@ -1317,7 +1321,11 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition=Conductor.rawSongPos;
 		updateCurStep();
 		updateBeat();
-		canScore = currentOptions.modcharts;
+
+		//canScore = currentOptions.modcharts;
+		// TODO: write a seperate system for modchart off w/ modcharts
+		// probably have a way to define modcharted songs and then make it lookup in a diff table for the high score if you have modcharts off
+		// for now however, modchart off will save to the same score as the song with modcharts on
 
 		if(startPos>0)canScore=false;
 
@@ -2251,13 +2259,13 @@ class PlayState extends MusicBeatState
 			if(PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection){
 				if(turn!='bf'){
 					turn='bf';
-					if(currentOptions.staticCam==0)
+					if(currentOptions.staticCam==0 && !currentOptions.noChars)
 						focus='bf';
 				}
 			}else{
 				if(turn!='dad'){
 					turn='dad';
-					if(currentOptions.staticCam==0)
+					if(currentOptions.staticCam==0 && !currentOptions.noChars)
 						focus='dad';
 				}
 			}
@@ -2487,8 +2495,12 @@ class PlayState extends MusicBeatState
 						if (crosshair.tooLate)
 						{
 							//dad.playAnim("shoot",true);
+							var dam = crosshairDamages[currentOptions.difficultyShots];
 							if(!crosshair.wasHit){
-								health = -1; // perish, whore.
+								health -= dam;
+								if(dam>=2) // max hp is 2 in FNF
+									health = -1;  // perish, whore.
+
 								// set to -1 incase you gain hp right as you miss so you just die immediately
 							}else{
 
@@ -3455,6 +3467,24 @@ class PlayState extends MusicBeatState
 			noteMiss(3);
 	}
 
+	var crosshairDamages:Array<Float> = [
+		0, // off
+		0.5, // easy
+		1, // normal
+		1.5, // hard
+		2, // original
+		4 // insane
+	];
+
+	var damMults:Array<Float> = [ // for hitbox
+		0, // off
+		2, // easy
+		1.5, // normal
+		1, // hard
+		0.8, // original
+		0.75 // insane
+	];
+
 	function dodge(crosshair:Crosshair):Void
 	{
 		if(!crosshair.wasHit){
@@ -3462,8 +3492,9 @@ class PlayState extends MusicBeatState
 			crosshair.visible=false;
 			var trueDiff = crosshair.strumTime - Conductor.songPosition;
 			var diff = Math.abs(trueDiff);
-
-			var damage = CoolUtil.scale(diff,crosshair.goodWindow,crosshair.hitbox,0,2);
+			var maxDam = crosshairDamages[currentOptions.difficultyShots];
+			var boxMult = damMults[currentOptions.difficultyShots];
+			var damage = CoolUtil.scale(diff,crosshair.goodWindow * boxMult,crosshair.hitbox * boxMult,0,maxDam);
 			if(damage<0)damage=0;
 			crosshair.damage = damage;
 

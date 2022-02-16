@@ -155,7 +155,7 @@ class TitleState extends MusicBeatState
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
 
-		credTextShit = new Alphabet(0, 0, "Nebula the Zorua\nBepixel\nHooda the Antagonist\nEcholocated\nWilde", true);
+		credTextShit = new Alphabet(0, 0, "Nebula the Zorua\nBepixel\nEcholocated\nWilde", true);
 		credTextShit.screenCenter();
 
 		// credTextShit.alignment = CENTER;
@@ -362,7 +362,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['Nebula the Zorua', 'Bepixel', 'Hooda the Antagonist', 'Wilde', 'Echolocated']);
+				createCoolText(['Nebula the Zorua', 'Bepixel', 'Wilde', 'Echolocated']);
 			case 3:
 				addMoreText('present');
 			case 4:

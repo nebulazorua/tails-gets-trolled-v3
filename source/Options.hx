@@ -89,6 +89,7 @@ class Options
 	public var gfSkin:String = 'gfbest';
 	public var jukeboxSong:Int = 0;
 	public var isInst:Bool = false;
+
 	// gameplay
 	public var controls:Array<FlxKey> = [FlxKey.A,FlxKey.S,FlxKey.K,FlxKey.L,FlxKey.R,FlxKey.ENTER,FlxKey.SPACE];
 	public var ghosttapping:Bool = false;
@@ -129,6 +130,7 @@ class Options
 	public var getHigh:Bool = true;
 	public var shotsGetJudged:Bool = false;
 	public var modcharts:Bool = true;
+	public var difficultyShots:Int = 2;
 
 	// performance
 	public var fps:Int = 120;
