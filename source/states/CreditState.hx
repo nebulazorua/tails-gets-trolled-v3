@@ -59,7 +59,6 @@ class CreditState extends MusicBeatState  {
   var credits:Array<CreditInfo> = [
     {link: 'https://twitter.com/CH_echolocated', textName: "Echo", displayName: "Echolocated", iconName: "echo", roles: "Main Director, Artist, Musician", note: "Made a single High Shovel cutscene frame.\n(Oh and almost all the icons I guess..)\n((EDIT: Allegedly also Swag Sonic and Scourge))\n(((Sometimes made No Villains)))" },
     {link: 'https://twitter.com/bepixel_owo', textName: "Bepixel", displayName: "Bepixel", iconName: "jellie", roles: "Art Director, Artist", note: "Made the Tails and Sonic sprites and backgrounds. Animated Shadow's shot animation. Helped with Chapter 3 Boyfriend death anim. Made Talentless Fox, No Villains, Die Batsards, Taste For Blood and partly High Shovel\n\ncutscenes."},
-    {link: 'https://twitter.com/mylimit666', textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "Music Director, Musician", note: "Made No Villains and, according to the fanbase, literally nothing else...\nMost of the time." },
     {link: 'https://twitter.com/Nebula_Zorua', textName: "Nebula", displayName: "Nebula The Zorua", iconName: "neb", roles: "Code Director, Programmer", note: "BLAMMED LIGHTS<r>‼️<r>" },
     {link: 'https://twitter.com/0WildeRaze', textName: "Wilde", displayName: "Wilde", iconName: "wilde", roles: "Chart Director, Charter", note: "Charted No Villains, Die Batsards, Taste For Blood and No Heroes. Recharted Talentless Fox. Touched on most charts.\nAnd looked damn good while doing it <3" },
     // TODO: create seperators for roles
@@ -67,12 +66,14 @@ class CreditState extends MusicBeatState  {
     {link: 'https://twitter.com/staticlysm', textName: "Static", displayName: "Staticlysm", iconName: "sketch", roles: "Sprite Artist, Background Artist", note: "Created Swag Tails and Shadow sprites. Also created Die Batsards and Taste For Blood backgrounds.\nBullied into namechange by Hooda" },
     {textName: "Wieder", displayName: "Wieder the Rabbit", iconName: "wiener", roles: "Sprite Artist, Background Artist", note: "Literally all the High Shovel art.\nWiener." },
     {link: 'https://twitter.com/potopollo_po', textName: "Polli", displayName: "Potopollo", iconName: "polli", roles: "Sprite Artist", note: "Creating the Chapter 3+ boyfriend sprites and animations.\nDTIYS but somehow MORE in your style" },
-    {link: 'https://twitter.com/xooplord', textName: "Xooplord", displayName: "Xooplord", iconName: "xoop", roles: "Cutscene Artist", note: "Animated most of the High Shovel cutscene" },
+    {link: 'https://twitter.com/xooplord', textName: "Xooplord", displayName: "Xooplord", iconName: "xoop", roles: "Cutscene Artist", note: "Animated most of the High Shovel cutscene.\nFix ur discord >:(" },
     // bepixel's words: "she animated my storyboard which was already sketched and then I finished"
-    // so if this is undercrediting xoop still, that's not on me. This is what I got told.
 
     {link: 'https://twitter.com/fl0pd00dle/', textName: "flopdoodle", displayName: "Flopdoodle", iconName: "flop", roles: "Sprite Artist", note: "Jukebox art" },
-    {link: 'https://twitter.com/Comgamingnz', textName: "Comgaming", displayName: "Comgaming", iconName: "com", roles: "Sprite Artist", note: "Scrapped background characters for Die Batsards.\nBest of luck to you and your living situation, I hope it all gets resolved!" },
+    {link: 'https://twitter.com/Comgamingnz', textName: "Comgaming", displayName: "Comgaming", iconName: "com", roles: "Sprite Artist", note: "Scrapped background characters for Die Batsards." },
+    // wanted to mention gl to his living situation but idk if people would take that as sarcasm and us joking about it even tho its not and its meant to be genuine, like Matasaki's is.
+    // so I'll leave it blank until I can get a joke or something because I dont want people to misconstrue it, we're already in hot water. 
+
     // programmers
     {link: 'https://twitter.com/Shadowfi1385', textName: "Shadowfi", displayName: "Shadowfi", iconName: "shadowfi", roles: "Programmer", note: "Put in the Side-stories menu and Die Batsards stage.\nFucking kity."},
     // charters
@@ -88,6 +89,7 @@ class CreditState extends MusicBeatState  {
     // because i know people are gonna go "WAA YOU'RE SAYING THEY'RE THE ONLY GOOD COVER!!" and go off at hooda
     // it was me, neb, lmao
     // flame me not hooda
+    {link: 'https://twitter.com/mylimit666', textName: "Hooda", displayName: "Hooda The Antagonist", iconName: "hooda", roles: "(Ex)Musician", note: "Made No Villains and, according to the fanbase, literally nothing else...\nMost of the time." },
 
     // VAs
     {link: 'https://twitter.com/mc83ch5', textName: "Mike", displayName: "mc83ch5", iconName: "mikechrysler", roles: "Voice Actor", note: "Voice acted Tails.\nNo talent whatsoever." },
