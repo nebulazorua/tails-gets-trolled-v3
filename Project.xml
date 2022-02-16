@@ -55,8 +55,8 @@
 	-->
 	<define name="HAXEFLIXEL_LOGO"/> <!--Allows the Haxeflixel watermark to show on startup when compiled as release;.-->
 	<!-- <define name="NO_BOTPLAY" unless="debug"/> --> <!--Disables the ability to use botplay-->
-	<define name="DISABLE_CHART_EDITOR" unless="debug"/>  <!--Disables the ability to use the chart editor ingame-->
-	<define name="DISABLE_CHARACTER_EDITOR" unless="debug"/>  <!--Disables the ability to use the character editor ingame-->
+	<!-- <define name="DISABLE_CHART_EDITOR" unless="debug"/>-->  <!--Disables the ability to use the chart editor ingame-->
+	<!-- <define name="DISABLE_CHARACTER_EDITOR" unless="debug"/>-->  <!--Disables the ability to use the character editor ingame-->
 	<!-- <define name="NO_FREEPLAY_MODS"/> --> <!--Disables the ability to change freeplay modifiers (CMod, MMod, XMod, NoFail)-->
 	<define name="FORCE_LUA_MODCHARTS"/> <!--Disables the ability to turn off lua modcharts-->
 	<!-- <define name="FORCED_JUDGE"/> -->  <!--Disables the ability to change judgement window.-->

@@ -727,7 +727,7 @@ class PlayState extends MusicBeatState
 
 		if(currentOptions.noChars && stage.tails!=null)
 			stage.tails.visible=false;
-			
+
 		if(currentOptions.getHigh){
 			highShader = new HighEffect();
 
@@ -3269,7 +3269,6 @@ class PlayState extends MusicBeatState
 		#end
 		if(ScoreUtils.botPlay)return;
 		var direction = bindData.indexOf(event.keyCode);
-		trace(direction);
 		if(direction!=-1 && !pressedKeys[direction]){
 			pressedKeys[direction]=true;
 			if(direction==4){
@@ -3324,8 +3323,10 @@ class PlayState extends MusicBeatState
 				if(currentOptions.ghosttapSounds)
 					FlxG.sound.play(Paths.sound('Ghost_Hit'),currentOptions.hitsoundVol/100);
 
-				if(currentOptions.ghosttapping==false)
+				if(currentOptions.ghosttapping==false){
 					showMiss(direction);
+					health -= 0.023;
+				}
 			}
 
 		}
