@@ -58,7 +58,7 @@
 	<!-- <define name="DISABLE_CHART_EDITOR" unless="debug"/>-->  <!--Disables the ability to use the chart editor ingame-->
 	<!-- <define name="DISABLE_CHARACTER_EDITOR" unless="debug"/>-->  <!--Disables the ability to use the character editor ingame-->
 	<!-- <define name="NO_FREEPLAY_MODS"/> --> <!--Disables the ability to change freeplay modifiers (CMod, MMod, XMod, NoFail)-->
-	<define name="FORCE_LUA_MODCHARTS"/> <!--Disables the ability to turn off lua modcharts-->
+	<!--define name="FORCE_LUA_MODCHARTS"--> <!--Disables the ability to turn off lua modcharts-->
 	<!-- <define name="FORCED_JUDGE"/> -->  <!--Disables the ability to change judgement window.-->
 	<!-- <define name="GOTO_CHAR_EDITOR" if="debug"/> --> <!--Makes it so you go straight to the character editor when compiling. Mainly just for testing-->
 	<!-- <define name="ALLOW_SET_STARTPOS"/> --> <!--Enables the ability to set a start pos from the pause menu-->
