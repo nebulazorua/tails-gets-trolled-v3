@@ -362,7 +362,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['Nebula the Zorua', 'Bepixel', 'Wilde', 'Echolocated']);
+				createCoolText(['Nebula the Zorua', 'Bepixel', 'LongestSoloEver', 'Wilde', 'Echolocated']);
 			case 3:
 				addMoreText('present');
 			case 4:

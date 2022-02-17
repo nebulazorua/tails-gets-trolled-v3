@@ -3474,7 +3474,7 @@ class PlayState extends MusicBeatState
 		1, // normal
 		1.5, // hard
 		2, // original
-		4 // insane
+		5 // insane
 	];
 
 	var damMults:Array<Float> = [ // for hitbox
@@ -3483,7 +3483,7 @@ class PlayState extends MusicBeatState
 		1.5, // normal
 		1, // hard
 		0.8, // original
-		0.75 // insane
+		0.65 // insane
 	];
 
 	function dodge(crosshair:Crosshair):Void

@@ -266,11 +266,6 @@ modMgr:queueEase(528,534,'invert',125,'quadOut', 1)
 modMgr:queueEase(592,596,'flip',0,'quadOut', 1)
 modMgr:queueEase(592,596,'invert',0,'quadOut', 1)
 
-
---[[modMgr:queueEase(618,624,'flip',0,'quadOut', 1)
-modMgr:queueEase(618,624,'invert',0,'quadOut', 1)
-
-]]
 local noteSize = 160 * 0.7;
 
 modMgr:queueEase(592,596,"transform0X",-noteSize * 2,'quadOut', 1)

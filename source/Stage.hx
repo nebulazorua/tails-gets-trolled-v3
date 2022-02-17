@@ -264,6 +264,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         grass.active = false;
         add(grass);
 
+        centerX = 900;
+        centerY = 300;
+
         if(doDistractions){
           tails = new FlxSprite();
           tails.frames = Paths.getSparrowAtlas('tails','chapter3');
@@ -325,6 +328,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         stageFront.active = false;
         add(stageFront);
 
+        centerX = 600;
+        centerY = 500;
+
 
       case 'hillzoneDarkSonic':
         gfVersion = 'gfbest';
@@ -350,6 +356,9 @@ class Stage extends FlxTypedGroup<FlxBasic> {
         fg.x = -541;
         fg.y = -96.5;
         add(fg);
+
+        centerX = 400;
+        centerY = 500;
 
       case 'blank':
         centerX = 400;
