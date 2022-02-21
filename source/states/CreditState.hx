@@ -69,12 +69,8 @@ class CreditState extends MusicBeatState  {
     {link: 'https://twitter.com/WiederPixel', textName: "Wieder", displayName: "Wieder the Rabbit", iconName: "wiener", roles: "Sprite Artist, Background Artist", note: "Literally all the High Shovel art.\nWiener." },
     {link: 'https://twitter.com/potopollo_po', textName: "Polli", displayName: "Potopollo", iconName: "polli", roles: "Sprite Artist", note: "Creating the Chapter 3+ boyfriend sprites and animations.\nDTIYS but somehow MORE in your style" },
     {link: 'https://twitter.com/xooplord', textName: "Xooplord", displayName: "Xooplord", iconName: "xoop", roles: "Cutscene Artist", note: "Animated most of the High Shovel cutscene.\nFix ur discord >:(" },
-    // bepixel's words: "she animated my storyboard which was already sketched and then I finished"
     {link: 'https://twitter.com/fl0pd00dle/', textName: "flopdoodle", displayName: "Flopdoodle", iconName: "flop", roles: "Sprite Artist", note: "Jukebox and promo art" },
     {link: 'https://twitter.com/Comgamingnz', textName: "Comgaming", displayName: "Comgaming", iconName: "com", roles: "Sprite Artist", note: "Scrapped background characters for Die Batsards." },
-    // wanted to mention gl to his living situation but idk if people would take that as sarcasm and us joking about it even tho its not and its meant to be genuine, like Matasaki's is.
-    // so I'll leave it blank until I can get a joke or something because I dont want people to misconstrue it, we're already in hot water.
-
     // programmers
     {textName: "Programmers", displayName:"", iconName: "", roles: "", note: "", selectable: false},
     {link: 'https://twitter.com/Shadowfi1385', textName: "Shadowfi", displayName: "Shadowfi", iconName: "shadowfi", roles: "Programmer", note: "Put in the Side-stories menu and Die Batsards stage.\nFucking kity."},
@@ -89,10 +85,6 @@ class CreditState extends MusicBeatState  {
     {link: 'https://twitter.com/Matasaki_Dude', textName: "matasaki", displayName: "Matasaki", iconName: "matasaki", roles: "Musician", note: "Created No Bitches M.\nBiggest fan. Thanks for stickin' by us!" },
     {link: 'https://twitter.com/HugeNate_', textName: "hugenate", displayName: "HugeNate", iconName: "hugenate", roles: "Musician", note: "Created Groovy Fox.\nNathaniel of the large variety." },
     {link: 'https://twitter.com/ayybeff', textName: "ayybeff", displayName: "Ayybeff", iconName: "ayybeff", roles: "Musician", note: "Created No Heroes / No Villains B-Side.\nGot their good cover in the game." },
-    // because i know people are gonna go "WAA YOU'RE SAYING THEY'RE THE ONLY GOOD COVER!!" and go off at hooda
-    // it was me, neb, lmao
-    // flame me not hooda
-
     // VAs
     {textName: "VAs", displayName:"", iconName: "", roles: "", note: "", selectable: false},
     {link: 'https://twitter.com/mc83ch5', textName: "Mike", displayName: "mc83ch5", iconName: "mikechrysler", roles: "Voice Actor", note: "Voice acted Tails.\nNo talent whatsoever." },
